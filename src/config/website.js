@@ -12,7 +12,7 @@ export default {
   statusWhiteList: [400],
   //配置首页不可关闭
   setting: {
-    sidebar: 'vertical',
+    sidebar: 'horizontal',
     tag: true,
     debug: true,
     collapse: true,

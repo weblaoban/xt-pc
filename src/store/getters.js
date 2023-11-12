@@ -8,7 +8,7 @@ const getters = {
   isMacOs: (state, getters) => getters.themeName == 'mac-os',
   isRefresh: state => state.common.isRefresh,
   isSearch: state => state.common.isSearch,
-  isHorizontal: state => state.common.setting.sidebar === 'horizontal',
+  isHorizontal: state =>state.common.setting.sidebar === 'horizontal',
   isCollapse: state => state.common.isCollapse,
   isLock: state => state.common.isLock,
   isFullScren: state => state.common.isFullScren,
