@@ -1,7 +1,7 @@
 import request from '@/axios';
 import { baseUrl } from '@/config/env';
 export const loginByUsername = (username, password, code, redomStr) => request({
-  url: baseUrl + '/user/login',
+  url: baseUrl + '/adminLogin',
   method: 'post',
   meta: {
     isToken: false
