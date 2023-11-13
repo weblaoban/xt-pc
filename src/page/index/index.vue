@@ -4,17 +4,17 @@
 			class="avue-layout"
 			:class="{ 'avue-layout--horizontal': isHorizontal }"
 		>
-			<div class="avue-sidebar" v-show="validSidebar">
+			<!-- <div class="avue-sidebar" v-show="validSidebar"> -->
 				<!-- 左侧导航栏 -->
-				<logo />
-				<sidebar />
-			</div>
+				<!-- <logo />
+				<sidebar /> -->
+			<!-- </div> -->
 			<div class="avue-main">
 				<!-- 顶部导航栏 -->
-				<top ref="top" />
+				<!-- <top ref="top" /> -->
 				<!-- 顶部标签卡 -->
-				<tags />
-				<search class="avue-view" v-show="isSearch"></search>
+				<!-- <tags /> -->
+				<!-- <search class="avue-view" v-show="isSearch"></search> -->
 				<!-- 主体视图层 -->
 				<div id="avue-view" v-show="!isSearch" v-if="isRefresh">
 					<router-view #="{ Component }">
@@ -24,7 +24,7 @@
 					</router-view>
 				</div>
 				<div class="avue-footer">
-					<p class="copyright">© 2018-2021 Avue designed by smallwei</p>
+					<p class="copyright"></p>
 				</div>
 			</div>
 		</div>
