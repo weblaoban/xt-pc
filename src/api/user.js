@@ -50,3 +50,16 @@ export const logout = () => request({
   },
   method: 'get'
 })
+
+
+
+export const register = (data)=>request({
+    url:baseUrl+'user/register',
+    method:'post',
+    data:data
+})
+export const modifyPassword = (data)=>request({
+    url:baseUrl+'user/modifyPassword',
+    method:'post',
+    data:data
+})
