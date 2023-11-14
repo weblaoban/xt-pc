@@ -12,8 +12,6 @@ import { serialize } from 'utils/util'
 import { getToken } from 'utils/auth'
 import { ElMessage } from 'element-plus'
 import website from '@/config/website';
-import NProgress from 'nprogress' // progress bar
-import 'nprogress/nprogress.css' // progress bar style
 axios.defaults.timeout = 10000;
 //返回其他状态吗
 axios.defaults.validateStatus = function (status) {
@@ -21,13 +19,9 @@ axios.defaults.validateStatus = function (status) {
 };
 //跨域请求，允许保存cookie
 axios.defaults.withCredentials = true;
-// NProgress Configuration
-NProgress.configure({
-  showSpinner: false
-});
+
 //HTTPrequest拦截
 axios.interceptors.request.use(config => {
-  NProgress.start() // start progress bar
   const meta = (config.meta || {});
   const isToken = meta.isToken === false;
   if (getToken() && !isToken) {
@@ -46,7 +40,6 @@ axios.interceptors.request.use(config => {
 });
 //HTTPresponse拦截
 axios.interceptors.response.use(res => {
-  NProgress.done();
   const status = Number(res.status) || 200;
   const statusWhiteList = website.statusWhiteList || [];
   const message = res.data.message || '未知错误';
@@ -73,7 +66,6 @@ axios.interceptors.response.use(res => {
   }
   return res;
 }, error => {
-  NProgress.done();
   return Promise.reject(new Error(error));
 })
 

@@ -17,7 +17,7 @@ import error from './error';
 import basicBlock from 'components/basic-block/main.vue'
 import basicContainer from 'components/basic-container/main.vue'
 import App from './App.vue'
-import 'animate.css'
+// import 'animate.css'
 import dayjs from 'dayjs'
 import 'styles/common.scss';
 window.$crudCommon = crudCommon

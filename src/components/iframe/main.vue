@@ -7,15 +7,12 @@
 </template>
 
 <script>
-import NProgress from "nprogress"; // progress bar
-import "nprogress/nprogress.css"; // progress bar style
 export default {
   name: "AvueIframe",
   data () {
     return {};
   },
   created () {
-    NProgress.configure({ showSpinner: false });
   },
   mounted () {
     this.load();
@@ -33,11 +30,9 @@ export default {
   methods: {
     // 显示等待框
     show () {
-      NProgress.start();
     },
     // 隐藏等待狂
     hide () {
-      NProgress.done();
     },
     // 加载组件
     load () {

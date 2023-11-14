@@ -81,7 +81,7 @@ export default {
 		openMenu(item = {}) {
 			this.$store.dispatch("GetMenu", item.parentId).then((data) => {
 				if (data.length !== 0) {
-					this.$router.$avueRouter.formatRoutes(data, true);
+					// this.$router.$avueRouter.formatRoutes(data, true);
 				}
 				//当点击顶部菜单做的事件
 				if (!validatenull(item)) {

@@ -2,9 +2,6 @@ import router from './router/'
 import store from './store'
 import { validatenull } from '@/utils/validate'
 import { getToken } from '@/utils/auth'
-import NProgress from 'nprogress' // progress bar
-import 'nprogress/nprogress.css' // progress bar style
-NProgress.configure({ showSpinner: false });
 const lockPage = '/lock'; //锁屏页
 router.beforeEach((to, from, next) => {
   const meta = to.meta || {};
@@ -55,7 +52,6 @@ router.beforeEach((to, from, next) => {
 })
 
 router.afterEach(to => {
-  NProgress.done();
   let title = router.$avueRouter.generateTitle(to)
   router.$avueRouter.setTitle(title);
   store.commit('SET_IS_SEARCH', false)
