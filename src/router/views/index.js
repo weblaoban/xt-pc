@@ -59,7 +59,7 @@ export default [{
         },
         component: () =>
             import( /* webpackChunkName: "views" */ '@/views/wel/zixun.vue')
-    }, 
+    },
     {
         path: 'informationDetail/:id',
         name: '信托资讯详情',
@@ -69,7 +69,7 @@ export default [{
         component: () =>
             import( /* webpackChunkName: "views" */ '@/views/wel/zixunDetail.vue')
     },
-     {
+    {
         path: 'aboutUs',
         name: '关于我们',
         meta: {
@@ -77,5 +77,29 @@ export default [{
         },
         component: () =>
             import( /* webpackChunkName: "views" */ '@/views/wel/aboutUs.vue')
+    }, {
+        path: 'register',
+        name: '注册',
+        meta: {
+            title: '注册'
+        },
+        component: () =>
+            import( /* webpackChunkName: "views" */ '@/views/wel/register.vue')
+    }, {
+        path: 'updatePassword',
+        name: '修改密码',
+        meta: {
+            title: '修改密码'
+        },
+        component: () =>
+            import( /* webpackChunkName: "views" */ '@/views/wel/updatePassword.vue')
+    }, {
+        path: 'forgetPassword',
+        name: '忘记密码',
+        meta: {
+            title: '忘记密码'
+        },
+        component: () =>
+            import( /* webpackChunkName: "views" */ '@/views/wel/forgetPassword.vue')
     }]
 },]

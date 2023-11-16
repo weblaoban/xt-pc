@@ -15,101 +15,111 @@
 				</div>
 			</div>
 		</div>
-		<div class="menuContent">
-			<div class="container">
-				<div class="menuList">
-					<div @click="onMenuClick(item)" :class="{'active':index==active}" v-for="(item,index) in menuList" :key="item" class="menuItem"><img v-if="item.icon" :src="item.icon" alt="">{{item.name}} <div class="tag" v-if="item.notOpen">暂未开放</div></div>
-				</div>
-			</div>
-		</div>
 		<div class="bannerContent">
-			<el-carousel height="500px" direction="vertical" :autoplay="false">
-				<el-carousel-item v-for="item in 3" :key="item">
-					<div class="carouseCard"></div>
-				</el-carousel-item>
-			</el-carousel>
-<!-- 已经登陆啦 -->
-			<div class="loginContent haslogin">
-               <img src="/img/welcome.png" alt="" class="welcom">
-				<div class="username">欢迎，张先生</div>
-                <div class="phoneinfo">13888888888</div>
-                <div class="button" @click="onModifyPassword">修改密码</div>
-                <div class="button gray" @click="onModifyPassword">退出登录</div>
-			</div>
-            <!-- 未登录 -->
-			<div class="loginContent" v-if="!showRegister && !showModifyPass && !userInfo.name">
-                <h4 class="loginTitle">登录</h4>
-				<div class="inputItem">
-					<input v-model="userName" class="input" id="userName" type="text" /><label
+            <div class="carouseCard" style="height:675px">
+            <img src="/img/welcomebg.png" alt="">	<div class="loginContent register">
+                <h4 class="loginTitle">注册</h4>
+                <div class="genderCon">
+                    <div class="inputItem">
+					<input autocomplete="off" v-model="userName" class="input" id="userName" type="text" /><label
 						class="placeholder"
 						for="userName"
                         v-show="!userName"
-						>您的手机号</label
+						>输入您的姓名</label
+					>
+					<div class="cut"></div>
+                </div>
+                <div class="gender">
+                    <div class="genderItem">
+                        <label @click="gender=0" class="radio">
+                            <span :class="{'radio-inner':true,'active':gender===0}"></span>
+        <input type="radio" name="gender" :checked="gender===0">
+       先生
+    </label>
+    <label class="radio" @click="gender=1">
+                            <span :class="{'radio-inner':true,'active':gender===1}"></span>
+        <input type="radio" name="gender" :checked="gender===1">
+        女士
+    </label>
+                    </div>
+                </div>
+                </div>
+				<div class="inputItem">
+					<input autocomplete="off" v-model="phone" class="input" id="phone" type="text" /><label
+						class="placeholder"
+						for="phone"
+                        v-show="!phone"
+						>请输入您的手机号</label
 					>
 					<div class="cut"></div>
 				</div>
+                <div class="smscodeCon">
+                    
 				<div class="inputItem">
-					<input v-model="passWord" class="input" id="passWord" type="password" /><label
+					<input autocomplete="off" v-model="smsCode" class="input" id="smsCode" type="text" /><label
+						class="placeholder"
+						for="smsCode"
+                        v-show="!smsCode"
+						>输入手机验证码</label
+					>
+					<div class="cut"></div>
+				</div>
+                <div class="sendBtn">
+                    <div class="send" v-if="timeDown===originTime" @click="sendSms">发送</div>
+                    <div class="hasSend" v-if="timeDown!==originTime">{{timeDown}}</div>
+                </div>
+                </div>
+				<div class="inputItem">
+					<input autocomplete="off" v-model="passWord" class="input" id="passWord" :type="showPassword?'text':'password'" /><label
 						class="placeholder"
 						for="passWord"
                         v-if="!passWord"
-						>登录密码</label
+						>输入您的登录密码</label
 					>
 					<div class="cut"></div>
+                    <img @click="showPassword=false" v-if="showPassword" src="/img/show.png" alt="" class="togglePassword">
+                    <img @click="showPassword = true" v-if="!showPassword" src="/img/hide.png" alt="" class="togglePassword">
 				</div>
-                <div class="button" @click="onLogin">立即登录</div>
+				<div class="inputItem">
+					<input autocomplete="off" v-model="twopassWord" class="input" id="twopassWord" :type="showtwoPassword?'text':'password'" /><label
+						class="placeholder"
+						for="twopassWord"
+                        v-if="!twopassWord"
+						>再次输入登录密码</label
+					>
+					<div class="cut"></div>
+                    <img @click="showtwoPassword=false" v-if="showtwoPassword" src="/img/show.png" alt="" class="togglePassword">
+                    <img @click="showtwoPassword = true" v-if="!showtwoPassword" src="/img/hide.png" alt="" class="togglePassword">
+				</div>
+                <div class="button" @click="onRegister">立即注册</div>
                 <div class="other">
-                    <p @click="goRegister">还没有账号？ <span>立即注册</span></p>
-                    <p @click="onForgetPassword">忘记密码</p>
+                    <p></p>
+                    <p @click="backLogin">返回登陆</p>
                 </div>
-			</div>
-
+			</div></div>
+		
 		</div>
+	<main-footer></main-footer>
 	</div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import mainFooter from '../common/footer.vue'
 import { encrypt } from 'utils/util'
 import {register,modifyPassword} from '@/api/user.js'
 export default {
-	name: "header",
-    props:['active'],
+	name: "register",
+	components: {
+        mainFooter,
+	},
 	data() {
 		return {
+            showtwoPassword:false,
+            showPassword:false,
             showContact:false,
-			cardItem: [{ title: "财富增值", desc: "稳健安全的资产配置", id: 0, img: "/img/icon1.png" },{ title: "产品安全", desc: "专业风控团队优中优选", id: 0, img: "/img/icon2.png" },{ title: "全面覆盖", desc: "信托资管私募全面覆盖", id: 0, img: "/img/icon3.png" },{ title: "专业服务", desc: "专业服务经理1对1服务", id: 0, img: "/img/icon4.png" }],
-			amount: 111,
-            menuList:[
-                {
-                    name:'首页',
-                    icon:'/img/home.png',
-                    link:'/'
-                },{
-                    name:'集合信托',
-                    link:'/xtcombine'
-                },{
-                    name:'集合资管',
-                    link:'/ziguan'
-                },{
-                    name:'私募基金',
-                    link:'/privateFund'
-                },{
-                    name:'集合保险',
-                    notOpen:true
-                },{
-                    name:'信托问答',
-                    link:'/trustQa'
-                },{
-                    name:'信托资讯',
-                    link:'/information'
-                },{
-                    name:'关于我们',
-                    link:'/aboutUs'
-                }
-            ],
             userName:'',
             passWord:'',
+            twopassWord:'',
             phone:'13888888888',
             gender:0,
             smsCode:'',
@@ -135,37 +145,17 @@ export default {
                 phone:'',
                 message:''
             },
-            showPassword:false,
-            showModifyPass:false
 		};
-	},
-	computed: {
-		...mapGetters(["userInfo"]),
 	},
 	created() {},
 	methods: {
-        onLogin(){
-            const {userName,passWord} = this;
-            
-          this.$store.dispatch("LoginByUsername", {username:userName,password:passWord}).then(() => {
-            // this.$router.push(this.tagWel);
-            // location.reload()
-          });
+        backLogin(){
+history.go(-1)
         },
-        goRegister(){
-this.$router.push('/register')
-        },
-        onModifyPassword(){
+        onRegister(){
 
-            this.$router.push('/updatePassword')
-        },
-        onForgetPassword(){
-
-            this.$router.push('/forgetPassword')
-        },
-        onModify(){
             const {userName,passWord,gender,smsCode,phone} = this;
-            modifyPassword({smsCode,passWord:encrypt(passWord),phone}).then(res=>{
+            register({userName,passWord:encrypt(passWord),gender,smsCode,phone}).then(res=>{
                 console.log(res)
             })
         },
@@ -312,10 +302,16 @@ background: #EABA63;
 	.carouseCard {
 		width: 100%;
 		height: 100%;
-		background-image: url(/img/banner.png);
+		background-image: url(/img/registerbg.png);
         background-size:100% 100%;
         background-position:center center;
         background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &>img{
+        height:322px;
+    }
 	}
 	.el-carousel__indicator--vertical .el-carousel__button {
 		width: 8px;
@@ -343,14 +339,15 @@ background: #EABA63;
 		border: 1px solid #fff;
 	}
 	.loginContent {
-        position:absolute;
-        top:56px;
-        right:calc(50% - 490px);
-        width: 320px;
-height: 380px;
+        // position:absolute;
+        // top:56px;
+        // right:calc(50% - 490px);
+        width: 380px;
+height: 565px;
 background: #FFFFFF;
 box-shadow: 0px 0px 10px 10px rgba(234,186,99,0.1);
 border-radius: 12px;
+
 &.haslogin{
     text-align: center;
     .welcom{
@@ -380,7 +377,7 @@ color: #30333B;
 }
 &.register{
     .inputItem{
-        margin-bottom:10px;
+        // margin-bottom:10px;
         .phoneInfo{
             text-align: center;
 font-size: 16px;
@@ -417,7 +414,7 @@ margin-right: 4px;
         margin:0 auto;
         align-items:center;
         justify-content: space-between;
-        margin-bottom:10px;
+        margin-bottom:20px;
         .inputItem,.input{
             width:150px;
             margin:0;
@@ -471,7 +468,7 @@ margin-right:6px;
         margin:0 auto;
         align-items:center;
         justify-content: space-between;
-        margin-bottom:10px;
+        margin-bottom:20px;
         .inputItem,.input{
             width:190px;
             margin:0;
@@ -505,8 +502,8 @@ text-align: center;
         }
     }
     .button{
-        margin-top:20px;
-        margin-bottom:0;
+        margin-top:50px;
+        margin-bottom:8px;
     }
 }
 .other{
