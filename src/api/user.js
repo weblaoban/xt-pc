@@ -1,16 +1,13 @@
 import request from '@/axios';
 import { baseUrl } from '@/config/env';
-export const loginByUsername = (username, password, code, redomStr) => request({
+export const loginByUsername = (data) => request({
   url: baseUrl + '/adminLogin',
   method: 'post',
   meta: {
     isToken: false
   },
   data: {
-    username,
-    password,
-    code,
-    redomStr
+   ...data
   }
 })
 

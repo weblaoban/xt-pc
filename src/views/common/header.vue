@@ -22,49 +22,6 @@
 				</div>
 			</div>
 		</div>
-		<div class="bannerContent">
-			<el-carousel height="500px" direction="vertical" :autoplay="false">
-				<el-carousel-item v-for="item in 3" :key="item">
-					<div class="carouseCard"></div>
-				</el-carousel-item>
-			</el-carousel>
-<!-- 已经登陆啦 -->
-			<div class="loginContent haslogin">
-               <img src="/img/welcome.png" alt="" class="welcom">
-				<div class="username">欢迎，张先生</div>
-                <div class="phoneinfo">13888888888</div>
-                <div class="button" @click="onModifyPassword">修改密码</div>
-                <div class="button gray" @click="onModifyPassword">退出登录</div>
-			</div>
-            <!-- 未登录 -->
-			<div class="loginContent" v-if="!showRegister && !showModifyPass && !userInfo.name">
-                <h4 class="loginTitle">登录</h4>
-				<div class="inputItem">
-					<input v-model="userName" class="input" id="userName" type="text" /><label
-						class="placeholder"
-						for="userName"
-                        v-show="!userName"
-						>您的手机号</label
-					>
-					<div class="cut"></div>
-				</div>
-				<div class="inputItem">
-					<input v-model="passWord" class="input" id="passWord" type="password" /><label
-						class="placeholder"
-						for="passWord"
-                        v-if="!passWord"
-						>登录密码</label
-					>
-					<div class="cut"></div>
-				</div>
-                <div class="button" @click="onLogin">立即登录</div>
-                <div class="other">
-                    <p @click="goRegister">还没有账号？ <span>立即注册</span></p>
-                    <p @click="onForgetPassword">忘记密码</p>
-                </div>
-			</div>
-
-		</div>
 	</div>
 </template>
 
@@ -144,25 +101,6 @@ export default {
 	},
 	created() {},
 	methods: {
-        onLogin(){
-            const {userName,passWord} = this;
-            
-          this.$store.dispatch("LoginByUsername", {username:userName,password:passWord}).then(() => {
-            // this.$router.push(this.tagWel);
-            // location.reload()
-          });
-        },
-        goRegister(){
-this.$router.push('/register')
-        },
-        onModifyPassword(){
-
-            this.$router.push('/updatePassword')
-        },
-        onForgetPassword(){
-
-            this.$router.push('/forgetPassword')
-        },
         onModify(){
             const {userName,passWord,gender,smsCode,phone} = this;
             modifyPassword({smsCode,passWord:encrypt(passWord),phone}).then(res=>{

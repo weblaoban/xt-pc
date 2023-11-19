@@ -67,6 +67,7 @@ const user = {
         },
         //刷新token
         RefreshToken({ state, commit }) {
+            return;
             return new Promise((resolve, reject) => {
                 refreshToken(state.refreshToken).then(res => {
                     const data = res.data.data;

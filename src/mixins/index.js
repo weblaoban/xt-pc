@@ -16,6 +16,7 @@ export default {
   methods: {
     // 10分钟检测一次token
     refreshToken () {
+        return;
       this.refreshTime = setInterval(() => {
         const token = getStore({
           name: "token",
