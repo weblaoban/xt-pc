@@ -68,6 +68,51 @@
             </div>
         </div>
 	<main-footer></main-footer>
+
+<!-- 确认预约产品弹窗 -->
+    <div class="model" v-if="showYuyue">
+        <div class="modelContent"><el-icon @click="showYuyue = false"><Close /></el-icon>
+            <div class="yuyue">
+                <h3>产品预约</h3>
+                <p class="desc">您要预约的产品为</p>
+                <p class="title">xx信托-110号浙江省杭州市集合资金信托计划</p>
+                <div class="button">确定</div>
+            </div>
+        </div>
+    </div>
+<!-- 协议 -->
+    <div class="model" v-if="showAgreement">
+        <div class="modelContent"><el-icon @click="showAgreement = false"><Close /></el-icon>
+            <div class="agreement">
+                <img class="logo" src="/img/logo.png" alt="">
+                <div class="agCon">
+                    <h1>《合格投资者认定》</h1>
+                    <p>
+                        本网谨遵中国银行业监督管理委员会发布的《信托公司集合资金信托计划管理办法》之规定，只向特定投资者展示信托产品信息，不构成任何投资推介建议。
+        
+                    </p>
+                    <p>
+        阁下如有意进行信托投资，请承诺符合《信托公司集合资金信托计划管理办法》之规定合格投资者的条件。</p>
+        <p>
+        即具备相应风险识别能力和风险承担能力，投资于单只信托产品金额不低于100万元，且符合下列相关标准之一：</p>
+        <p class="red">1.承诺符合金融类资产不低于300万元;（金融资产包括银行存款、股票、债券、基金份额、资产管理计划、银行理财产品、信托计划、保险产品、期货权益等）
+ </p>
+ <p class="red">或
+</p>
+<p class="red">2.承诺符合最近三年个人平均收入不低于50万元人民币；
+</p>
+<h1 style="margin-top:50px">《免责条款》</h1>
+<p>        一、本网致力于提供完整、准确的产品信息，信息内容绝大部份来自于本网的授权机构，本网尽谨慎注意和一致描述义务。尽</p>
+                </div>
+                <div class="checkBox">
+                    <img v-if="checked" src="/img/checked.png" @click="toggleCheck" alt="" class="checked">
+                    <img v-if="!checked" src="/img/unchecked.png" @click="toggleCheck" alt="" class="notCheced">
+                    <span>我接受 <span class="yel">《合格投资者认定》</span>、<span class="yel">《免责条款》</span>中所有条款</span>
+                </div>
+                <div class="button">确定</div>
+            </div>
+        </div>
+    </div>
 	</div>
 </template>
 
@@ -276,7 +321,10 @@ export default {
                 pageSize:15,
                 total:23,
                 current:1
-            }
+            },
+            checked:false,
+            showAgreement:false,
+            showYuyue:false
 		};
 	},
 	created() {this.fetchList()},
@@ -323,6 +371,9 @@ this.selected[key]={
         currentChange(current){
             this.page.current = current
             console.log(current)
+        },
+        toggleCheck(){
+            this.checked = !this.checked;
         }
     },
 };
@@ -596,6 +647,153 @@ background: #EABA63;
     .el-pagination.is-background .btn-next:hover:not([disabled]), .el-pagination.is-background .btn-prev:hover:not([disabled]){
 
         color:#EABA63 !important;
+    }
+}
+
+.model{
+    position:fixed;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    display: flex;
+    // align-items: center;
+    justify-content: center;
+    background:rgba(0,0,0,0.6);
+    overflow-y: scroll;
+    .modelContent{
+        padding:0 38px;
+        position:relative;
+        margin:100px auto 0;
+        .el-icon{
+            position:absolute;
+            right:0;
+            top:0;
+            color:#fff;
+            font-size: 18px;
+        }
+        .yuyue{
+            width:500px;
+            height:259px;
+            background-image: url(/img/yuyuebg.png);
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size:100% 100%;
+            padding:49px;
+            box-sizing: border-box;
+            h3{
+
+font-size: 24px;
+font-family: Heiti SC;
+font-weight: 500;
+color: #EABA63;
+margin-bottom: 27px;
+margin-top:0;
+            }
+            p.desc{
+
+font-size: 18px;
+font-family: Heiti SC;
+font-weight: 500;
+color: #30333B;
+margin:0;
+margin-bottom:10px;
+            }
+            p.title{
+
+font-size: 18px;
+font-family: Heiti SC;
+font-weight: 500;
+color: #30333B;
+margin:0;
+margin-bottom:40px;
+            }
+        }
+            .button{
+                width: 180px;
+height: 44px;
+background: linear-gradient(163deg, #E1AD4F, #EABA63, #E0AF56);
+box-shadow: 0px 3px 0px 0px #DEA949;
+border-radius: 12px;
+margin:0 auto;
+text-align: center;
+line-height: 44px;;
+font-size: 18px;
+font-family: Heiti SC;
+font-weight: 500;
+color: #FFFFFF;
+cursor: pointer;
+
+            }
+        .agreement{
+            width:597px;
+            height:766px;
+            background-image: url(/img/agreement.png);
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size:100% 100%;
+            padding:30px;
+            box-sizing: border-box;
+            .logo{
+                width:161px;
+                height:47px;
+                margin-bottom:32px;
+            }
+            .agCon{
+width:100%;
+height:488px;background: #FFFFFF;
+box-shadow: 0px 4px 2px 0px rgba(234,186,99,0.5);
+border-radius: 12px;
+overflow-y: scroll;
+padding:26px;
+box-sizing: border-box;
+&::-webkit-scrollbar{
+    width: 4px;
+background: #EABA63;
+opacity: 0.5;
+border-radius: 2px;
+}
+h1{
+    margin:0 auto 20px;
+    text-align: center;
+font-size: 20px;
+font-family: Heiti SC;
+font-weight: 500;
+color: #30333B;
+}
+p{
+    margin:0 auto 6px;
+    text-indent: 32px;
+font-size: 14px;
+font-family: Heiti SC;
+font-weight: 500;
+color: #30333B;
+&.red{
+    color:#EC5E2A;
+}
+}
+            }
+            .checkBox{
+                margin-top:25px;
+                margin-bottom:29px;
+                img{
+                    width:18px;
+                    height: 18px;
+                    vertical-align: middle;
+                    margin-right: 10px;
+                }
+                span{
+                    line-height: 18px;
+font-size: 14px;
+font-family: Heiti SC;
+font-weight: 500;
+color: #9A9A9C;
+&.yel{
+    color:#EABA63;
+}
+                }
+            }
+        }
     }
 }
 </style>
