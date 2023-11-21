@@ -384,6 +384,11 @@ this.selected[key]={
     width: 100%;
 height: 274px;
 background: linear-gradient(90deg, #F2C775, #EF836D, #FFE8E0, #FDD3AB, #FFDDC1);
+
+background-image: url(/img/listbg.png);
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size:1920px 275px;
 position:relative;
 .input{
     width: 550px;
