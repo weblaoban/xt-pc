@@ -53,7 +53,7 @@ export const logout = () =>
 // 注册
 export const register = (data) =>
 	request({
-		url: baseUrl + "user/register",
+		url: baseUrl + "/user/register",
 		method: "post",
 		data: data,
 	});

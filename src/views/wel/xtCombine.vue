@@ -119,7 +119,7 @@
 <script>
 import mainFooter from '../common/footer.vue'
 import mainHeader from '../common/header.vue'
-import {list} from '@/api/prod.js'
+import {list,zxlist} from '@/api/prod.js'
 export default {
 	name: "jeZi",
 	components: {
@@ -327,7 +327,7 @@ export default {
             showYuyue:false
 		};
 	},
-	created() {this.fetchList()},
+	created() {this.fetchList(),zxlist()},
 	methods: {
         fetchList(){
             const {selected,page} = this
@@ -338,7 +338,7 @@ export default {
             console.log(selectObj)
             console.log(page)
 // console.log(list);
-// list()
+list({...page,status:-1,categoryId:97})
         },
         onSelectSearch(value,prop){
             console.log(value,prop)

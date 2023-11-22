@@ -32,8 +32,8 @@ const user = {
                     passWord: encrypt(user.password)
                 }).then(res => {
                     const data = res.data.data;
-                    commit('SET_TOKEN', data);
-                    commit('SET_REFRESH_TOKEN', data);
+                    commit('SET_TOKEN', data.accessToken);
+                    commit('SET_REFRESH_TOKEN', data.refreshToken);
                     commit('DEL_ALL_TAG', []);
                     commit('CLEAR_LOCK');
                     resolve();

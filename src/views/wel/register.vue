@@ -106,7 +106,7 @@
 <script>
 import mainFooter from '../common/footer.vue'
 import { encrypt } from 'utils/util'
-import {register,modifyPassword} from '@/api/user.js'
+import {register,modifyPassword,getUserInfo} from '@/api/user.js'
 export default {
 	name: "register",
 	components: {
@@ -147,7 +147,7 @@ export default {
             },
 		};
 	},
-	created() {},
+	created() {getUserInfo()},
 	methods: {
         backLogin(){
 history.go(-1)
@@ -155,7 +155,7 @@ history.go(-1)
         onRegister(){
 
             const {userName,passWord,gender,smsCode,phone} = this;
-            register({userName,passWord:encrypt(passWord),gender,smsCode,phone}).then(res=>{
+            register({nickName:userName,passWord:encrypt(passWord),gender,smsCode,phone}).then(res=>{
                 console.log(res)
             })
         },
