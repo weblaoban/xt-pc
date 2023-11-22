@@ -1,8 +1,9 @@
 import request from "@/axios";
 import { baseUrl } from "@/config/env";
+// 登录
 export const loginByUsername = (data) =>
 	request({
-		url: baseUrl + "/adminLogin",
+		url: baseUrl + "/login",
 		method: "post",
 		meta: {
 			isToken: false,

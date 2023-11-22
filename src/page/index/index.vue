@@ -4,18 +4,7 @@
 			class="avue-layout"
 			:class="{ 'avue-layout--horizontal': isHorizontal }"
 		>
-			<!-- <div class="avue-sidebar" v-show="validSidebar"> -->
-				<!-- 左侧导航栏 -->
-				<!-- <logo />
-				<sidebar /> -->
-			<!-- </div> -->
 			<div class="avue-main">
-				<!-- 顶部导航栏 -->
-				<!-- <top ref="top" /> -->
-				<!-- 顶部标签卡 -->
-				<!-- <tags /> -->
-				<!-- <search class="avue-view" v-show="isSearch"></search> -->
-				<!-- 主体视图层 -->
 				<div id="avue-view" v-show="!isSearch" v-if="isRefresh">
 					<router-view #="{ Component }">
 						<keep-alive :include="$store.getters.tagsKeep">
@@ -34,24 +23,10 @@
 
 <script>
 import index from "@/mixins/index";
-import wechat from "./wechat.vue";
 import { validatenull } from "utils/validate";
 import { mapGetters } from "vuex";
-import tags from "./tags.vue";
-import search from "./search.vue";
-import logo from "./logo.vue";
-import top from "./top/index.vue";
-import sidebar from "./sidebar/index.vue";
 export default {
 	mixins: [index],
-	components: {
-		top,
-		logo,
-		tags,
-		search,
-		sidebar,
-		wechat,
-	},
 	name: "index",
 	provide() {
 		return {
@@ -76,34 +51,5 @@ export default {
 		},
 	},
 	props: [],
-	methods: {
-		//打开菜单
-		openMenu(item = {}) {
-			this.$store.dispatch("GetMenu", item.parentId).then((data) => {
-				if (data.length !== 0) {
-					// this.$router.$avueRouter.formatRoutes(data, true);
-				}
-				//当点击顶部菜单做的事件
-				if (!validatenull(item)) {
-					let itemActive = {},
-						childItemActive = 0;
-					//vue-router路由
-					if (item.path) {
-						itemActive = item;
-					} else {
-						if (this.menu[childItemActive].length == 0) {
-							itemActive = this.menu[childItemActive];
-						} else {
-							itemActive = this.menu[childItemActive].children[childItemActive];
-						}
-					}
-					this.$store.commit("SET_MENUID", item);
-					this.$router.push({
-						path: itemActive.path,
-					});
-				}
-			});
-		},
-	},
 };
 </script>
