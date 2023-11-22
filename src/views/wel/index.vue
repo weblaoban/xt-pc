@@ -203,6 +203,8 @@ export default {
                 phone:'',
                 message:''
             },
+            userName:'',
+            passWord:''
 		};
 	},
 	computed: {
