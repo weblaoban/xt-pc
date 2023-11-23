@@ -2,6 +2,7 @@
  * 全局配置文件
  */
 export default {
+  VUE_APP_RESOURCES_URL: 'http://8.140.252.39/',
   title: "Avue",
   logo: "A",
   key: 'avue',//配置主键,目前用于存储
