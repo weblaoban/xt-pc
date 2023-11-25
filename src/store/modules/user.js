@@ -56,9 +56,9 @@ const user = {
             return new Promise((resolve, reject) => {
                 getUserInfo().then((res) => {
                     const data = res.data.data;
-                    commit('SET_USERIFNO', data.userInfo);
-                    commit('SET_ROLES', data.roles);
-                    commit('SET_PERMISSION', data.permission)
+                    // commit('SET_USERIFNO', data.userInfo);
+                    // commit('SET_ROLES', data.roles);
+                    // commit('SET_PERMISSION', data.permission)
                     resolve(data);
                 }).catch(err => {
                     reject(err);

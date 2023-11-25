@@ -41,6 +41,15 @@ export default [
 					import(/* webpackChunkName: "views" */ "@/views/wel/jijin.vue"),
 			},
 			{
+				path: "prodDetail/:id",
+				name: "产品详情",
+				meta: {
+					title: "产品详情",
+				},
+				component: () =>
+					import(/* webpackChunkName: "views" */ "@/views/wel/prodDetail.vue"),
+			},
+			{
 				path: "trustQa",
 				name: "信托问答",
 				meta: {

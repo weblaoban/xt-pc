@@ -13,7 +13,7 @@
 				<el-carousel-item v-for="item in bannerList" :key="item">
 					<div
 						class="carouseCard"
-						:style="'background-image:url(' + resourcesUrl + item.imgUrl + ')'"
+						:style="'background-image:url(' + item.imgUrl + ')'"
 					></div>
 				</el-carousel-item>
 			</el-carousel>
@@ -90,7 +90,6 @@
 		<div class="productC">
 			<div class="productContent product1">
 				<div class="container">
-					{{ product1 }}
 					<div class="productTitle"><span>信托产品</span></div>
 					<div class="products">
 						<div class="productItem" v-for="item in product1" :key="item.id">
@@ -99,37 +98,37 @@
 							<p class="count">9.7 <span>%</span></p>
 							<div class="line"></div>
 							<div class="duration">产品期限：6-12月</div>
-							<div class="button">立即查看</div>
+							<div class="button" @click="goDetail(item,1)">立即查看</div>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="productContent product2">
 				<div class="container">
-					<div class="productTitle">信托产品</div>
+					<div class="productTitle">集合资管</div>
 					<div class="products">
-						<div class="productItem" v-for="item in products" :key="item">
+						<div class="productItem" v-for="item in product2" :key="item">
 							<div class="title">名称</div>
 							<div class="desc">产品收益</div>
 							<p class="count">9.7 <span>%</span></p>
 							<div class="line"></div>
 							<div class="duration">产品期限：6-12月</div>
-							<div class="button">立即查看</div>
+							<div class="button" @click="goDetail(item,2)">立即查看</div>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="productContent product3">
 				<div class="container">
-					<div class="productTitle">信托产品</div>
+					<div class="productTitle">私募基金</div>
 					<div class="products">
-						<div class="productItem" v-for="item in products" :key="item">
+						<div class="productItem" v-for="item in product3" :key="item">
 							<div class="title">名称</div>
 							<div class="desc">产品收益</div>
 							<p class="count">9.7 <span>%</span></p>
 							<div class="line"></div>
 							<div class="duration">产品期限：6-12月</div>
-							<div class="button">立即查看</div>
+							<div class="button" @click="goDetail(item,3)">立即查看</div>
 						</div>
 					</div>
 				</div>
@@ -155,13 +154,14 @@
 				</div>
 				<div class="contactItem">
 					<p class="label">手机号</p>
-					<input v-model="contact.phone" type="text" />
+					<input v-model="contact.tel" type="text" />
 				</div>
 				<div class="contactItem">
 					<p class="label">咨询内容</p>
-					<input v-model="contact.message" type="textarea" class="textarea" />
+                    <textarea resize="none" v-model="contact.content" name="" class="textarea" id="" cols="30" rows="4"></textarea>
+				
 				</div>
-				<div class="button">提交</div>
+				<div class="button" @click="sendComm">提交</div>
 			</div>
 		</div>
 		<div class="aboutUs">
@@ -190,8 +190,8 @@
 import { mapGetters } from "vuex";
 import mainFooter from "../common/footer.vue";
 import mainHeader from "../common/header.vue";
+import {addComment} from '@/api/index.js'
 import { zxlist, list } from "@/api/prod.js";
-import website from "@/config/website.js";
 export default {
 	name: "wel",
 	components: {
@@ -200,7 +200,6 @@ export default {
 	},
 	data() {
 		return {
-			resourcesUrl: website.VUE_APP_RESOURCES_URL,
 			showContact: false,
 			cardItem: [
 				{
@@ -257,24 +256,10 @@ export default {
 					name: "关于我们",
 				},
 			],
-			products: [
-				{
-					name: "名称",
-				},
-				{
-					name: "名称",
-				},
-				{
-					name: "名称",
-				},
-				{
-					name: "名称",
-				},
-			],
 			contact: {
 				name: "",
-				phone: "",
-				message: "",
+				tel: "",
+				content: "",
 			},
 			userName: "",
 			passWord: "",
@@ -282,6 +267,7 @@ export default {
 			product1: [],
 			product2: [],
 			product3: [],
+            loading:false
 		};
 	},
 	computed: {
@@ -302,8 +288,9 @@ export default {
 			});
 		},
 		getProdList() {
-			list({ categoryId: 97, sold_num: 1 }).then((res) => {
+			list({ categoryId: 97, soldNum: 1,status:-1 }).then((res) => {
 				if (res && res.status === 200) {
+                    console.log(res.data.data.records)
 					this.product1 = res.data.data.records;
 				}
 			});
@@ -343,6 +330,42 @@ export default {
 		onForgetPassword() {
 			this.$router.push("/forgetPassword");
 		},
+        sendComm(){
+            if(this.loading){
+                return;
+            }
+            const {name,tel,content} = this.contact;
+            if(!name||!tel||!content){
+                return;
+            }
+            this.loading = true;
+            addComment({...this.contact}).then(res=>{
+                const data = res.data;
+                if(data && data.success){
+                    this.$message.success('提交成功');
+                    this.contact = {
+				name: "",
+				tel: "",
+				content: "",
+			}
+            this.showContact = false
+            this.loading = false;
+                }
+            }).catch(()=>{
+                
+            this.loading = false;
+            })
+        },
+
+        goDetail(row,type){
+    window.scrollTo(0,0)
+this.$router.push({
+    path:'/prodDetail/'+row.id,
+    query:{
+        type
+    }
+})
+        }
 	},
 };
 </script>
@@ -466,7 +489,7 @@ export default {
 	}
 	.products {
 		display: flex;
-		justify-content: space-between;
+		// justify-content: space-between;
 		.productItem {
 			width: 280px;
 			height: 377px;
@@ -474,6 +497,7 @@ export default {
 			box-shadow: 0px 0px 21px 9px rgba(66, 142, 230, 0.1);
 			border-radius: 12px;
 			text-align: center;
+            margin-right:27px;
 			.title {
 				height: 94px;
 				background: linear-gradient(0deg, #89f7fe, #66a6ff);
@@ -484,7 +508,7 @@ export default {
 				font-family: Heiti SC;
 				font-weight: 500;
 				color: #ffffff;
-				text-align: center;
+				text-align: center;  margin-bottom: 20px;
 			}
 			&:nth-child(2n) {
 				box-shadow: 0px 0px 21px 9px rgba(252, 106, 74, 0.1);
@@ -527,11 +551,20 @@ export default {
 				height: 54px;
 				line-height: 54px;
 			}
+            &:last-child{
+                margin:0;
+            }
 		}
 	}
 }
 
 .product2 {
+    .productTitle{
+        
+		&:after {
+background: linear-gradient(90deg, #F1954C, #938BE4);
+		}
+    }
 	.products {
 		.productItem {
 			box-shadow: 0px 0px 21px 9px rgba(234, 186, 99, 0.1);
@@ -548,6 +581,12 @@ export default {
 	}
 }
 .product3 {
+    .productTitle{
+        
+		&:after {
+background: linear-gradient(90deg, #FE924E, #3AE9BB);
+		}
+    }
 	.products {
 		.productItem {
 			box-shadow: 0px 0px 21px 9px rgba(252, 107, 109, 0.1);
@@ -716,6 +755,16 @@ export default {
 				height: 120px;
 			}
 		}
+        textarea{
+			width: 100%;
+			background: #f8f8f8;
+			border-radius: 6px;
+			border: none;
+			outline: none;
+            resize: none;
+			padding: 10px 20px;
+            box-sizing: border-box;
+        }
 	}
 	.button {
 		width: 320px;
@@ -1039,4 +1088,6 @@ export default {
 		}
 	}
 }
+
+
 </style>

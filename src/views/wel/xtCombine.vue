@@ -67,10 +67,11 @@
 							<div class="ths">操作</div>
 						</div>
 						<div
+                        @click="goDetail(item)"
 							:class="{
 								prodItem: true,
-								valid: item.status !== 1,
-								notValid: item.status == 1,
+								valid: item.status !== 3,
+								notValid: item.status == 3,
 							}"
 							v-for="(item, index) in prodList"
 							:key="index"
@@ -78,7 +79,7 @@
 							<div class="ths" v-for="item in propColumn" :key="item.value">
 								{{ item.label }}
 							</div>
-							<div class="ths can yuyue">我要预约</div>
+							<div @click.capture="showAgreement = true" class="ths can yuyue">我要预约</div>
 						</div>
 					</div>
 
@@ -171,7 +172,7 @@
 <script>
 import mainFooter from "../common/footer.vue";
 import mainHeader from "../common/header.vue";
-import { list, zxlist } from "@/api/prod.js";
+import { list } from "@/api/prod.js";
 export default {
 	name: "jeZi",
 	components: {
@@ -381,7 +382,7 @@ export default {
 
 			page: {
 				pageSize: 15,
-				total: 23,
+				total: 0,
 				current: 1,
 			},
 			checked: false,
@@ -390,7 +391,7 @@ export default {
 		};
 	},
 	created() {
-		this.fetchList(), zxlist();
+		this.fetchList()
 	},
 	methods: {
 		fetchList() {
@@ -399,10 +400,10 @@ export default {
 			for (let i in selected) {
 				selectObj[i] = selected[i].value;
 			}
-			console.log(selectObj);
-			console.log(page);
-			// console.log(list);
-			list({ ...page, status: -1, categoryId: 97 });
+			list({ ...page, status: -1, categoryId: 97 }).then(res=>{
+                this.prodList = res.data.data.records;
+                this.page.total = res.data.data.total;
+            });
 		},
 		onSelectSearch(value, prop) {
 			console.log(value, prop);
@@ -445,6 +446,14 @@ export default {
 		toggleCheck() {
 			this.checked = !this.checked;
 		},
+        goDetail(row){
+this.$router.push({
+    path:'/prodDetail/'+row.id,
+    query:{
+        type:1
+    }
+})
+        }
 	},
 };
 </script>
@@ -687,6 +696,7 @@ export default {
 			}
 		}
 		&.notValid {
+            pointer-events: none;
 			color: #9a9a9c;
 			.ths {
 				&:nth-child(5) {

@@ -7,7 +7,11 @@ import Store from '@/store/'
 const Router = createRouter({
     base: import.meta.env.VITE_APP_BASE,
     history: createWebHashHistory(),
-    routes: [...ViewsRouter]
+    routes: [...ViewsRouter],
+    scrollBehavior(to, from, savedPosition) {
+        // 始终滚动到顶部
+        return { top: 0 }
+    },
 })
 AvueRouter.install({
     store: Store,
