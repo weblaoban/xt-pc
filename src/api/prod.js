@@ -38,6 +38,15 @@ export const proddetail = (params) => {
     return request({
         url: baseUrl + '/prod/prodInfo/',
         method: 'get',
-        params:{...params}
+        params: { ...params }
+    })
+}
+
+
+export const yuyue = (data) => {
+    return request({
+        url: baseUrl + '/p/collection/addOrCancel',
+        method: 'post',
+        data: { ...data }
     })
 }

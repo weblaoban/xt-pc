@@ -27,7 +27,7 @@
                 <div class="zixun">
                     <h5>客户咨询</h5>
                     <p>请输入您想要了解的内容，客服将及时回电解答</p>
-                    <el-input type="textarea" :rows="4" maxlength="300" :resize="'none'" v-model="zixun"></el-input>
+                    <el-input type="textarea" :rows="4" maxlength="300" :resize="'none'" v-model="content"></el-input>
                     <div class="button" @click="sendComm">确定</div>
                 </div>
             </div>
@@ -118,14 +118,19 @@ mounted(){
             if(this.loading){
                 return;
             }
-            const {name,tel} = this.userInfo;
+            const {realName:name,nickName:tel} = this.userInfo;
             const {content} = this;
-            if(!name||!tel||!content){
+            if(!name||!tel){
+                this.$store.dispatch('setLoginDialog',true)
+                return;
+            }
+            if(!content){
+                this.$message.error('请输入咨询内容')
                 return;
             }
             const id = this.$route.params.id
             this.loading = true;
-            addComment({content,prodId:id}).then(res=>{
+            addComment({name,tel,content,prodId:id}).then(res=>{
                 const data = res.data;
                 if(data && data.success){
                     this.$message.success('提交成功');

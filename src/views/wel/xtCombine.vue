@@ -76,10 +76,10 @@
 							v-for="(item, index) in prodList"
 							:key="index"
 						>
-							<div class="ths" v-for="item in propColumn" :key="item.value">
-								{{ item.label }}
+							<div class="ths" v-for="prop in propColumn" :key="prop.value">
+								{{ prop.dicData?prop.dicData[item[prop.value]]:item[prop.value] }}
 							</div>
-							<div @click.capture="showAgreement = true" class="ths can yuyue">我要预约</div>
+							<div @click.stop="onYuyue(item)" class="ths can yuyue">我要预约</div>
 						</div>
 					</div>
 
@@ -106,8 +106,8 @@
 				<div class="yuyue">
 					<h3>产品预约</h3>
 					<p class="desc">您要预约的产品为</p>
-					<p class="title">xx信托-110号浙江省杭州市集合资金信托计划</p>
-					<div class="button">确定</div>
+					<p class="title">{{ cur.name }}</p>
+					<div class="button" @click="onDoYuyue">确定</div>
 				</div>
 			</div>
 		</div>
@@ -162,7 +162,7 @@
 							>中所有条款</span
 						>
 					</div>
-					<div class="button">确定</div>
+					<div class="button" @click="onAgree">确定</div>
 				</div>
 			</div>
 		</div>
@@ -170,9 +170,10 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import mainFooter from "../common/footer.vue";
 import mainHeader from "../common/header.vue";
-import { list } from "@/api/prod.js";
+import { list ,yuyue} from "@/api/prod.js";
 export default {
 	name: "jeZi",
 	components: {
@@ -349,10 +350,20 @@ export default {
 				{
 					label: "状态",
 					value: "status",
+                    dicData:{
+                        1:'预售',
+                        2:'在售',
+                        3:'售罄'
+                    }
 				},
 				{
 					label: "类型",
 					value: "categoryId",
+                    dicData:{
+                        97:'集合信托',
+                        98:'集合资管',
+                        99:'私募基金'
+                    }
 				},
 				{
 					label: "期限",
@@ -388,7 +399,11 @@ export default {
 			checked: false,
 			showAgreement: false,
 			showYuyue: false,
+            cur:{}
 		};
+	},
+	computed: {
+		...mapGetters(["userInfo"]),
 	},
 	created() {
 		this.fetchList()
@@ -400,7 +415,7 @@ export default {
 			for (let i in selected) {
 				selectObj[i] = selected[i].value;
 			}
-			list({ ...page, status: -1, categoryId: 97 }).then(res=>{
+			list({ ...page, status: -1, categoryId: 97,soldNum:-1 }).then(res=>{
                 this.prodList = res.data.data.records;
                 this.page.total = res.data.data.total;
             });
@@ -453,6 +468,31 @@ this.$router.push({
         type:1
     }
 })
+        },
+        onYuyue(cur){
+            this.cur = cur;
+            this.showAgreement = true
+        },
+        onAgree(){
+            if(!this.checked){
+                this.$message.error('请先同意协议');
+                return;
+            }
+            this.showYuyue = true
+            this.showAgreement = false
+        },
+        onDoYuyue(){
+const cur = this.cur;
+const userInfo = this.userInfo
+if(cur.id){
+    yuyue({prodId:cur.id,userId:userInfo.userId}).then(res=>{
+        if(res && res.data && res.data.success){
+            this.$message.success('预约成功')
+            this.showYuyue = false
+            this.cur = {}
+        }
+    })
+}
         }
 	},
 };

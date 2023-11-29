@@ -131,7 +131,7 @@ export default {
 	created() {},
 	methods: {
         backLogin(){
-history.go(-1)
+			this.$router.replace("/index");
         },
         onRegister(){
 

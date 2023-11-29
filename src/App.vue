@@ -1,20 +1,27 @@
 <template>
 	<div class="main">
 		<router-view />
+        <login-mask v-if="showLogin"></login-mask>
 	</div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import loginMask from './views/common/loginDialog.vue'
 export default {
 	data() {
 		return {};
 	},
-	computed() {
-		return {
-			...mapGetters["showLogin"],
-		};
+	computed:{
+			...mapGetters(["showLogin"]),
+		
 	},
+    components:{
+        loginMask
+    },
+    created(){
+        console.log(this.showLogin)
+    }
 };
 </script>
 

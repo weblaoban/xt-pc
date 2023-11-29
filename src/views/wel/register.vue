@@ -92,6 +92,7 @@
 							v-model="passWord"
 							class="input"
 							id="passWord"
+							@input="twoPasswordChange"
 							:type="showPassword ? 'text' : 'password'"
 						/><label class="placeholder" for="passWord" v-if="!passWord"
 							>输入您的登录密码</label
@@ -199,22 +200,31 @@ export default {
 	created() {},
 	methods: {
 		backLogin() {
-			history.go(-1);
+			this.$router.replace("/index");
 		},
 		onRegister() {
-			const { userName, passWord, gender, smsCode, phone } = this;
-			if (!userName || !passWord || !gender || !smsCode || !phone) {
+			const { userName, passWord,gender, smsCode, phone,twopassWord } = this;
+			if (!userName || !passWord  || !smsCode || !phone) {
 				this.errInfo = "请输入完整信息";
 				return;
-			}
+			}  if(!twopassWord){
+				this.errInfo = "请确认密码";
+				return;
+            }
 			register({
-				nickName: userName,
+                realName:userName,
+				nickName: phone,
+                mobile:phone,
 				passWord: encrypt(passWord),
-				gender,
+				sex:gender===0?'M':'F',
 				smsCode,
-				phone,
 			}).then((res) => {
 				console.log(res);
+                if(res.data.success){
+                    this.backLogin()
+                }else{
+                    this.$message.error(res.data.msg)
+                }
 			});
 		},
 		sendSms() {
@@ -238,10 +248,13 @@ export default {
 				this.$router.push(menu.link);
 			}
 		},
-		twoPasswordChange(value) {
-			if (value !== this.passWord) {
+		twoPasswordChange() {
+            console.log(this.twopassWord ,this.passWord)
+			if (this.twopassWord !== this.passWord) {
 				this.errInfo = "两次密码不一致，请检查";
-			}
+			}else{
+                this.errInfo = ''
+            }
 		},
 	},
 };
@@ -683,5 +696,13 @@ export default {
 		color: #9a9a9c;
 		margin-top: 0;
 	}
+}
+
+.errInfo{
+    margin:0;
+    font-size: 12px;
+    color:red;
+    margin-left:50px;
+    margin-top:-18px;
 }
 </style>

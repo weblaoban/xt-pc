@@ -23,12 +23,12 @@
 				<div class="username">欢迎，张先生</div>
 				<div class="phoneinfo">13888888888</div>
 				<div class="button" @click="onModifyPassword">修改密码</div>
-				<div class="button gray" @click="onModifyPassword">退出登录</div>
+				<div class="button gray" @click="onLogout">退出登录</div>
 			</div>
 			<!-- 未登录 -->
 			<div
 				class="loginContent"
-				v-if="!showRegister && !showModifyPass && !userInfo.name"
+				v-if="!showRegister && !showModifyPass && !userInfo.nickName"
 			>
 				<h4 class="loginTitle">登录</h4>
 				<div class="inputItem">
@@ -97,7 +97,7 @@
 							<div class="desc">产品收益</div>
 							<p class="count">9.7 <span>%</span></p>
 							<div class="line"></div>
-							<div class="duration">产品期限：6-12月</div>
+							<div class="duration">产品期限：{{item.investLimitId}}</div>
 							<div class="button" @click="goDetail(item,1)">立即查看</div>
 						</div>
 					</div>
@@ -108,11 +108,11 @@
 					<div class="productTitle">集合资管</div>
 					<div class="products">
 						<div class="productItem" v-for="item in product2" :key="item">
-							<div class="title">名称</div>
+							<div class="title">{{ item.name }}</div>
 							<div class="desc">产品收益</div>
 							<p class="count">9.7 <span>%</span></p>
 							<div class="line"></div>
-							<div class="duration">产品期限：6-12月</div>
+							<div class="duration">产品期限：{{item.investLimitId}}</div>
 							<div class="button" @click="goDetail(item,2)">立即查看</div>
 						</div>
 					</div>
@@ -123,11 +123,11 @@
 					<div class="productTitle">私募基金</div>
 					<div class="products">
 						<div class="productItem" v-for="item in product3" :key="item">
-							<div class="title">名称</div>
+							<div class="title">{{ item.name }}</div>
 							<div class="desc">产品收益</div>
 							<p class="count">9.7 <span>%</span></p>
 							<div class="line"></div>
-							<div class="duration">产品期限：6-12月</div>
+							<div class="duration">产品期限：{{item.investLimitId}}</div>
 							<div class="button" @click="goDetail(item,3)">立即查看</div>
 						</div>
 					</div>
@@ -294,12 +294,12 @@ export default {
 					this.product1 = res.data.data.records;
 				}
 			});
-			list({ categoryId: 98, sold_num: 1 }).then((res) => {
+			list({ categoryId: 98, soldNum: 1,status:-1 }).then((res) => {
 				if (res && res.status === 200) {
 					this.product2 = res.data.data.records;
 				}
 			});
-			list({ categoryId: 99, sold_num: 1 }).then((res) => {
+			list({ categoryId: 99, soldNum: 1,status:-1}).then((res) => {
 				if (res && res.status === 200) {
 					this.product3 = res.data.data.records;
 				}
@@ -324,6 +324,9 @@ export default {
 		goRegister() {
 			this.$router.push("/register");
 		},
+        onLogout(){
+            this.$store.dispatch('LogOut')
+        },
 		onModifyPassword() {
 			this.$router.push("/updatePassword");
 		},
@@ -358,7 +361,6 @@ export default {
         },
 
         goDetail(row,type){
-    window.scrollTo(0,0)
 this.$router.push({
     path:'/prodDetail/'+row.id,
     query:{

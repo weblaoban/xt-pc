@@ -95,6 +95,10 @@ background: linear-gradient(163deg, #92B5B3, #696F6E);
 border-radius: 12px;
 margin:50px auto;
 position:relative;
+video{
+    width:100%;
+    height:100%;
+}
 
 .play{
                 position:absolute;

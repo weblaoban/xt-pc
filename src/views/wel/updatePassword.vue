@@ -101,6 +101,8 @@
 							class="togglePassword"
 						/>
 					</div>
+                    
+					<p class="errInfo">{{ errInfo }}</p>
 					<div class="button" @click="onModify">确认修改</div>
 					<div class="other">
 						<p></p>
@@ -141,12 +143,13 @@ export default {
 				phone: "",
 				message: "",
 			},
+            errInfo:''
 		};
 	},
 	created() {},
 	methods: {
 		backLogin() {
-			history.go(-1);
+			this.$router.replace("/index");
 		},
 		onRegister() {
 			const { userName, passWord, gender, smsCode, phone } = this;
@@ -161,10 +164,27 @@ export default {
 			});
 		},
 		onModify() {
-			const { userName, passWord, gender, smsCode, phone } = this;
-			modifyPassword({ smsCode, passWord: encrypt(passWord), phone }).then(
+			const { userName, passWord, gender, smsCode, phone,twopassWord } = this;
+            if(!twopassWord){
+				this.errInfo = "请确认密码";
+				return;
+            }
+			if (!passWord  || !smsCode) {
+				this.errInfo = "请输入完整信息";
+				return;
+			}
+			modifyPassword({ smsCode, passWord: encrypt(passWord), 
+				nickName: phone, }).then(
 				(res) => {
-					console.log(res);
+                if(res.data.success){
+                    this.$message.success('修改成功');
+                    setTimeout(()=>{
+            this.$store.dispatch('LogOut')
+                    this.backLogin()
+                    },2000)
+                }else{
+                    this.$message.error(res.data.msg)
+                }
 				}
 			);
 		},
@@ -570,5 +590,12 @@ export default {
 		color: #9a9a9c;
 		margin-top: 0;
 	}
+}
+.errInfo{
+    margin:0;
+    font-size: 12px;
+    color:red;
+    margin-left:50px;
+    margin-top:-18px;
 }
 </style>
