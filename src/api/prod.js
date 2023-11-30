@@ -3,7 +3,7 @@ import { baseUrl } from "@/config/env";
 // 产品列表 根据分类id来
 export const list = (data) => {
     return request({
-        url: baseUrl + "/prod/pageProd",
+        url: baseUrl + "/p/prod/pageProd",
         method: "get",
         meta: {
             isSerialize: true,
@@ -11,6 +11,19 @@ export const list = (data) => {
         params: data,
     });
 };
+
+
+// 产品列表 根据关键字查询
+export const keylist = (data) => {
+    return request({
+        url: baseUrl + '/p/prod/find',
+        method: "get",
+        meta: {
+            isSerialize: true,
+        },
+        params: data,
+    })
+}
 
 // 资讯用来查banner 问答和资讯根据分类id来
 export const zxlist = (params) => {
