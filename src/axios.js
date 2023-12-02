@@ -47,7 +47,7 @@ axios.interceptors.response.use(res => {
     //如果在白名单里则自行catch逻辑处理
     if (statusWhiteList.includes(status)) return Promise.reject(res);
     //如果是401则跳转到登录页面
-    if (status === 401) {
+    if (res.data.code === 'A00004') {
         store.dispatch('clearCancel');
         ElMessage({
             message: '登录信息已过期，请重新登录！',

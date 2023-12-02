@@ -470,7 +470,11 @@ export default {
 		},
 		currentChange(current) {
 			this.page.current = current;
-			console.log(current);
+            if(!this.key){
+                this.fetchList();
+            }else{
+this.fetchListBykey()
+            }
 		},
 		toggleCheck() {
 			this.checked = !this.checked;

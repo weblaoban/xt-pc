@@ -90,17 +90,17 @@ const user = {
         LogOut({ commit }) {
             return new Promise((resolve, reject) => {
                 // logout().then(() => {
-                    commit('SET_TOKEN', '')
-                    commit('SET_REFRESH_TOKEN', '');
-                    commit('SET_MENUALL_NULL', []);
-                    commit('SET_MENU', [])
-                    commit('SET_ROLES', [])
-                    commit('DEL_ALL_TAG', []);
-                    commit('CLEAR_LOCK');
-                    commit('SET_USERIFNO', {});
-                    clearStore()
-                    removeToken()
-                    resolve()
+                commit('SET_TOKEN', '')
+                commit('SET_REFRESH_TOKEN', '');
+                commit('SET_MENUALL_NULL', []);
+                commit('SET_MENU', [])
+                commit('SET_ROLES', [])
+                commit('DEL_ALL_TAG', []);
+                commit('CLEAR_LOCK');
+                commit('SET_USERIFNO', {});
+                clearStore()
+                removeToken()
+                resolve()
                 // }).catch(error => {
                 //     reject(error)
                 // })
@@ -118,6 +118,7 @@ const user = {
                 commit('CLEAR_LOCK');
                 removeToken()
                 resolve()
+                clearStore()
             })
         },
         GetTopMenu() {

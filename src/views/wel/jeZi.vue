@@ -5,7 +5,7 @@
 		<div class="combineCon">
 			<div class="combineBanner">
 				<div class="input">
-					<input type="text" placeholder="状态｜期限｜门槛｜付息方式｜领域" />
+					<input v-model="key" @blur="fetchListBykey" type="text" placeholder="状态｜期限｜门槛｜付息方式｜领域" />
 					<img src="/img/search.png" alt="" class="search" />
 				</div>
 			</div>
@@ -79,7 +79,8 @@
 							<div class="ths" v-for="prop in propColumn" :key="prop.value">
 								{{ prop.dicData?prop.dicData[item[prop.value]]:item[prop.value] }}
 							</div>
-							<div @click.stop="onYuyue(item)" class="ths can yuyue">我要预约</div>
+							<div v-if="!item.imgs" @click.stop="onYuyue(item)" class="ths can yuyue">我要预约</div>
+							<div v-if="item.imgs" class="ths can yuyue">已预约</div>
 						</div>
 					</div>
 
@@ -173,7 +174,7 @@
 import { mapGetters } from "vuex";
 import mainFooter from "../common/footer.vue";
 import mainHeader from "../common/header.vue";
-import { list ,yuyue} from "@/api/prod.js";
+import { list ,yuyue,keylist} from "@/api/prod.js";
 export default {
 	name: "jeZi",
 	components: {
@@ -215,15 +216,15 @@ export default {
 						},
 						{
 							label: "一年内（含）",
-							value: "1",
+							value: "一年内（含）",
 						},
 						{
 							label: "一年至两年（含）",
-							value: "2",
+							value: "一年至两年（含）",
 						},
 						{
 							label: "两年以上",
-							value: "3",
+							value: "两年以上",
 						},
 					],
 				},
@@ -237,19 +238,19 @@ export default {
 						},
 						{
 							label: "50万以内（含）",
-							value: "1",
+							value: "50万以内（含）",
 						},
 						{
 							label: "50万至100万（含）",
-							value: "2",
+							value: "50万至100万（含）",
 						},
 						{
 							label: "100万至300万（含）",
-							value: "3",
+							value: "100万至300万（含）",
 						},
 						{
 							label: "300万以上",
-							value: "4",
+							value: "300万以上",
 						},
 					],
 				},
@@ -263,23 +264,23 @@ export default {
 						},
 						{
 							label: "按月付息",
-							value: "1",
+							value: "按月付息",
 						},
 						{
 							label: "按季付息",
-							value: "2",
+							value: "按季付息",
 						},
 						{
 							label: "半年付息",
-							value: "3",
+							value: "半年付息",
 						},
 						{
 							label: "按年付息",
-							value: "4",
+							value: "按年付息",
 						},
 						{
 							label: "到期付息",
-							value: "5",
+							value: "到期付息",
 						},
 					],
 				},
@@ -293,27 +294,27 @@ export default {
 						},
 						{
 							label: "工商企业类",
-							value: "0",
+							value: "工商企业类",
 						},
 						{
 							label: "金融市场类",
-							value: "1",
+							value: "金融市场类",
 						},
 						{
 							label: "基础设施类",
-							value: "2",
+							value: "基础设施类",
 						},
 						{
 							label: "房地产类",
-							value: "3",
+							value: "房地产类",
 						},
 						{
 							label: "资金池类",
-							value: "4",
+							value: "资金池类",
 						},
 						{
 							label: "其他",
-							value: "5",
+							value: "其他",
 						},
 					],
 				},
@@ -399,7 +400,8 @@ export default {
 			checked: false,
 			showAgreement: false,
 			showYuyue: false,
-            cur:{}
+            cur:{},
+            key:'',
 		};
 	},
 	computed: {
@@ -415,20 +417,32 @@ export default {
 			for (let i in selected) {
 				selectObj[i] = selected[i].value;
 			}
-			list({ ...page, status: -1, categoryId: 98,soldNum:-1 }).then(res=>{
+			list({ ...page, status: -1, categoryId: 98,soldNum:-1,...selectObj }).then(res=>{
                 this.prodList = res.data.data.records;
                 this.page.total = res.data.data.total;
             });
 		},
+        fetchListBykey(){
+            if(!this.key){
+                this.fetchList();
+                return;
+            }
+            keylist({keystr:this.key,catstr:98}).then(res=>{
+                this.prodList = res.data.data.records;
+                this.page.total = res.data.data.total;
+            })
+        },
 		onSelectSearch(value, prop) {
 			console.log(value, prop);
 			this.selected[prop] = value;
+            this.fetchList()
 		},
 		removeSelected(key) {
 			this.selected[key] = {
 				label: "不限",
 				value: "-1",
 			};
+		this.fetchList()
 		},
 		resetSearch() {
 			this.selected = {
@@ -456,7 +470,11 @@ export default {
 		},
 		currentChange(current) {
 			this.page.current = current;
-			console.log(current);
+            if(!this.key){
+                this.fetchList();
+            }else{
+this.fetchListBykey()
+            }
 		},
 		toggleCheck() {
 			this.checked = !this.checked;
@@ -490,6 +508,7 @@ if(cur.id){
             this.$message.success('预约成功')
             this.showYuyue = false
             this.cur = {}
+            this.fetchList()
         }
     })
 }

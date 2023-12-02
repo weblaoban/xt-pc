@@ -70,6 +70,11 @@ export default {
                 this.page.total = res.data.data.total
             });
 		},
+		currentChange(current) {
+			this.page.current = current;
+                this.fetchList();
+          
+		},
 		onSelectSearch(value, prop) {
 			console.log(value, prop);
 			this.selected[prop] = value;
