@@ -11,7 +11,11 @@
 				:autoplay="true"
 			>
 				<el-carousel-item v-for="item in bannerList" :key="item">
-					<div
+                    <a v-if="item.link" :href="item.link">	<div
+						class="carouseCard"
+						:style="'background-image:url(' + item.imgUrl + ')'"
+					></div></a>
+					<div v-if="!item.link"
 						class="carouseCard"
 						:style="'background-image:url(' + item.imgUrl + ')'"
 					></div>
@@ -20,8 +24,8 @@
 			<!-- 已经登陆啦 -->
 			<div class="loginContent haslogin">
 				<img src="/img/welcome.png" alt="" class="welcom" />
-				<div class="username">欢迎，张先生</div>
-				<div class="phoneinfo">13888888888</div>
+				<div class="username">欢迎，{{ userInfo.nickName }}</div>
+				<div class="phoneinfo">{{ userInfo.userMobile }}</div>
 				<div class="button" @click="onModifyPassword">修改密码</div>
 				<div class="button gray" @click="onLogout">退出登录</div>
 			</div>
@@ -279,10 +283,10 @@ export default {
 	},
 	methods: {
 		getBannerList() {
-			zxlist({ categoryId: 11 }).then((res) => {
-				console.log(res);
+			
+			zxlist({ categoryId: 10 }).then((res) => {
 				if (res && res.status === 200) {
-					this.bannerList = res.data.data.records;
+					this.bannerList = res.data.data.records.filter(item=>item.imgUrl).sort((a,b)=>{return a.seq-b.seq});
 					this.$refs.car.setActiveItem(0);
 				}
 			});

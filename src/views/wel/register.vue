@@ -212,9 +212,8 @@ export default {
 				return;
             }
 			register({
-                realName:userName,
-				nickName: phone,
-                mobile:phone,
+				nickName: userName,
+                userMmobile:phone,
 				passWord: encrypt(passWord),
 				sex:gender===0?'M':'F',
 				smsCode,
