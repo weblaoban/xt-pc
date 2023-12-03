@@ -54,7 +54,10 @@ axios.interceptors.response.use(res => {
             type: 'error'
         });
         store.dispatch('FedLogOut')
-        location.href = '/#/';
+        if (!this.userInfo.userId) {
+            store.dispatch('setLoginDialog', true)
+            return;
+        }
         return false
     }
     // 如果请求为非200否者默认统一处理

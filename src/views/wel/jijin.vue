@@ -488,6 +488,10 @@ this.$router.push({
 })
         },
         onYuyue(cur){
+            if(!this.userInfo.userId){
+                this.$store.dispatch('setLoginDialog',true)
+                return;
+            }
             this.cur = cur;
             this.showAgreement = true
         },
