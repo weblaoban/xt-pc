@@ -68,6 +68,23 @@
 						<div class="inputItem">
 							<input
 								autocomplete="off"
+								v-model="code"
+								class="input"
+								id="code"
+								type="text"
+							/><label class="placeholder" for="code" v-show="!code"
+								>输入图形验证码</label
+							>
+							<div class="cut"></div>
+						</div>
+						<div class="sendBtn">
+        <img :src="captcha" alt="" @click="refershCode">
+						</div>
+					</div>
+					<div class="smscodeCon">
+						<div class="inputItem">
+							<input
+								autocomplete="off"
 								v-model="smsCode"
 								class="input"
 								id="smsCode"
@@ -78,7 +95,7 @@
 							<div class="cut"></div>
 						</div>
 						<div class="sendBtn">
-							<div class="send" v-if="timeDown === originTime" @click="sendSms">
+							<div class="send" v-if="timeDown === originTime" @click="checkCaptcha">
 								发送
 							</div>
 							<div class="hasSend" v-if="timeDown !== originTime">
@@ -156,7 +173,7 @@
 <script>
 import mainFooter from "../common/footer.vue";
 import { encrypt } from "utils/util";
-import { register, modifyPassword } from "@/api/user.js";
+import { register, modifyPassword,getCaptcha,sendSmsCode,checkCode } from "@/api/user.js";
 export default {
 	name: "register",
 	components: {
@@ -170,10 +187,11 @@ export default {
 			userName: "",
 			passWord: "",
 			twopassWord: "",
-			phone: "13888888888",
+			phone: "",
 			gender: 0,
 			smsCode: "",
 			originTime: 30,
+        code:'',
 			timeDown: 30,
 			timer: null,
 			products: [
@@ -195,10 +213,68 @@ export default {
 				phone: "",
 				message: "",
 			},
+            captcha:'',
+            time:new Date().getTime(),
+            errInfo:''
 		};
 	},
-	created() {},
+	mounted() {this.getCaptcha()},
 	methods: {
+        getCaptcha(){
+            getCaptcha({time:this.time}).then((res)=>{
+                const file = new FileReader()
+                const that = this;
+                file.onloadend =function(e){
+                that.captcha = e.target.result
+                }
+                file.readAsDataURL(res.data)
+            })
+        },
+        refershCode(){
+this.time = new Date().getTime();
+this.code=''
+this.getCaptcha()
+        },
+        checkCaptcha(){
+            if(!this.code){
+                this.errInfo = "请输入图形验证码";
+                return;
+            }
+            // this.errInfo = "";
+            checkCode({time:this.time,code:this.code}).then(({data})=>{
+                if(data.data){
+
+                    this.sendSms()
+                this.errInfo = "";
+                }else{
+                this.errInfo = "请输入正确的图形验证码";
+                this.refershCode()
+                }
+            })
+        },
+		sendSms() {
+            sendSmsCode({mobile:this.phone}).then(res=>{
+                if(res && res.data&& res.data.success){
+this.timeDownfn()
+                }
+            })
+		},
+        timeDownfn(){
+			this.timer = setTimeout(() => {
+				this.timeDown = this.timeDown - 1;
+				if (this.timeDown <= 1) {
+					this.timeDown = this.originTime;
+					if (this.timer) {
+						clearTimeout(this.timer);
+					}
+				} else {
+					if (this.timer) {
+						clearTimeout(this.timer);
+					}
+					this.timeDownfn();
+				}
+			}, 1000);
+        },
 		backLogin() {
 			this.$router.replace("/index");
 		},
@@ -226,22 +302,6 @@ export default {
                 }
 			});
 		},
-		sendSms() {
-			this.timer = setTimeout(() => {
-				this.timeDown = this.timeDown - 1;
-				if (this.timeDown <= 1) {
-					this.timeDown = this.originTime;
-					if (this.timer) {
-						clearTimeout(this.timer);
-					}
-				} else {
-					if (this.timer) {
-						clearTimeout(this.timer);
-					}
-					this.sendSms();
-				}
-			}, 1000);
-		},
 		onMenuClick(menu) {
 			if (menu.link) {
 				this.$router.push(menu.link);
@@ -249,7 +309,7 @@ export default {
 		},
 		twoPasswordChange() {
             console.log(this.twopassWord ,this.passWord)
-			if (this.twopassWord !== this.passWord) {
+			if (this.twopassWord&&this.passWord && this.twopassWord !== this.passWord) {
 				this.errInfo = "两次密码不一致，请检查";
 			}else{
                 this.errInfo = ''
@@ -577,7 +637,7 @@ export default {
 				}
 			}
 			.button {
-				margin-top: 50px;
+				margin-top: 20px;
 				margin-bottom: 8px;
 			}
 		}
@@ -703,5 +763,13 @@ export default {
     color:red;
     margin-left:50px;
     margin-top:-18px;
+    height:16px;
+}
+
+.sendBtn{
+    img{
+        width:80px;
+        height:40px;
+    }
 }
 </style>

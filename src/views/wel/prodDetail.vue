@@ -54,7 +54,7 @@
 
                 <div class="title">产品进度</div>
                 <div class="progress">
-                    <div class="progressItem" v-for="item in detail.porder" :key="item">{{ item }}</div>
+                    <div class="progressItem" v-for="item in detail.porder" :key="item">{{ item.detail }}</div>
                 </div>
                 <div class="title">产品详情</div>
                 <div class="detailCon" v-html="detail.content"></div>
@@ -359,7 +359,7 @@ border-radius: 6px;
 padding:0 18px 50px;
 .progressItem{
 line-height: 50px;
-    border: 1px dashed #EABA63;
+    border-bottom: 1px dashed #EABA63;
 font-size: 16px;
 font-family: Heiti SC;
 font-weight: 500;

@@ -67,7 +67,7 @@ export default {
             ],
             userName:'',
             passWord:'',
-            phone:'13888888888',
+            phone:'',
             gender:0,
             smsCode:'',
             originTime:30,

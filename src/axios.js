@@ -7,7 +7,6 @@
  */
 import axios from 'axios'
 import store from '@/store/';
-import router from '@/router/'
 import { serialize } from 'utils/util'
 import { getToken } from 'utils/auth'
 import { ElMessage } from 'element-plus'
@@ -40,7 +39,6 @@ axios.interceptors.request.use(config => {
 });
 //HTTPresponse拦截
 axios.interceptors.response.use(res => {
-    console.log(res)
     const status = Number(res.status) || 200;
     const statusWhiteList = website.statusWhiteList || [];
     const message = res.data.message || '未知错误';
@@ -54,26 +52,18 @@ axios.interceptors.response.use(res => {
             type: 'error'
         });
         store.dispatch('FedLogOut')
-        if (!this.userInfo.userId) {
-            store.dispatch('setLoginDialog', true)
-            return;
-        }
-        return false
+        store.dispatch('setLoginDialog', true)
+        return res
     }
     // 如果请求为非200否者默认统一处理
     if (status !== 200) {
-        ElMessage({
-            message: message,
-            type: 'error'
-        })
-        return Promise.reject(new Error(message))
-    }
-    if (!res.data.success) {
-        ElMessage({
-            message: res.data.msg,
-            type: 'error'
-        })
-        return Promise.reject(new Error(message))
+        if (!res.data.success) {
+            ElMessage({
+                message: res.data.msg,
+                type: 'error'
+            })
+            return Promise.reject(new Error(message))
+        }
     }
     return res;
 }, error => {

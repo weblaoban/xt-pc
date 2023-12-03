@@ -57,6 +57,7 @@
 					>
 					<div class="cut" v-if="!passWord"></div>
 				</div>
+					<p class="errInfo">{{ errInfo }}</p>
 				<div class="button" @click="onLogin">立即登录</div>
 				<div class="other">
 					<p @click="goRegister">还没有账号？ <span>立即注册</span></p>
@@ -271,7 +272,8 @@ export default {
 			product1: [],
 			product2: [],
 			product3: [],
-            loading:false
+            loading:false,
+            errInfo:''
 		};
 	},
 	computed: {
@@ -321,9 +323,15 @@ export default {
 			}
 			this.$store
 				.dispatch("LoginByUsername", { username: userName, password: passWord })
-				.then(() => {
-					this.$store.dispatch("GetUserInfo");
-				});
+				.then(({data}) => {
+                    if(data.success){
+
+                        this.$store.dispatch("GetUserInfo");
+                    }else{
+                        
+                    this.errInfo = data.msg
+                    }
+				})
 		},
 		goRegister() {
 			this.$router.push("/register");
@@ -1095,5 +1103,12 @@ background: linear-gradient(90deg, #FE924E, #3AE9BB);
 	}
 }
 
-
+.errInfo{
+    margin:0;
+    font-size: 12px;
+    color:red;
+    margin-left:50px;
+    margin-top:-18px;
+    height:16px;
+}
 </style>
