@@ -254,8 +254,8 @@ this.timeDownfn()
 				this.errInfo = "请输入完整信息";
 				return;
 			}
-			modifyPassword({ smsCode, passWord: encrypt(passWord), 
-				nickName: phone, }).then(
+			modifyPassword({ code:smsCode, passWord: encrypt(passWord), 
+				userMobile: phone,mobile:phone,time:this.time }).then(
 				(res) => {
                 if(res.data.success){
                     this.$message.success('修改成功');
@@ -265,6 +265,7 @@ this.timeDownfn()
                     },2000)
                 }else{
                     this.$message.error(res.data.msg)
+                    this.refershCode();
                 }
 				}
 			);

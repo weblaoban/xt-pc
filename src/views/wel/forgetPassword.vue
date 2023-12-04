@@ -212,8 +212,18 @@ this.timeDownfn()
         },
         onModify(){
             const {userName,passWord,gender,smsCode,phone} = this;
-            modifyPassword({smsCode,passWord:encrypt(passWord),phone}).then(res=>{
-                console.log(res)
+            modifyPassword({code:smsCode,passWord:encrypt(passWord),mobile:phone,userMobile:phone,time:this.time}).then(res=>{
+                
+                if(res.data.success){
+                    this.$message.success('修改成功');
+                    setTimeout(()=>{
+            this.$store.dispatch('LogOut')
+                    this.backLogin()
+                    },2000)
+                }else{
+                    this.$message.error(res.data.msg)
+                    this.refershCode();
+                }
             })
         },
         

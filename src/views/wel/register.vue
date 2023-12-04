@@ -288,17 +288,20 @@ this.timeDownfn()
 				return;
             }
 			register({
+                mobile:phone,
 				nickName: userName,
-                userMmobile:phone,
+                userMobile:phone,
 				passWord: encrypt(passWord),
 				sex:gender===0?'M':'F',
-				smsCode,
+				code:smsCode,
+                t:this.time
 			}).then((res) => {
-				console.log(res);
                 if(res.data.success){
+                    this.$message.success('注册成功，请登录')
                     this.backLogin()
                 }else{
                     this.$message.error(res.data.msg)
+                this.refershCode()
                 }
 			});
 		},
