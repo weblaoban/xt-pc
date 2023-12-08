@@ -11,11 +11,14 @@
 				:autoplay="true"
 			>
 				<el-carousel-item v-for="item in bannerList" :key="item">
-                    <a v-if="item.link" :href="item.link">	<div
-						class="carouseCard"
-						:style="'background-image:url(' + item.imgUrl + ')'"
-					></div></a>
-					<div v-if="!item.link"
+					<a v-if="item.link" :href="item.link">
+						<div
+							class="carouseCard"
+							:style="'background-image:url(' + item.imgUrl + ')'"
+						></div
+					></a>
+					<div
+						v-if="!item.link"
 						class="carouseCard"
 						:style="'background-image:url(' + item.imgUrl + ')'"
 					></div>
@@ -57,7 +60,7 @@
 					>
 					<div class="cut" v-if="!passWord"></div>
 				</div>
-					<p class="errInfo">{{ errInfo }}</p>
+				<p class="errInfo">{{ errInfo }}</p>
 				<div class="button" @click="onLogin">立即登录</div>
 				<div class="other">
 					<p @click="goRegister">还没有账号？ <span>立即注册</span></p>
@@ -83,8 +86,8 @@
 						>万元
 					</div>
 					<div class="amountItem">
-						累计交易<span>{{ amount }}</span
-						>万元
+						累计服务客户<span>{{ pmount }}</span
+						>人
 					</div>
 					<div class="customer" @click="showContact = true">
 						<img src="/img/message.png" alt="" />在线客服
@@ -102,8 +105,8 @@
 							<div class="desc">产品收益</div>
 							<p class="count">9.7 <span>%</span></p>
 							<div class="line"></div>
-							<div class="duration">产品期限：{{item.investLimitId}}</div>
-							<div class="button" @click="goDetail(item,1)">立即查看</div>
+							<div class="duration">产品期限：{{ item.investLimitId }}</div>
+							<div class="button" @click="goDetail(item, 1)">立即查看</div>
 						</div>
 					</div>
 				</div>
@@ -117,8 +120,8 @@
 							<div class="desc">产品收益</div>
 							<p class="count">9.7 <span>%</span></p>
 							<div class="line"></div>
-							<div class="duration">产品期限：{{item.investLimitId}}</div>
-							<div class="button" @click="goDetail(item,2)">立即查看</div>
+							<div class="duration">产品期限：{{ item.investLimitId }}</div>
+							<div class="button" @click="goDetail(item, 2)">立即查看</div>
 						</div>
 					</div>
 				</div>
@@ -132,8 +135,8 @@
 							<div class="desc">产品收益</div>
 							<p class="count">9.7 <span>%</span></p>
 							<div class="line"></div>
-							<div class="duration">产品期限：{{item.investLimitId}}</div>
-							<div class="button" @click="goDetail(item,3)">立即查看</div>
+							<div class="duration">产品期限：{{ item.investLimitId }}</div>
+							<div class="button" @click="goDetail(item, 3)">立即查看</div>
 						</div>
 					</div>
 				</div>
@@ -163,8 +166,15 @@
 				</div>
 				<div class="contactItem">
 					<p class="label">咨询内容</p>
-                    <textarea resize="none" v-model="contact.content" name="" class="textarea" id="" cols="30" rows="4"></textarea>
-				
+					<textarea
+						resize="none"
+						v-model="contact.content"
+						name=""
+						class="textarea"
+						id=""
+						cols="30"
+						rows="4"
+					></textarea>
 				</div>
 				<div class="button" @click="sendComm">提交</div>
 			</div>
@@ -195,7 +205,7 @@
 import { mapGetters } from "vuex";
 import mainFooter from "../common/footer.vue";
 import mainHeader from "../common/header.vue";
-import {addComment} from '@/api/index.js'
+import { addComment, getAmount } from "@/api/index.js";
 import { zxlist, list } from "@/api/prod.js";
 export default {
 	name: "wel",
@@ -232,7 +242,8 @@ export default {
 					img: "/img/icon4.png",
 				},
 			],
-			amount: 111,
+			amount: 0,
+			pmount: 0,
 			menuList: [
 				{
 					name: "首页",
@@ -272,8 +283,8 @@ export default {
 			product1: [],
 			product2: [],
 			product3: [],
-            loading:false,
-            errInfo:''
+			loading: false,
+			errInfo: "",
 		};
 	},
 	computed: {
@@ -282,30 +293,42 @@ export default {
 	created() {
 		this.getBannerList();
 		this.getProdList();
+		this.getAmount();
 	},
 	methods: {
+		getAmount() {
+			getAmount().then((res) => {
+				if (res && res.status === 200) {
+					this.amount = res.data.data.pcount || 0;
+					this.pmount = res.data.data.mcount || 0;
+				}
+			});
+		},
 		getBannerList() {
-			
 			zxlist({ categoryId: 10 }).then((res) => {
 				if (res && res.status === 200) {
-					this.bannerList = res.data.data.records.filter(item=>item.imgUrl).sort((a,b)=>{return a.seq-b.seq});
+					this.bannerList = res.data.data.records
+						.filter((item) => item.imgUrl)
+						.sort((a, b) => {
+							return a.seq - b.seq;
+						});
 					this.$refs.car.setActiveItem(0);
 				}
 			});
 		},
 		getProdList() {
-			list({ categoryId: 97, soldNum: 1,status:-1 }).then((res) => {
+			list({ categoryId: 97, soldNum: 1, status: -1 }).then((res) => {
 				if (res && res.status === 200) {
-                    console.log(res.data.data.records)
+					console.log(res.data.data.records);
 					this.product1 = res.data.data.records;
 				}
 			});
-			list({ categoryId: 98, soldNum: 1,status:-1 }).then((res) => {
+			list({ categoryId: 98, soldNum: 1, status: -1 }).then((res) => {
 				if (res && res.status === 200) {
 					this.product2 = res.data.data.records;
 				}
 			});
-			list({ categoryId: 99, soldNum: 1,status:-1}).then((res) => {
+			list({ categoryId: 99, soldNum: 1, status: -1 }).then((res) => {
 				if (res && res.status === 200) {
 					this.product3 = res.data.data.records;
 				}
@@ -323,63 +346,62 @@ export default {
 			}
 			this.$store
 				.dispatch("LoginByUsername", { username: userName, password: passWord })
-				.then(({data}) => {
-                    if(data.success){
-
-                        this.$store.dispatch("GetUserInfo");
-                    }else{
-                        
-                    this.errInfo = data.msg
-                    }
-				})
+				.then(({ data }) => {
+					if (data.success) {
+						this.$store.dispatch("GetUserInfo");
+					} else {
+						this.errInfo = data.msg;
+					}
+				});
 		},
 		goRegister() {
 			this.$router.push("/register");
 		},
-        onLogout(){
-            this.$store.dispatch('LogOut')
-        },
+		onLogout() {
+			this.$store.dispatch("LogOut");
+		},
 		onModifyPassword() {
 			this.$router.push("/updatePassword");
 		},
 		onForgetPassword() {
 			this.$router.push("/forgetPassword");
 		},
-        sendComm(){
-            if(this.loading){
-                return;
-            }
-            const {name,tel,content} = this.contact;
-            if(!name||!tel||!content){
-                return;
-            }
-            this.loading = true;
-            addComment({...this.contact}).then(res=>{
-                const data = res.data;
-                if(data && data.success){
-                    this.$message.success('提交成功');
-                    this.contact = {
-				name: "",
-				tel: "",
-				content: "",
+		sendComm() {
+			if (this.loading) {
+				return;
 			}
-            this.showContact = false
-            this.loading = false;
-                }
-            }).catch(()=>{
-                
-            this.loading = false;
-            })
-        },
+			const { name, tel, content } = this.contact;
+			if (!name || !tel || !content) {
+				return;
+			}
+			this.loading = true;
+			addComment({ ...this.contact })
+				.then((res) => {
+					const data = res.data;
+					if (data && data.success) {
+						this.$message.success("提交成功");
+						this.contact = {
+							name: "",
+							tel: "",
+							content: "",
+						};
+						this.showContact = false;
+						this.loading = false;
+					}
+				})
+				.catch(() => {
+					this.loading = false;
+				});
+		},
 
-        goDetail(row,type){
-this.$router.push({
-    path:'/prodDetail/'+row.id,
-    query:{
-        type
-    }
-})
-        }
+		goDetail(row, type) {
+			this.$router.push({
+				path: "/prodDetail/" + row.id,
+				query: {
+					type,
+				},
+			});
+		},
 	},
 };
 </script>
@@ -511,7 +533,7 @@ this.$router.push({
 			box-shadow: 0px 0px 21px 9px rgba(66, 142, 230, 0.1);
 			border-radius: 12px;
 			text-align: center;
-            margin-right:27px;
+			margin-right: 27px;
 			.title {
 				height: 94px;
 				background: linear-gradient(0deg, #89f7fe, #66a6ff);
@@ -522,7 +544,8 @@ this.$router.push({
 				font-family: Heiti SC;
 				font-weight: 500;
 				color: #ffffff;
-				text-align: center;  margin-bottom: 20px;
+				text-align: center;
+				margin-bottom: 20px;
 			}
 			&:nth-child(2n) {
 				box-shadow: 0px 0px 21px 9px rgba(252, 106, 74, 0.1);
@@ -565,20 +588,19 @@ this.$router.push({
 				height: 54px;
 				line-height: 54px;
 			}
-            &:last-child{
-                margin:0;
-            }
+			&:last-child {
+				margin: 0;
+			}
 		}
 	}
 }
 
 .product2 {
-    .productTitle{
-        
+	.productTitle {
 		&:after {
-background: linear-gradient(90deg, #F1954C, #938BE4);
+			background: linear-gradient(90deg, #f1954c, #938be4);
 		}
-    }
+	}
 	.products {
 		.productItem {
 			box-shadow: 0px 0px 21px 9px rgba(234, 186, 99, 0.1);
@@ -595,12 +617,11 @@ background: linear-gradient(90deg, #F1954C, #938BE4);
 	}
 }
 .product3 {
-    .productTitle{
-        
+	.productTitle {
 		&:after {
-background: linear-gradient(90deg, #FE924E, #3AE9BB);
+			background: linear-gradient(90deg, #fe924e, #3ae9bb);
 		}
-    }
+	}
 	.products {
 		.productItem {
 			box-shadow: 0px 0px 21px 9px rgba(252, 107, 109, 0.1);
@@ -769,16 +790,16 @@ background: linear-gradient(90deg, #FE924E, #3AE9BB);
 				height: 120px;
 			}
 		}
-        textarea{
+		textarea {
 			width: 100%;
 			background: #f8f8f8;
 			border-radius: 6px;
 			border: none;
 			outline: none;
-            resize: none;
+			resize: none;
 			padding: 10px 20px;
-            box-sizing: border-box;
-        }
+			box-sizing: border-box;
+		}
 	}
 	.button {
 		width: 320px;
@@ -1103,12 +1124,12 @@ background: linear-gradient(90deg, #FE924E, #3AE9BB);
 	}
 }
 
-.errInfo{
-    margin:0;
-    font-size: 12px;
-    color:red;
-    margin-left:50px;
-    margin-top:-18px;
-    height:16px;
+.errInfo {
+	margin: 0;
+	font-size: 12px;
+	color: red;
+	margin-left: 50px;
+	margin-top: -18px;
+	height: 16px;
 }
 </style>
