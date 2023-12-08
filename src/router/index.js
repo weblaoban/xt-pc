@@ -21,4 +21,6 @@ AvueRouter.install({
 
 // Router.$avueRouter.formatRoutes(Store.getters.menuAll, true);
 
+
+
 export default Router

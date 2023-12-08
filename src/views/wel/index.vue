@@ -182,9 +182,9 @@
 		<div class="aboutUs">
 			<div class="container">
 				<div class="menuCard">
-					<div class="menuCardItem"><span>信托问答</span></div>
-					<div class="menuCardItem"><span>信托资讯</span></div>
-					<div class="menuCardItem"><span>关于我们</span></div>
+					<div class="menuCardItem" @click="goQa"><span>信托问答</span></div>
+					<div class="menuCardItem" @click="goZixun"><span>信托资讯</span></div>
+					<div class="menuCardItem" @click="goAboutUs"><span>关于我们</span></div>
 				</div>
 				<div class="company">
 					<h4>合作伙伴</h4>
@@ -296,6 +296,17 @@ export default {
 		this.getAmount();
 	},
 	methods: {
+        goQa(){
+this.$router.push('/trustQa')
+        },
+        goZixun(){
+
+            this.$router.push('/information')
+        },
+        goAboutUs(){
+this.$router.push('/aboutUs')
+
+        },
 		getAmount() {
 			getAmount().then((res) => {
 				if (res && res.status === 200) {

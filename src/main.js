@@ -24,7 +24,7 @@ window.$crudCommon = crudCommon
 window.axios = axios;
 const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-  app.component(key, component)
+    app.component(key, component)
 }
 app.component('basicContainer', basicContainer)
 app.component('basicBlock', basicBlock)
@@ -36,10 +36,16 @@ app.use(i18n)
 app.use(store)
 app.use(router)
 app.use(ElementPlus, {
-  locale: messages[language]
+    locale: messages[language]
 })
+
+
+router.afterEach(to => {
+    let title = router.$avueRouter.generateTitle(to)
+    router.$avueRouter.setTitle(title);
+});
 app.use(Avue, {
-  axios,
-  locale: messages[language]
+    axios,
+    locale: messages[language]
 })
 app.mount('#app')
