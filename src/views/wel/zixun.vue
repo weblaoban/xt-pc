@@ -71,7 +71,7 @@ export default {
 			this.selected[prop] = value;
 		},
         goDetail(row){
-            this.$router.push('/trustQaDetail/'+row.id)
+            this.$router.push('/informationDetail/'+row.id)
         }
     },
 };

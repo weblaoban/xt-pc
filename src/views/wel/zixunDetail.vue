@@ -57,7 +57,7 @@ export default {
     .banner{
 width:100%;
 height:293px;
-		background-image: url(/img/qabanner.png);
+		background-image: url(/img/zixunbanner.png);
 		background-size: 1920px 293px;
 		background-position: center center;
 		background-repeat: no-repeat;

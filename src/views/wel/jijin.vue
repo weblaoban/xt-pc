@@ -480,6 +480,10 @@ this.fetchListBykey()
 			this.checked = !this.checked;
 		},
         goDetail(row){
+            if(!this.userInfo.id){
+                this.$store.dispatch('setLoginDialog',true)
+                return;
+            }
 this.$router.push({
     path:'/prodDetail/'+row.id,
     query:{
@@ -488,12 +492,12 @@ this.$router.push({
 })
         },
         onYuyue(cur){
-            if(!this.userInfo.userId){
+            if(!this.userInfo.id){
                 this.$store.dispatch('setLoginDialog',true)
                 return;
             }
             this.cur = cur;
-            this.showAgreement = true
+            this.showYuyue = true
         },
         onAgree(){
             if(!this.checked){
@@ -507,7 +511,7 @@ this.$router.push({
 const cur = this.cur;
 const userInfo = this.userInfo
 if(cur.id){
-    yuyue({prodId:cur.id,userId:userInfo.userId}).then(res=>{
+    yuyue({prodId:cur.id,userId:userInfo.id}).then(res=>{
         if(res && res.data && res.data.success){
             this.$message.success('预约成功')
             this.showYuyue = false

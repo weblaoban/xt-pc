@@ -112,61 +112,6 @@
 				</div>
 			</div>
 		</div>
-		<!-- 协议 -->
-		<div class="model" v-if="showAgreement">
-			<div class="modelContent">
-				<el-icon @click="showAgreement = false"><Close /></el-icon>
-				<div class="agreement">
-					<img class="logo" src="/img/logo.png" alt="" />
-					<div class="agCon">
-						<h1>《合格投资者认定》</h1>
-						<p>
-							本网谨遵中国银行业监督管理委员会发布的《信托公司集合资金信托计划管理办法》之规定，只向特定投资者展示信托产品信息，不构成任何投资推介建议。
-						</p>
-						<p>
-							阁下如有意进行信托投资，请承诺符合《信托公司集合资金信托计划管理办法》之规定合格投资者的条件。
-						</p>
-						<p>
-							即具备相应风险识别能力和风险承担能力，投资于单只信托产品金额不低于100万元，且符合下列相关标准之一：
-						</p>
-						<p class="red">
-							1.承诺符合金融类资产不低于300万元;（金融资产包括银行存款、股票、债券、基金份额、资产管理计划、银行理财产品、信托计划、保险产品、期货权益等）
-						</p>
-						<p class="red">或</p>
-						<p class="red">
-							2.承诺符合最近三年个人平均收入不低于50万元人民币；
-						</p>
-						<h1 style="margin-top: 50px">《免责条款》</h1>
-						<p>
-							一、本网致力于提供完整、准确的产品信息，信息内容绝大部份来自于本网的授权机构，本网尽谨慎注意和一致描述义务。尽
-						</p>
-					</div>
-					<div class="checkBox">
-						<img
-							v-if="checked"
-							src="/img/checked.png"
-							@click="toggleCheck"
-							alt=""
-							class="checked"
-						/>
-						<img
-							v-if="!checked"
-							src="/img/unchecked.png"
-							@click="toggleCheck"
-							alt=""
-							class="notCheced"
-						/>
-						<span
-							>我接受 <span class="yel">《合格投资者认定》</span>、<span
-								class="yel"
-								>《免责条款》</span
-							>中所有条款</span
-						>
-					</div>
-					<div class="button" @click="onAgree">确定</div>
-				</div>
-			</div>
-		</div>
 	</div>
 </template>
 
@@ -480,6 +425,10 @@ this.fetchListBykey()
 			this.checked = !this.checked;
 		},
         goDetail(row){
+            if(!this.userInfo.id){
+                this.$store.dispatch('setLoginDialog',true)
+                return;
+            }
 this.$router.push({
     path:'/prodDetail/'+row.id,
     query:{
@@ -488,12 +437,12 @@ this.$router.push({
 })
         },
         onYuyue(cur){
-            if(!this.userInfo.userId){
+            if(!this.userInfo.id){
                 this.$store.dispatch('setLoginDialog',true)
                 return;
             }
             this.cur = cur;
-            this.showAgreement = true
+            this.showYuyue = true
         },
         onAgree(){
             if(!this.checked){
@@ -507,7 +456,7 @@ this.$router.push({
 const cur = this.cur;
 const userInfo = this.userInfo
 if(cur.id){
-    yuyue({prodId:cur.id,userId:userInfo.userId}).then(res=>{
+    yuyue({prodId:cur.id,userId:userInfo.id}).then(res=>{
         if(res && res.data && res.data.success){
             this.$message.success('预约成功')
             this.showYuyue = false

@@ -35,7 +35,7 @@
 			<!-- 未登录 -->
 			<div
 				class="loginContent"
-				v-if="!showRegister && !showModifyPass && !userInfo.nickName"
+				v-if="!showRegister && !showModifyPass && !userInfo.id"
 			>
 				<h4 class="loginTitle">登录</h4>
 				<div class="inputItem">
@@ -103,7 +103,7 @@
 						<div class="productItem" v-for="item in product1" :key="item.id">
 							<div class="title">{{ item.name }}</div>
 							<div class="desc">产品收益</div>
-							<p class="count">9.7 <span>%</span></p>
+							<p class="count">{{ item.brief || 0 }} <span>%</span></p>
 							<div class="line"></div>
 							<div class="duration">产品期限：{{ item.investLimitId }}</div>
 							<div class="button" @click="goDetail(item, 1)">立即查看</div>
@@ -118,7 +118,7 @@
 						<div class="productItem" v-for="item in product2" :key="item">
 							<div class="title">{{ item.name }}</div>
 							<div class="desc">产品收益</div>
-							<p class="count">9.7 <span>%</span></p>
+							<p class="count">{{ item.brief || '--' }} <span>%</span></p>
 							<div class="line"></div>
 							<div class="duration">产品期限：{{ item.investLimitId }}</div>
 							<div class="button" @click="goDetail(item, 2)">立即查看</div>
@@ -133,7 +133,7 @@
 						<div class="productItem" v-for="item in product3" :key="item">
 							<div class="title">{{ item.name }}</div>
 							<div class="desc">产品收益</div>
-							<p class="count">9.7 <span>%</span></p>
+							<p class="count">{{ item.brief || '--' }}<span>%</span></p>
 							<div class="line"></div>
 							<div class="duration">产品期限：{{ item.investLimitId }}</div>
 							<div class="button" @click="goDetail(item, 3)">立即查看</div>
@@ -330,7 +330,11 @@ this.$router.push('/aboutUs')
 		getProdList() {
 			list({ categoryId: 97, soldNum: 1, status: -1 }).then((res) => {
 				if (res && res.status === 200) {
-					console.log(res.data.data.records);
+					console.log();
+                    let list = res.data.data.records || [];
+list = list.sort((a,b)=>{
+    return a.soldNum - b.soldNum
+})
 					this.product1 = res.data.data.records;
 				}
 			});
@@ -406,6 +410,10 @@ this.$router.push('/aboutUs')
 		},
 
 		goDetail(row, type) {
+            if(!this.userInfo.id){
+                this.$store.dispatch('setLoginDialog',true)
+                return;
+            }
 			this.$router.push({
 				path: "/prodDetail/" + row.id,
 				query: {
@@ -576,6 +584,9 @@ this.$router.push('/aboutUs')
 				font-weight: 400;
 				color: #eaba63;
 				margin: 9px 0 30px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
 				span {
 					font-size: 24px;
 					font-weight: 400;
@@ -821,7 +832,8 @@ this.$router.push('/aboutUs')
 .button {
 	width: 280px;
 	height: 44px;
-	background: linear-gradient(163deg, #e1ad4f, #eaba63, #e0af56);
+
+    background: linear-gradient(163deg, #E1AD4F, rgba(234, 186, 99, 0.8), #E0AF56);
 	box-shadow: 0px 3px 0px 0px #dea949;
 	border-radius: 8px;
 
@@ -833,6 +845,12 @@ this.$router.push('/aboutUs')
 	text-align: center;
 	line-height: 44px;
 	cursor: pointer;
+    &.gray{
+
+background: linear-gradient(163deg, #D5D5D5, #EFEFEF);
+box-shadow: 0rem 3px 0rem 0rem #CBCBCB;
+color: #9A9A9C;
+    }
 }
 
 .bannerContent .el-carousel__indicators--vertical {
