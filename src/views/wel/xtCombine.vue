@@ -5,7 +5,12 @@
 		<div class="combineCon">
 			<div class="combineBanner">
 				<div class="input">
-					<input v-model="key" @blur="fetchListBykey" type="text" placeholder="状态｜期限｜门槛｜付息方式｜领域" />
+					<input
+						v-model="key"
+						@blur="fetchListBykey"
+						type="text"
+						placeholder="状态｜期限｜门槛｜付息方式｜领域"
+					/>
 					<img src="/img/search.png" alt="" class="search" />
 				</div>
 			</div>
@@ -67,7 +72,7 @@
 							<div class="ths">操作</div>
 						</div>
 						<div
-                        @click="goDetail(item)"
+							@click="goDetail(item)"
 							:class="{
 								prodItem: true,
 								valid: item.status !== 3,
@@ -77,9 +82,19 @@
 							:key="index"
 						>
 							<div class="ths" v-for="prop in propColumn" :key="prop.value">
-								{{ prop.dicData?prop.dicData[item[prop.value]]:item[prop.value] }}
+								{{
+									prop.dicData
+										? prop.dicData[item[prop.value]]
+										: item[prop.value]
+								}}
 							</div>
-							<div v-if="!item.imgs" @click.stop="onYuyue(item)" class="ths can yuyue">我要预约</div>
+							<div
+								v-if="!item.imgs"
+								@click.stop="onYuyue(item)"
+								class="ths can yuyue"
+							>
+								我要预约
+							</div>
 							<div v-if="item.imgs" class="ths can yuyue">已预约</div>
 						</div>
 					</div>
@@ -119,7 +134,7 @@
 import { mapGetters } from "vuex";
 import mainFooter from "../common/footer.vue";
 import mainHeader from "../common/header.vue";
-import { list ,yuyue,keylist} from "@/api/prod.js";
+import { list, yuyue, keylist } from "@/api/prod.js";
 export default {
 	name: "jeZi",
 	components: {
@@ -296,20 +311,20 @@ export default {
 				{
 					label: "状态",
 					value: "status",
-                    dicData:{
-                        1:'预售',
-                        2:'在售',
-                        3:'售罄'
-                    }
+					dicData: {
+						1: "预售",
+						2: "在售",
+						3: "售罄",
+					},
 				},
 				{
 					label: "类型",
 					value: "categoryId",
-                    dicData:{
-                        97:'集合信托',
-                        98:'集合资管',
-                        99:'私募基金'
-                    }
+					dicData: {
+						97: "集合信托",
+						98: "集合资管",
+						99: "私募基金",
+					},
 				},
 				{
 					label: "期限",
@@ -345,49 +360,51 @@ export default {
 			checked: false,
 			showAgreement: false,
 			showYuyue: false,
-            cur:{},
-            key:'',
+			cur: {},
+			key: "",
 		};
 	},
 	computed: {
 		...mapGetters(["userInfo"]),
 	},
 	created() {
-		this.fetchList()
+		this.fetchList();
 	},
 	methods: {
 		fetchList() {
 			const { selected, page } = this;
 			const selectObj = {};
 			for (let i in selected) {
-				selectObj[i] = selected[i].value;
+				if (selected[i].value != -1) {
+					selectObj[i] = selected[i].value;
+				}
 			}
-			list({ ...page, status: -1, categoryId: 97,soldNum:-1,...selectObj }).then(res=>{
-                this.prodList = res.data.data.records;
-                this.page.total = res.data.data.total;
-            });
+			list({ ...page, categoryId: 97, ...selectObj }).then((res) => {
+				this.prodList = res.data.data.records;
+				this.page.total = res.data.data.total;
+			});
 		},
-        fetchListBykey(){
-            if(!this.key){
-                this.fetchList();
-                return;
-            }
-            keylist({keystr:this.key,catstr:97}).then(res=>{
-                this.prodList = res.data.data.records;
-                this.page.total = res.data.data.total;
-            })
-        },
+		fetchListBykey() {
+			if (!this.key) {
+				this.fetchList();
+				return;
+			}
+			keylist({ keystr: this.key, catstr: 97 }).then((res) => {
+				this.prodList = res.data.data.records;
+				this.page.total = res.data.data.total;
+			});
+		},
 		onSelectSearch(value, prop) {
 			console.log(value, prop);
 			this.selected[prop] = value;
-            this.fetchList()
+			this.fetchList();
 		},
 		removeSelected(key) {
 			this.selected[key] = {
 				label: "不限",
 				value: "-1",
 			};
-		this.fetchList()
+			this.fetchList();
 		},
 		resetSearch() {
 			this.selected = {
@@ -415,57 +432,57 @@ export default {
 		},
 		currentChange(current) {
 			this.page.current = current;
-            if(!this.key){
-                this.fetchList();
-            }else{
-this.fetchListBykey()
-            }
+			if (!this.key) {
+				this.fetchList();
+			} else {
+				this.fetchListBykey();
+			}
 		},
 		toggleCheck() {
 			this.checked = !this.checked;
 		},
-        goDetail(row){
-            if(!this.userInfo.id){
-                this.$store.dispatch('setLoginDialog',true)
-                return;
-            }
-this.$router.push({
-    path:'/prodDetail/'+row.id,
-    query:{
-        type:1
-    }
-})
-        },
-        onYuyue(cur){
-            if(!this.userInfo.id){
-                this.$store.dispatch('setLoginDialog',true)
-                return;
-            }
-            this.cur = cur;
-            this.showYuyue = true
-        },
-        onAgree(){
-            if(!this.checked){
-                this.$message.error('请先同意协议');
-                return;
-            }
-            this.showYuyue = true
-            this.showAgreement = false
-        },
-        onDoYuyue(){
-const cur = this.cur;
-const userInfo = this.userInfo
-if(cur.id){
-    yuyue({prodId:cur.id,userId:userInfo.id}).then(res=>{
-        if(res && res.data && res.data.success){
-            this.$message.success('预约成功')
-            this.showYuyue = false
-            this.cur = {}
-            this.fetchList()
-        }
-    })
-}
-        }
+		goDetail(row) {
+			if (!this.userInfo.id) {
+				this.$store.dispatch("setLoginDialog", true);
+				return;
+			}
+			this.$router.push({
+				path: "/prodDetail/" + row.id,
+				query: {
+					type: 1,
+				},
+			});
+		},
+		onYuyue(cur) {
+			if (!this.userInfo.id) {
+				this.$store.dispatch("setLoginDialog", true);
+				return;
+			}
+			this.cur = cur;
+			this.showYuyue = true;
+		},
+		onAgree() {
+			if (!this.checked) {
+				this.$message.error("请先同意协议");
+				return;
+			}
+			this.showYuyue = true;
+			this.showAgreement = false;
+		},
+		onDoYuyue() {
+			const cur = this.cur;
+			const userInfo = this.userInfo;
+			if (cur.id) {
+				yuyue({ prodId: cur.id, userId: userInfo.id }).then((res) => {
+					if (res && res.data && res.data.success) {
+						this.$message.success("预约成功");
+						this.showYuyue = false;
+						this.cur = {};
+						this.fetchList();
+					}
+				});
+			}
+		},
 	},
 };
 </script>
@@ -700,6 +717,11 @@ if(cur.id){
 			}
 			.can {
 				display: block !important;
+				width: 83px;
+				height: 36px;
+				border-radius: 6px;
+				line-height: 36px;
+				margin-left: 20px;
 			}
 			.ths {
 				&:nth-child(5) {
@@ -708,7 +730,7 @@ if(cur.id){
 			}
 		}
 		&.notValid {
-            pointer-events: none;
+			pointer-events: none;
 			color: #9a9a9c;
 			.ths {
 				&:nth-child(5) {

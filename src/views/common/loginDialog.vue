@@ -1,8 +1,10 @@
 <template>
 	<div class="loginMask">
 		<div class="loginContent">
-            <div class="close" @click="closeDialog"><img src="/img/close.png" alt=""></div>
-			<h4 class="loginTitle">登录</h4>
+			<div class="close" @click="closeDialog">
+				<img src="/img/close.png" alt="" />
+			</div>
+			<h4 class="loginTitle"><span>登录</span></h4>
 			<div class="inputItem">
 				<input
 					v-model="userName"
@@ -56,12 +58,12 @@ export default {
 				.dispatch("LoginByUsername", { username: userName, password: passWord })
 				.then(() => {
 					this.$store.dispatch("GetUserInfo");
-                    this.closeDialog()
+					this.closeDialog();
 				});
 		},
-        closeDialog(){
-            this.$store.dispatch('setLoginDialog',false)
-        },
+		closeDialog() {
+			this.$store.dispatch("setLoginDialog", false);
+		},
 		goRegister() {
 			this.$router.push("/register");
 		},
@@ -73,37 +75,38 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.loginMask{
-    position:fixed;
-    left:0;
-    right:0;
-    bottom:0;
-    top:0;
-    background: rgba(0,0,0,0.3);
-    
+.loginMask {
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	top: 0;
+	background: rgba(0, 0, 0, 0.3);
+
 	.loginContent {
 		position: absolute;
-		top:0;
-        bottom:0;
-        left:0;
-        right:0;
-        margin:auto;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		margin: auto;
 		width: 320px;
 		height: 380px;
 		background: #ffffff;
 		box-shadow: 0px 0px 10px 10px rgba(234, 186, 99, 0.1);
 		border-radius: 12px;
-        .close{
-            width:18px;
-            height:18px;
-            position:absolute;
-            right:-36px;
-            top:-36px;
-            img{
-                width:18px;
-                height:18px;
-            }
-        }
+		.close {
+			width: 18px;
+			height: 18px;
+			position: absolute;
+			right: -36px;
+			top: -36px;
+			cursor: pointer;
+			img {
+				width: 18px;
+				height: 18px;
+			}
+		}
 		&.haslogin {
 			text-align: center;
 			.welcom {
@@ -292,6 +295,7 @@ export default {
 			position: relative;
 			text-align: center;
 			margin-bottom: 40px;
+			line-height: 1;
 			&::after {
 				position: absolute;
 				content: "";
@@ -303,6 +307,10 @@ export default {
 				right: 0;
 				bottom: 0;
 				margin: auto;
+			}
+			span {
+				position: relative;
+				z-index: 1;
 			}
 		}
 		.cut {
@@ -342,7 +350,7 @@ export default {
 			position: absolute;
 			transform-origin: 0 50%;
 			transition: transform 200ms, color 200ms;
-			top: 16px;
+			top: 13px;
 		}
 		.input:focus ~ .cut {
 			transform: translateY(8px);
@@ -353,22 +361,23 @@ export default {
 			z-index: 1;
 		}
 	}
-    
-.button {
-	width: 280px;
-	height: 44px;
-	background: linear-gradient(163deg, #e1ad4f, #eaba63, #e0af56);
-	box-shadow: 0px 3px 0px 0px #dea949;
-	border-radius: 8px;
 
-	margin: 0 auto;
-	font-size: 18px;
-	font-family: Heiti SC;
-	font-weight: 500;
-	color: #ffffff;
-	text-align: center;
-	line-height: 44px;
-	cursor: pointer;
+	.button {
+		width: 280px;
+		height: 44px;
+		background: linear-gradient(163deg, #e1ad4f, #eaba63, #e0af56);
+		box-shadow: 0px 3px 0px 0px #dea949;
+		border-radius: 8px;
+
+		margin: 0 auto;
+		font-size: 18px;
+		font-family: Heiti SC;
+		font-weight: 500;
+		color: #ffffff;
+		text-align: center;
+		line-height: 44px;
+		cursor: pointer;
+	}
 }
-}
-</style>>
+</style>
+>

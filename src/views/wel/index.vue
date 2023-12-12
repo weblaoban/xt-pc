@@ -113,12 +113,12 @@
 			</div>
 			<div class="productContent product2">
 				<div class="container">
-					<div class="productTitle">集合资管</div>
+					<div class="productTitle"><span>集合资管</span></div>
 					<div class="products">
 						<div class="productItem" v-for="item in product2" :key="item">
 							<div class="title">{{ item.name }}</div>
 							<div class="desc">产品收益</div>
-							<p class="count">{{ item.brief || '--' }} <span>%</span></p>
+							<p class="count">{{ item.brief || "--" }} <span>%</span></p>
 							<div class="line"></div>
 							<div class="duration">产品期限：{{ item.investLimitId }}</div>
 							<div class="button" @click="goDetail(item, 2)">立即查看</div>
@@ -128,12 +128,12 @@
 			</div>
 			<div class="productContent product3">
 				<div class="container">
-					<div class="productTitle">私募基金</div>
+					<div class="productTitle"><span>私募基金</span></div>
 					<div class="products">
 						<div class="productItem" v-for="item in product3" :key="item">
 							<div class="title">{{ item.name }}</div>
 							<div class="desc">产品收益</div>
-							<p class="count">{{ item.brief || '--' }}<span>%</span></p>
+							<p class="count">{{ item.brief || "--" }}<span>%</span></p>
 							<div class="line"></div>
 							<div class="duration">产品期限：{{ item.investLimitId }}</div>
 							<div class="button" @click="goDetail(item, 3)">立即查看</div>
@@ -184,7 +184,9 @@
 				<div class="menuCard">
 					<div class="menuCardItem" @click="goQa"><span>信托问答</span></div>
 					<div class="menuCardItem" @click="goZixun"><span>信托资讯</span></div>
-					<div class="menuCardItem" @click="goAboutUs"><span>关于我们</span></div>
+					<div class="menuCardItem" @click="goAboutUs">
+						<span>关于我们</span>
+					</div>
 				</div>
 				<div class="company">
 					<h4>合作伙伴</h4>
@@ -296,17 +298,15 @@ export default {
 		this.getAmount();
 	},
 	methods: {
-        goQa(){
-this.$router.push('/trustQa')
-        },
-        goZixun(){
-
-            this.$router.push('/information')
-        },
-        goAboutUs(){
-this.$router.push('/aboutUs')
-
-        },
+		goQa() {
+			this.$router.push("/trustQa");
+		},
+		goZixun() {
+			this.$router.push("/information");
+		},
+		goAboutUs() {
+			this.$router.push("/aboutUs");
+		},
 		getAmount() {
 			getAmount().then((res) => {
 				if (res && res.status === 200) {
@@ -331,10 +331,10 @@ this.$router.push('/aboutUs')
 			list({ categoryId: 97, soldNum: 1, status: -1 }).then((res) => {
 				if (res && res.status === 200) {
 					console.log();
-                    let list = res.data.data.records || [];
-list = list.sort((a,b)=>{
-    return a.soldNum - b.soldNum
-})
+					let list = res.data.data.records || [];
+					list = list.sort((a, b) => {
+						return a.soldNum - b.soldNum;
+					});
 					this.product1 = res.data.data.records;
 				}
 			});
@@ -410,10 +410,10 @@ list = list.sort((a,b)=>{
 		},
 
 		goDetail(row, type) {
-            if(!this.userInfo.id){
-                this.$store.dispatch('setLoginDialog',true)
-                return;
-            }
+			if (!this.userInfo.id) {
+				this.$store.dispatch("setLoginDialog", true);
+				return;
+			}
 			this.$router.push({
 				path: "/prodDetail/" + row.id,
 				query: {
@@ -526,9 +526,11 @@ list = list.sort((a,b)=>{
 		color: #30333b;
 		text-align: center;
 		margin-bottom: 89px;
-		line-height: 35px;
+		line-height: 1;
+		position: relative;
 		&:after {
 			content: "";
+			position: absolute;
 			display: block;
 			width: 150px;
 			height: 10px;
@@ -536,10 +538,14 @@ list = list.sort((a,b)=>{
 			opacity: 0.5;
 			left: 0;
 			right: 0;
-			bottom: 30px;
+			bottom: 0;
 			margin: auto;
-			transform: translateY(-10px);
-			z-index: 0;
+			// transform: translateY(-10px);
+			// z-index: -1;
+		}
+		span {
+			position: relative;
+			z-index: 1;
 		}
 	}
 	.products {
@@ -584,9 +590,9 @@ list = list.sort((a,b)=>{
 				font-weight: 400;
 				color: #eaba63;
 				margin: 9px 0 30px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
 				span {
 					font-size: 24px;
 					font-weight: 400;
@@ -833,7 +839,12 @@ list = list.sort((a,b)=>{
 	width: 280px;
 	height: 44px;
 
-    background: linear-gradient(163deg, #E1AD4F, rgba(234, 186, 99, 0.8), #E0AF56);
+	background: linear-gradient(
+		163deg,
+		#e1ad4f,
+		rgba(234, 186, 99, 0.7),
+		#e0af56
+	);
 	box-shadow: 0px 3px 0px 0px #dea949;
 	border-radius: 8px;
 
@@ -845,12 +856,11 @@ list = list.sort((a,b)=>{
 	text-align: center;
 	line-height: 44px;
 	cursor: pointer;
-    &.gray{
-
-background: linear-gradient(163deg, #D5D5D5, #EFEFEF);
-box-shadow: 0rem 3px 0rem 0rem #CBCBCB;
-color: #9A9A9C;
-    }
+	&.gray {
+		background: linear-gradient(163deg, #d5d5d5, #efefef);
+		box-shadow: 0rem 3px 0rem 0rem #cbcbcb;
+		color: #9a9a9c;
+	}
 }
 
 .bannerContent .el-carousel__indicators--vertical {
@@ -1140,7 +1150,7 @@ color: #9A9A9C;
 			position: absolute;
 			transform-origin: 0 50%;
 			transition: transform 200ms, color 200ms;
-			top: 16px;
+			top: 13px;
 		}
 		.input:focus ~ .cut {
 			transform: translateY(8px);
