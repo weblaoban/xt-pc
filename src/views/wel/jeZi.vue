@@ -415,9 +415,11 @@ export default {
 			const { selected, page } = this;
 			const selectObj = {};
 			for (let i in selected) {
-				selectObj[i] = selected[i].value;
+				if (selected[i].value != -1) {
+					selectObj[i] = selected[i].value;
+				}
 			}
-			list({ ...page, status: -1, categoryId: 98,soldNum:-1,...selectObj }).then(res=>{
+			list({ ...page, categoryId: 98,...selectObj }).then(res=>{
                 this.prodList = res.data.data.records;
                 this.page.total = res.data.data.total;
             });
