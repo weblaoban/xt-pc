@@ -37,7 +37,7 @@
 				class="loginContent"
 				v-if="!showRegister && !showModifyPass && !userInfo.id"
 			>
-				<h4 class="loginTitle">登录</h4>
+				<h4 class="loginTitle"><span>登录</span></h4>
 				<div class="inputItem">
 					<input
 						v-model="userName"
@@ -328,7 +328,7 @@ export default {
 			});
 		},
 		getProdList() {
-			list({ categoryId: 97, soldNum: 1, status: -1 }).then((res) => {
+			list({ categoryId: 97, soldNum: 1, }).then((res) => {
 				if (res && res.status === 200) {
 					console.log();
 					let list = res.data.data.records || [];
@@ -338,12 +338,12 @@ export default {
 					this.product1 = res.data.data.records;
 				}
 			});
-			list({ categoryId: 98, soldNum: 1, status: -1 }).then((res) => {
+			list({ categoryId: 98, soldNum: 1, }).then((res) => {
 				if (res && res.status === 200) {
 					this.product2 = res.data.data.records;
 				}
 			});
-			list({ categoryId: 99, soldNum: 1, status: -1 }).then((res) => {
+			list({ categoryId: 99, soldNum: 1, }).then((res) => {
 				if (res && res.status === 200) {
 					this.product3 = res.data.data.records;
 				}
@@ -441,14 +441,18 @@ export default {
 			img {
 				width: 64px;
 				height: 64px;
-				margin-left: 13px;
+				margin-right: 13px;
 			}
 			.cardDesc {
+                p{
+                    margin:0;
+                }
 				.title {
 					font-size: 24px;
 					font-family: Heiti SC;
 					font-weight: 500;
 					color: #eaba63;
+                    margin:10px 0;
 				}
 				.desc {
 					font-size: 16px;
@@ -479,9 +483,9 @@ export default {
 			font-family: Heiti SC;
 			font-weight: 500;
 			color: #ffffff;
-			position: absolute;
+			position: fixed;
 			right: 0;
-			bottom: -30px;
+			bottom: 200px;
 			padding-left: 30px;
 			display: flex;
 			align-items: center;
@@ -559,6 +563,10 @@ export default {
 			border-radius: 12px;
 			text-align: center;
 			margin-right: 27px;
+            &:hover{
+
+box-shadow: 0px 0px 21px 9px rgba(66,142,230,0.3);
+            }
 			.title {
 				height: 94px;
 				background: linear-gradient(0deg, #89f7fe, #66a6ff);
@@ -574,6 +582,10 @@ export default {
 			}
 			&:nth-child(2n) {
 				box-shadow: 0px 0px 21px 9px rgba(252, 106, 74, 0.1);
+            &:hover{
+
+				box-shadow: 0px 0px 21px 9px rgba(252, 106, 74, 0.3);
+            }
 				.title {
 					background: linear-gradient(0deg, #f28e26, #fd644f);
 				}
@@ -632,11 +644,19 @@ export default {
 	.products {
 		.productItem {
 			box-shadow: 0px 0px 21px 9px rgba(234, 186, 99, 0.1);
+            &:hover{
+
+                box-shadow: 0px 0px 21px 9px rgba(234, 186, 99, 0.3);
+}
 			.title {
 				background: linear-gradient(0deg, #fad126, #f39800);
 			}
 			&:nth-child(2n) {
-				box-shadow: 0px 0px 21px 9px rgba(130, 135, 222, 0.1);
+				box-shadow: 0px 0px 21px 9px rgba(130, 135, 222, 0.1);     
+                &:hover{
+
+                    box-shadow: 0px 0px 21px 9px rgba(130, 135, 222, 0.3);
+}
 				.title {
 					background: linear-gradient(0deg, #7683d9, #d8a0fe);
 				}
@@ -652,12 +672,20 @@ export default {
 	}
 	.products {
 		.productItem {
-			box-shadow: 0px 0px 21px 9px rgba(252, 107, 109, 0.1);
+			box-shadow: 0px 0px 21px 9px rgba(252, 107, 109, 0.1);         &:hover{
+
+
+                box-shadow: 0px 0px 21px 9px rgba(252, 107, 109, 0.3);  
+}
 			.title {
 				background: linear-gradient(90deg, #ff934c, #fc686f);
 			}
 			&:nth-child(2n) {
-				box-shadow: 0px 0px 21px 9px rgba(60, 231, 188, 0.1);
+				box-shadow: 0px 0px 21px 9px rgba(60, 231, 188, 0.1);      &:hover{
+
+
+                    box-shadow: 0px 0px 21px 9px rgba(60, 231, 188, 0.3); 
+}
 				.title {
 					background: linear-gradient(90deg, #38ebba, #6fb1d2);
 				}
@@ -676,7 +704,7 @@ export default {
 			width: 380px;
 			height: 200px;
 			background: #000000;
-			opacity: 0.6;
+			// opacity: 0.6;
 			border-radius: 12px;
 			position: relative;
 			&:nth-child(1) {
@@ -719,6 +747,7 @@ export default {
 			font-family: Heiti SC;
 			font-weight: 500;
 			color: #30333b;
+            margin-bottom:80px;
 		}
 		.companyBg {
 			position: absolute;
@@ -1100,6 +1129,7 @@ export default {
 			position: relative;
 			text-align: center;
 			margin-bottom: 40px;
+            line-height: 1;
 			&::after {
 				position: absolute;
 				content: "";
@@ -1112,6 +1142,10 @@ export default {
 				bottom: 0;
 				margin: auto;
 			}
+            span{
+                position: relative;
+                z-index: 1;
+            }
 		}
 		.cut {
 			background-color: #fff;

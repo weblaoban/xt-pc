@@ -19,7 +19,7 @@
 			<div class="carouseCard" style="height: 675px">
 				<img src="/img/welcomebg.png" alt="" />
 				<div class="loginContent register">
-					<h4 class="loginTitle">注册</h4>
+					<h4 class="loginTitle"><span>注册</span></h4>
 					<div class="genderCon">
 						<div class="inputItem">
 							<input
@@ -442,7 +442,7 @@ this.timeDownfn()
 		width: 100%;
 		height: 100%;
 		background-image: url(/img/registerbg.png);
-		background-size: 100% 100%;
+        background-size:1920px 100%;
 		background-position: center center;
 		background-repeat: no-repeat;
 		display: flex;
@@ -487,6 +487,7 @@ this.timeDownfn()
 		box-shadow: 0px 0px 10px 10px rgba(234, 186, 99, 0.1);
 		border-radius: 12px;
 
+        position:static;
 		&.haslogin {
 			text-align: center;
 			.welcom {
@@ -615,7 +616,7 @@ this.timeDownfn()
 				.send {
 					width: 70px;
 					height: 39px;
-					background: linear-gradient(5deg, #eaba63, #fac76c);
+					background: linear-gradient(5deg, #eaba63, rgba(250, 199, 108, 0.8));
 					border-radius: 8px;
 					cursor: pointer;
 
@@ -675,6 +676,7 @@ this.timeDownfn()
 			position: relative;
 			text-align: center;
 			margin-bottom: 40px;
+            line-height: 1;
 			&::after {
 				position: absolute;
 				content: "";
@@ -687,6 +689,10 @@ this.timeDownfn()
 				bottom: 0;
 				margin: auto;
 			}
+            span{
+                position:relative;
+                z-index:1;
+            }
 		}
 		.cut {
 			background-color: #fff;
@@ -725,13 +731,13 @@ this.timeDownfn()
 			position: absolute;
 			transform-origin: 0 50%;
 			transition: transform 200ms, color 200ms;
-			top: 16px;
+			top: 13px;
 		}
 		.input:focus ~ .cut {
 			transform: translateY(8px);
 		}
 		.input:focus ~ .placeholder {
-			transform: translateY(-24px) translateX(10px) scale(0.75);
+			transform: translateY(-20px) translateX(10px) scale(0.75);
 			color: #dc2f55;
 			z-index: 1;
 		}
@@ -740,7 +746,12 @@ this.timeDownfn()
 .button {
 	width: 280px;
 	height: 44px;
-	background: linear-gradient(163deg, #e1ad4f, #eaba63, #e0af56);
+	background: linear-gradient(
+		163deg,
+		#e1ad4f,
+		rgba(234, 186, 99, 0.7),
+		#e0af56
+	);
 	box-shadow: 0px 3px 0px 0px #dea949;
 	border-radius: 8px;
 

@@ -544,7 +544,10 @@ export default {
 		}
 	}
 }
+.combineCon{
 
+    background: #fff;
+}
 .combineContent {
 	transform: translateY(-50px);
 	.searchCard {

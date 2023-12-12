@@ -22,7 +22,7 @@
             
             <!-- 忘记密码 -->
 			<div class="loginContent register">
-                <h4 class="loginTitle">忘记密码</h4>
+                <h4 class="loginTitle"><span>忘记密码</span></h4>
 				
 				<div class="inputItem">
 					<input autocomplete="off" v-model="phone" class="input" id="phone" type="text" /><label
@@ -297,7 +297,7 @@ font-weight: 500;
 		width: 100%;
 		height: 100%;
 		background-image: url(/img/registerbg.png);
-        background-size:100% 100%;
+        background-size:1920px 100%;
         background-position:center center;
         background-repeat: no-repeat;
     display: flex;
@@ -341,6 +341,7 @@ height: auto;
 background: #FFFFFF;
 box-shadow: 0px 0px 10px 10px rgba(234,186,99,0.1);
 border-radius: 12px;
+position:static;
 
 &.haslogin{
     text-align: center;
@@ -529,17 +530,22 @@ color: #30333B;
 position:relative;
 text-align: center;
 margin-bottom:40px;
+line-height: 1;
 &::after{
     position:absolute;
     content:'';
     display: block;
-    width: 50px;
+    width: 80px;
 height: 4px;
 background: #EABA63;
 left:0;
 right:0;
 bottom:0;
 margin:auto;
+}
+span{
+    position:relative;
+    z-index:1;
 }
 }
 		.cut {
@@ -580,13 +586,13 @@ color: #9A9A9C;
 			position: absolute;
 			transform-origin: 0 50%;
 			transition: transform 200ms, color 200ms;
-			top: 16px;
+			top: 13px;
 		}
 		.input:focus ~ .cut {
 			transform: translateY(8px);
 		}
 		.input:focus ~ .placeholder {
-			transform: translateY(-24px) translateX(10px) scale(0.75);
+			transform: translateY(-20px) translateX(10px) scale(0.75);
 			color: #dc2f55;
             z-index:1;
 		}
@@ -595,7 +601,12 @@ color: #9A9A9C;
 .button{
     width: 280px;
 height: 44px;
-background: linear-gradient(163deg, #E1AD4F, #EABA63, #E0AF56);
+	background: linear-gradient(
+		163deg,
+		#e1ad4f,
+		rgba(234, 186, 99, 0.7),
+		#e0af56
+	);
 box-shadow: 0px 3px 0px 0px #DEA949;
 border-radius: 8px;
 

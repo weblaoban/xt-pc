@@ -105,7 +105,7 @@ background: #FFFFFF;
 box-shadow: 0px 0px 8px 2px rgba(48,51,59,0.1);
 border-radius: 12px;
 margin-bottom:30px;
-
+overflow: hidden;
         .time{
 font-size: 14px;
 font-family: Heiti SC;

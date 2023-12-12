@@ -543,6 +543,10 @@ export default {
 </script>
 
 <style lang="scss">
+.combineCon{
+
+    background: #fff;
+}
 .combineBanner {
 	width: 100%;
 	height: 274px;

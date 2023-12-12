@@ -40,7 +40,11 @@
 .footer{
 
 background: #13161C;
-opacity: 0.9;
+
+		background-image: url(/img/bgbottom.png);
+		background-size: 1920px 400px;
+		background-position: center center;
+		background-repeat: no-repeat;
 .container{
     height:400px;
 }

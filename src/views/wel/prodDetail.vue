@@ -27,7 +27,7 @@
                 <div class="zixun">
                     <h5>客户咨询</h5>
                     <p>请输入您想要了解的内容，客服将及时回电解答</p>
-                    <el-input type="textarea" :rows="4" maxlength="300" :resize="'none'" v-model="content"></el-input>
+                    <el-input type="textarea" :rows="5" maxlength="300" :resize="'none'" v-model="content"></el-input>
                     <div class="button" @click="sendComm">确定</div>
                 </div>
             </div>
@@ -270,6 +270,10 @@ li{
     border-right:1px solid #EBEBEB;
     box-sizing: border-box;
     padding-left:30px;
+    &:first-child{
+
+    padding-left:0px;
+    }
     &:last-child{
         border:none;
     }
@@ -322,12 +326,11 @@ margin-bottom:20px;
 
 .el-textarea{
 
-box-shadow: 0px 2px 1px 0px rgba(0,0,0,0.09);
 border-radius: 12px;
     border:none;
 textarea{
     border:none;
-    box-shadow: none !important;
+box-shadow: 0px 2px 1px 0px rgba(0,0,0,0.09) inset !important;
     outline: none;
 }
 }
@@ -352,6 +355,7 @@ textarea{
         box-sizing: border-box;
 background: #FFFFFF;
 border-radius: 6px;
+margin-bottom:52px;
         .title{
 
 font-size: 24px;
@@ -419,6 +423,7 @@ width:calc(100% - 150px);
 }
 
 .detailCon{
+margin-left:40px;
     img{
         max-width:100%;
     }
@@ -431,6 +436,8 @@ border: 1px solid #EABA63;
 border-radius: 6px;
 
 padding:0 18px 50px;
+margin-left:40px;
+box-sizing: border-box;
 .progressItem{
 line-height: 50px;
     border-bottom: 1px dashed #EABA63;
