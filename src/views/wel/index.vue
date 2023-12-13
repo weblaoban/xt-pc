@@ -11,7 +11,7 @@
 				:autoplay="true"
 			>
 				<el-carousel-item v-for="item in bannerList" :key="item">
-					<a v-if="item.link" :href="item.link">
+					<a target="_blank" v-if="item.link" :href="item.link">
 						<div
 							class="carouseCard"
 							:style="'background-image:url(' + item.imgUrl + ')'"
