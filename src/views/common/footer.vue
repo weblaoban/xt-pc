@@ -6,28 +6,28 @@
 					<div class="linkInfo">
 						<p class="linkTitle">联系方式</p>
 						<ul>
-							<li>客服电话：400—0000—000
+							<li>客服电话：0571-86012055
 </li>
-							<li>客服邮箱：xxxxxxxxx@xx.com</li>
+							<li>客服邮箱：hlxintuo@163.com</li>
 							<li>服务时间：9:00-12:00</li>
-							<li>公司地址：xxxx省xxx市xxx区xxx街xxx号</li>
+							<li>公司地址：浙江省杭州市上城区太平门直街213号</li>
 						</ul>
 					</div>
 				</div>
 				<div class="footerRight">
-					<div class="imgCon">
+					<!-- <div class="imgCon">
                         <div class="imgBg">
 
                             <img src="/img/code.png" alt="" />
                         </div>
 						<p>微信公众号</p>
-					</div>
+					</div> -->
 					<div class="imgCon">
                         <div class="imgBg">
 
                             <img src="/img/code1.png" alt="" />
                         </div>
-						<p>客服微信</p>
+						<p>微信公众号</p>
 					</div>
 				</div>
 			</div>

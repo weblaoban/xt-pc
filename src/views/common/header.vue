@@ -5,7 +5,7 @@
 		</div>
 		<div class="logoContent">
 			<div class="container">
-				<div class="logo"><img src="/img/logo.png" alt="" /></div>
+				<div class="logo" @click="goIndex"><img src="/img/logo.png" alt="" /></div>
 				<div class="phone">
 					<img src="/img/kefu.png" alt="" />
 					<div class="phoneInfo">
@@ -101,6 +101,9 @@ export default {
 	},
 	created() {},
 	methods: {
+        goIndex(){
+this.$router.push('/')
+        },
         onModify(){
             const {userName,passWord,gender,smsCode,phone} = this;
             modifyPassword({smsCode,passWord:encrypt(passWord),phone}).then(res=>{

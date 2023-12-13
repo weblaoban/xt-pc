@@ -332,9 +332,9 @@ export default {
 				if (res && res.status === 200) {
 					console.log();
 					let list = res.data.data.records || [];
-					list = list.sort((a, b) => {
-						return a.soldNum - b.soldNum;
-					});
+					// list = list.sort((a, b) => {
+					// 	return a.soldNum - b.soldNum;
+					// });
 					this.product1 = res.data.data.records;
 				}
 			});
