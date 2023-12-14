@@ -1,4 +1,4 @@
-<!-- simujijin -->
+<!-- 集合信托 -->
 <template>
 	<div class="index-container">
 		<main-header :active="3"></main-header>
@@ -127,61 +127,6 @@
 				</div>
 			</div>
 		</div>
-		<!-- 协议 -->
-		<div class="model" v-if="showAgreement">
-			<div class="modelContent">
-				<el-icon @click="showAgreement = false"><Close /></el-icon>
-				<div class="agreement">
-					<img class="logo" src="/img/logo.png" alt="" />
-					<div class="agCon">
-						<h1>《合格投资者认定》</h1>
-						<p>
-							本网谨遵中国银行业监督管理委员会发布的《信托公司集合资金信托计划管理办法》之规定，只向特定投资者展示信托产品信息，不构成任何投资推介建议。
-						</p>
-						<p>
-							阁下如有意进行信托投资，请承诺符合《信托公司集合资金信托计划管理办法》之规定合格投资者的条件。
-						</p>
-						<p>
-							即具备相应风险识别能力和风险承担能力，投资于单只信托产品金额不低于100万元，且符合下列相关标准之一：
-						</p>
-						<p class="red">
-							1.承诺符合金融类资产不低于300万元;（金融资产包括银行存款、股票、债券、基金份额、资产管理计划、银行理财产品、信托计划、保险产品、期货权益等）
-						</p>
-						<p class="red">或</p>
-						<p class="red">
-							2.承诺符合最近三年个人平均收入不低于50万元人民币；
-						</p>
-						<h1 style="margin-top: 50px">《免责条款》</h1>
-						<p>
-							一、本网致力于提供完整、准确的产品信息，信息内容绝大部份来自于本网的授权机构，本网尽谨慎注意和一致描述义务。尽
-						</p>
-					</div>
-					<div class="checkBox">
-						<img
-							v-if="checked"
-							src="/img/checked.png"
-							@click="toggleCheck"
-							alt=""
-							class="checked"
-						/>
-						<img
-							v-if="!checked"
-							src="/img/unchecked.png"
-							@click="toggleCheck"
-							alt=""
-							class="notCheced"
-						/>
-						<span
-							>我接受 <span class="yel">《合格投资者认定》</span>、<span
-								class="yel"
-								>《免责条款》</span
-							>中所有条款</span
-						>
-					</div>
-					<div class="button" @click="onAgree">确定</div>
-				</div>
-			</div>
-		</div>
 	</div>
 </template>
 
@@ -189,7 +134,7 @@
 import { mapGetters } from "vuex";
 import mainFooter from "../common/footer.vue";
 import mainHeader from "../common/header.vue";
-import { list, yuyue, keylist } from "@/api/prod.js";
+import { list, yuyue, keylist, getprodinfo } from "@/api/prod.js";
 export default {
 	name: "jeZi",
 	components: {
@@ -229,18 +174,6 @@ export default {
 							label: "不限",
 							value: "-1",
 						},
-						{
-							label: "一年内（含）",
-							value: "一年内（含）",
-						},
-						{
-							label: "一年至两年（含）",
-							value: "一年至两年（含）",
-						},
-						{
-							label: "两年以上",
-							value: "两年以上",
-						},
 					],
 				},
 				{
@@ -250,22 +183,6 @@ export default {
 						{
 							label: "不限",
 							value: "-1",
-						},
-						{
-							label: "50万以内（含）",
-							value: "50万以内（含）",
-						},
-						{
-							label: "50万至100万（含）",
-							value: "50万至100万（含）",
-						},
-						{
-							label: "100万至300万（含）",
-							value: "100万至300万（含）",
-						},
-						{
-							label: "300万以上",
-							value: "300万以上",
 						},
 					],
 				},
@@ -277,26 +194,6 @@ export default {
 							label: "不限",
 							value: "-1",
 						},
-						{
-							label: "按月付息",
-							value: "按月付息",
-						},
-						{
-							label: "按季付息",
-							value: "按季付息",
-						},
-						{
-							label: "半年付息",
-							value: "半年付息",
-						},
-						{
-							label: "按年付息",
-							value: "按年付息",
-						},
-						{
-							label: "到期付息",
-							value: "到期付息",
-						},
 					],
 				},
 				{
@@ -306,30 +203,6 @@ export default {
 						{
 							label: "不限",
 							value: "-1",
-						},
-						{
-							label: "工商企业类",
-							value: "工商企业类",
-						},
-						{
-							label: "金融市场类",
-							value: "金融市场类",
-						},
-						{
-							label: "基础设施类",
-							value: "基础设施类",
-						},
-						{
-							label: "房地产类",
-							value: "房地产类",
-						},
-						{
-							label: "资金池类",
-							value: "资金池类",
-						},
-						{
-							label: "其他",
-							value: "其他",
 						},
 					],
 				},
@@ -383,7 +256,7 @@ export default {
 				},
 				{
 					label: "期限",
-					value: "investLimitId",
+					value: "investLimitCnt",
 				},
 				{
 					label: "业绩比较基准",
@@ -391,15 +264,15 @@ export default {
 				},
 				{
 					label: "投资门槛",
-					value: "pmStand",
+					value: "pmStandCnt",
 				},
 				{
 					label: "付息方式",
-					value: "inrestMethodId",
+					value: "inrestMethodCnt",
 				},
 				{
 					label: "投资领域",
-					value: "prodEffid",
+					value: "prodEffCnt",
 				},
 				{
 					label: "防控评级",
@@ -424,8 +297,50 @@ export default {
 	},
 	created() {
 		this.fetchList();
+		this.getSearchCardInfo();
 	},
 	methods: {
+		getSearchCardInfo() {
+			// // 期限
+			// this.searchs.investLimitId = this.getDataByParent(12, data);
+			// // 付息方式
+			// this.searchs.inrestMethodId = this.getDataByParent(13, data);
+			// // 投资门槛
+			// this.searchs.pmStand = this.getDataByParent(14, data);
+			// // 投资领域
+			// this.searchs.prodEffid = this.getDataByParent(15, data);
+			getprodinfo({ parentId: 12 }).then((res) => {
+				console.log(res);
+				this.setcardInfo("investLimitId", res.data.data);
+			});
+			getprodinfo({ parentId: 13 }).then((res) => {
+				console.log(res);
+				this.setcardInfo("inrestMethodId", res.data.data);
+			});
+			getprodinfo({ parentId: 14 }).then((res) => {
+				console.log(res);
+				this.setcardInfo("pmStand", res.data.data);
+			});
+			getprodinfo({ parentId: 15 }).then((res) => {
+				console.log(res);
+				this.setcardInfo("prodEffid", res.data.data);
+			});
+		},
+		setcardInfo(key, data = []) {
+			const searchs = this.searchs;
+			const targt = searchs.find((item) => item.prop == key);
+			if (!targt) {
+				return;
+			}
+			let list = [...data];
+			list = list.map((item) => {
+				return {
+					label: item.name,
+					value: item.id,
+				};
+			});
+			targt.options = targt.options.concat(list);
+		},
 		fetchList() {
 			const { selected, page } = this;
 			const selectObj = {};
@@ -543,10 +458,6 @@ export default {
 </script>
 
 <style lang="scss">
-.combineCon{
-
-    background: #fff;
-}
 .combineBanner {
 	width: 100%;
 	height: 274px;
@@ -603,7 +514,9 @@ export default {
 		}
 	}
 }
-
+.combineCon {
+	background: #fff;
+}
 .combineContent {
 	transform: translateY(-50px);
 	.searchCard {
@@ -776,6 +689,11 @@ export default {
 			}
 			.can {
 				display: block !important;
+				width: 83px;
+				height: 36px;
+				border-radius: 6px;
+				line-height: 36px;
+				margin-left: 20px;
 			}
 			.ths {
 				&:nth-child(5) {

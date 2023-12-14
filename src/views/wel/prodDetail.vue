@@ -15,13 +15,13 @@
                         </li>
                         <li>
                             <div class="label">投资期限</div>
-                            <div class="con">{{ detail.investLimitId || '--' }}</div></li>
+                            <div class="con">{{ detail.investLimitCnt || '--' }}</div></li>
                         <li>
                             <div class="label">投资门槛</div>
-                            <div class="con">{{ detail.pmStand || '--' }}</div></li>
+                            <div class="con">{{ detail.pmStandCnt || '--' }}</div></li>
                         <li>
                             <div class="label">付息方式</div>
-                            <div class="con">{{ detail.inrestMethodId || '--' }}</div></li>
+                            <div class="con">{{ detail.inrestMethodCnt || '--' }}</div></li>
                     </ul>
                 </div>
                 <div class="zixun">
@@ -39,12 +39,12 @@
 
                     <el-col :span="12"><div class="infoItem"><div class="infoLabel">产品类别</div><div class="infoDesc">{{ type[active] }}</div></div></el-col>
                     <el-col :span="12"><div class="infoItem"><div class="infoLabel">发行机构</div><div class="infoDesc">{{ detail.organid }}</div></div></el-col>
-                    <el-col :span="12"><div class="infoItem"><div class="infoLabel">投资领域</div><div class="infoDesc">{{ detail.prodEffId }}</div></div></el-col>
+                    <el-col :span="12"><div class="infoItem"><div class="infoLabel">投资领域</div><div class="infoDesc">{{ detail.prodEffCnt }}</div></div></el-col>
                     <el-col :span="12"><div class="infoItem"><div class="infoLabel">收益类型</div><div class="infoDesc">{{ detail.investId }}</div></div></el-col>
                     <el-col :span="12"><div class="infoItem"><div class="infoLabel">规模</div><div class="infoDesc">{{ detail.name }}</div></div></el-col>
                     <el-col :span="12"><div class="infoItem"><div class="infoLabel">投资门槛</div><div class="infoDesc">{{ detail.pmStand }}</div></div></el-col>
-                    <el-col :span="12"><div class="infoItem"><div class="infoLabel">产品期限</div><div class="infoDesc">{{ detail.investLimitId }}</div></div></el-col>
-                    <el-col :span="12"><div class="infoItem"><div class="infoLabel">付息方式</div><div class="infoDesc">{{ detail.inrestMethodId }}</div></div></el-col>
+                    <el-col :span="12"><div class="infoItem"><div class="infoLabel">产品期限</div><div class="infoDesc">{{ detail.investLimitCnt }}</div></div></el-col>
+                    <el-col :span="12"><div class="infoItem"><div class="infoLabel">付息方式</div><div class="infoDesc">{{ detail.inrestMethodCnt }}</div></div></el-col>
                     <el-col :span="12"><div class="infoItem"><div class="infoLabel">所在地域</div><div class="infoDesc">{{ detail.area }}</div></div></el-col>
                     <el-col :span="12"><div class="infoItem"><div class="infoLabel">业绩比较基准</div><div class="infoDesc">{{ detail.brief }}</div></div></el-col>
                     <el-col :span="12"><div class="infoItem"><div class="infoLabel">大小配额比</div><div class="infoDesc">{{ detail.investRatio }}</div></div></el-col>

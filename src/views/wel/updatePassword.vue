@@ -336,6 +336,7 @@ this.timeDownfn()
 }
 .bannerContent {
 	position: relative;
+	height:322px;
 	.carouseCard {
 		width: 100%;
 		height: 100%;

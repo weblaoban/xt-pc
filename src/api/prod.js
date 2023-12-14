@@ -60,9 +60,10 @@ export const yuyue = (data) => {
 	});
 };
 
-export const getprodinfo = () => {
+export const getprodinfo = (params) => {
 	return request({
-		url: baseUrl + "/p/categoryContent/table",
+		url: baseUrl + "/categoryContent/categoryContentlnfo",
 		method: "get",
+		params: { ...params },
 	});
 };

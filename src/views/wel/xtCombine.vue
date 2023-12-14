@@ -174,18 +174,6 @@ export default {
 							label: "不限",
 							value: "-1",
 						},
-						{
-							label: "一年内（含）",
-							value: "一年内（含）",
-						},
-						{
-							label: "一年至两年（含）",
-							value: "一年至两年（含）",
-						},
-						{
-							label: "两年以上",
-							value: "两年以上",
-						},
 					],
 				},
 				{
@@ -195,22 +183,6 @@ export default {
 						{
 							label: "不限",
 							value: "-1",
-						},
-						{
-							label: "50万以内（含）",
-							value: "50万以内（含）",
-						},
-						{
-							label: "50万至100万（含）",
-							value: "50万至100万（含）",
-						},
-						{
-							label: "100万至300万（含）",
-							value: "100万至300万（含）",
-						},
-						{
-							label: "300万以上",
-							value: "300万以上",
 						},
 					],
 				},
@@ -222,26 +194,6 @@ export default {
 							label: "不限",
 							value: "-1",
 						},
-						{
-							label: "按月付息",
-							value: "按月付息",
-						},
-						{
-							label: "按季付息",
-							value: "按季付息",
-						},
-						{
-							label: "半年付息",
-							value: "半年付息",
-						},
-						{
-							label: "按年付息",
-							value: "按年付息",
-						},
-						{
-							label: "到期付息",
-							value: "到期付息",
-						},
 					],
 				},
 				{
@@ -251,30 +203,6 @@ export default {
 						{
 							label: "不限",
 							value: "-1",
-						},
-						{
-							label: "工商企业类",
-							value: "工商企业类",
-						},
-						{
-							label: "金融市场类",
-							value: "金融市场类",
-						},
-						{
-							label: "基础设施类",
-							value: "基础设施类",
-						},
-						{
-							label: "房地产类",
-							value: "房地产类",
-						},
-						{
-							label: "资金池类",
-							value: "资金池类",
-						},
-						{
-							label: "其他",
-							value: "其他",
 						},
 					],
 				},
@@ -328,7 +256,7 @@ export default {
 				},
 				{
 					label: "期限",
-					value: "investLimitId",
+					value: "investLimitCnt",
 				},
 				{
 					label: "业绩比较基准",
@@ -336,15 +264,15 @@ export default {
 				},
 				{
 					label: "投资门槛",
-					value: "pmStand",
+					value: "pmStandCnt",
 				},
 				{
 					label: "付息方式",
-					value: "inrestMethodId",
+					value: "inrestMethodCnt",
 				},
 				{
 					label: "投资领域",
-					value: "prodEffid",
+					value: "prodEffCnt",
 				},
 				{
 					label: "防控评级",
@@ -369,9 +297,50 @@ export default {
 	},
 	created() {
 		this.fetchList();
-		getprodinfo();
+		this.getSearchCardInfo();
 	},
 	methods: {
+		getSearchCardInfo() {
+			// // 期限
+			// this.searchs.investLimitId = this.getDataByParent(12, data);
+			// // 付息方式
+			// this.searchs.inrestMethodId = this.getDataByParent(13, data);
+			// // 投资门槛
+			// this.searchs.pmStand = this.getDataByParent(14, data);
+			// // 投资领域
+			// this.searchs.prodEffid = this.getDataByParent(15, data);
+			getprodinfo({ parentId: 12 }).then((res) => {
+				console.log(res);
+				this.setcardInfo("investLimitId", res.data.data);
+			});
+			getprodinfo({ parentId: 13 }).then((res) => {
+				console.log(res);
+				this.setcardInfo("inrestMethodId", res.data.data);
+			});
+			getprodinfo({ parentId: 14 }).then((res) => {
+				console.log(res);
+				this.setcardInfo("pmStand", res.data.data);
+			});
+			getprodinfo({ parentId: 15 }).then((res) => {
+				console.log(res);
+				this.setcardInfo("prodEffid", res.data.data);
+			});
+		},
+		setcardInfo(key, data = []) {
+			const searchs = this.searchs;
+			const targt = searchs.find((item) => item.prop == key);
+			if (!targt) {
+				return;
+			}
+			let list = [...data];
+			list = list.map((item) => {
+				return {
+					label: item.name,
+					value: item.id,
+				};
+			});
+			targt.options = targt.options.concat(list);
+		},
 		fetchList() {
 			const { selected, page } = this;
 			const selectObj = {};
