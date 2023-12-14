@@ -328,7 +328,7 @@ export default {
 			});
 		},
 		getProdList() {
-			list({ categoryId: 97, soldNum: 1, }).then((res) => {
+			list({ categoryId: 97, soldNum: 1 }).then((res) => {
 				if (res && res.status === 200) {
 					console.log();
 					let list = res.data.data.records || [];
@@ -338,12 +338,12 @@ export default {
 					this.product1 = res.data.data.records;
 				}
 			});
-			list({ categoryId: 98, soldNum: 1, }).then((res) => {
+			list({ categoryId: 98, soldNum: 1 }).then((res) => {
 				if (res && res.status === 200) {
 					this.product2 = res.data.data.records;
 				}
 			});
-			list({ categoryId: 99, soldNum: 1, }).then((res) => {
+			list({ categoryId: 99, soldNum: 1 }).then((res) => {
 				if (res && res.status === 200) {
 					this.product3 = res.data.data.records;
 				}
@@ -444,15 +444,15 @@ export default {
 				margin-right: 13px;
 			}
 			.cardDesc {
-                p{
-                    margin:0;
-                }
+				p {
+					margin: 0;
+				}
 				.title {
 					font-size: 24px;
 					font-family: Heiti SC;
 					font-weight: 500;
 					color: #eaba63;
-                    margin:10px 0;
+					margin: 10px 0;
 				}
 				.desc {
 					font-size: 16px;
@@ -491,6 +491,7 @@ export default {
 			align-items: center;
 			line-height: 1;
 			box-sizing: border-box;
+			z-index: 20;
 			img {
 				width: 36px;
 				height: 36px;
@@ -563,10 +564,9 @@ export default {
 			border-radius: 12px;
 			text-align: center;
 			margin-right: 27px;
-            &:hover{
-
-box-shadow: 0px 0px 21px 9px rgba(66,142,230,0.3);
-            }
+			&:hover {
+				box-shadow: 0px 0px 21px 9px rgba(66, 142, 230, 0.3);
+			}
 			.title {
 				height: 94px;
 				background: linear-gradient(0deg, #89f7fe, #66a6ff);
@@ -582,10 +582,9 @@ box-shadow: 0px 0px 21px 9px rgba(66,142,230,0.3);
 			}
 			&:nth-child(2n) {
 				box-shadow: 0px 0px 21px 9px rgba(252, 106, 74, 0.1);
-            &:hover{
-
-				box-shadow: 0px 0px 21px 9px rgba(252, 106, 74, 0.3);
-            }
+				&:hover {
+					box-shadow: 0px 0px 21px 9px rgba(252, 106, 74, 0.3);
+				}
 				.title {
 					background: linear-gradient(0deg, #f28e26, #fd644f);
 				}
@@ -644,19 +643,17 @@ box-shadow: 0px 0px 21px 9px rgba(66,142,230,0.3);
 	.products {
 		.productItem {
 			box-shadow: 0px 0px 21px 9px rgba(234, 186, 99, 0.1);
-            &:hover{
-
-                box-shadow: 0px 0px 21px 9px rgba(234, 186, 99, 0.3);
-}
+			&:hover {
+				box-shadow: 0px 0px 21px 9px rgba(234, 186, 99, 0.3);
+			}
 			.title {
 				background: linear-gradient(0deg, #fad126, #f39800);
 			}
 			&:nth-child(2n) {
-				box-shadow: 0px 0px 21px 9px rgba(130, 135, 222, 0.1);     
-                &:hover{
-
-                    box-shadow: 0px 0px 21px 9px rgba(130, 135, 222, 0.3);
-}
+				box-shadow: 0px 0px 21px 9px rgba(130, 135, 222, 0.1);
+				&:hover {
+					box-shadow: 0px 0px 21px 9px rgba(130, 135, 222, 0.3);
+				}
 				.title {
 					background: linear-gradient(0deg, #7683d9, #d8a0fe);
 				}
@@ -672,20 +669,18 @@ box-shadow: 0px 0px 21px 9px rgba(66,142,230,0.3);
 	}
 	.products {
 		.productItem {
-			box-shadow: 0px 0px 21px 9px rgba(252, 107, 109, 0.1);         &:hover{
-
-
-                box-shadow: 0px 0px 21px 9px rgba(252, 107, 109, 0.3);  
-}
+			box-shadow: 0px 0px 21px 9px rgba(252, 107, 109, 0.1);
+			&:hover {
+				box-shadow: 0px 0px 21px 9px rgba(252, 107, 109, 0.3);
+			}
 			.title {
 				background: linear-gradient(90deg, #ff934c, #fc686f);
 			}
 			&:nth-child(2n) {
-				box-shadow: 0px 0px 21px 9px rgba(60, 231, 188, 0.1);      &:hover{
-
-
-                    box-shadow: 0px 0px 21px 9px rgba(60, 231, 188, 0.3); 
-}
+				box-shadow: 0px 0px 21px 9px rgba(60, 231, 188, 0.1);
+				&:hover {
+					box-shadow: 0px 0px 21px 9px rgba(60, 231, 188, 0.3);
+				}
 				.title {
 					background: linear-gradient(90deg, #38ebba, #6fb1d2);
 				}
@@ -747,7 +742,7 @@ box-shadow: 0px 0px 21px 9px rgba(66,142,230,0.3);
 			font-family: Heiti SC;
 			font-weight: 500;
 			color: #30333b;
-            margin-bottom:80px;
+			margin-bottom: 80px;
 		}
 		.companyBg {
 			position: absolute;
@@ -1129,7 +1124,7 @@ box-shadow: 0px 0px 21px 9px rgba(66,142,230,0.3);
 			position: relative;
 			text-align: center;
 			margin-bottom: 40px;
-            line-height: 1;
+			line-height: 1;
 			&::after {
 				position: absolute;
 				content: "";
@@ -1142,10 +1137,10 @@ box-shadow: 0px 0px 21px 9px rgba(66,142,230,0.3);
 				bottom: 0;
 				margin: auto;
 			}
-            span{
-                position: relative;
-                z-index: 1;
-            }
+			span {
+				position: relative;
+				z-index: 1;
+			}
 		}
 		.cut {
 			background-color: #fff;

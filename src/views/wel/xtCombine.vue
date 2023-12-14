@@ -134,7 +134,7 @@
 import { mapGetters } from "vuex";
 import mainFooter from "../common/footer.vue";
 import mainHeader from "../common/header.vue";
-import { list, yuyue, keylist } from "@/api/prod.js";
+import { list, yuyue, keylist, getprodinfo } from "@/api/prod.js";
 export default {
 	name: "jeZi",
 	components: {
@@ -369,6 +369,7 @@ export default {
 	},
 	created() {
 		this.fetchList();
+		getprodinfo();
 	},
 	methods: {
 		fetchList() {
@@ -544,9 +545,8 @@ export default {
 		}
 	}
 }
-.combineCon{
-
-    background: #fff;
+.combineCon {
+	background: #fff;
 }
 .combineContent {
 	transform: translateY(-50px);
