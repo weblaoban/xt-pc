@@ -247,12 +247,7 @@ export default {
 				},
 				{
 					label: "类型",
-					value: "categoryId",
-					dicData: {
-						97: "集合信托",
-						98: "集合资管",
-						99: "私募基金",
-					},
+					value: "categoryCnt",
 				},
 				{
 					label: "期限",
@@ -341,18 +336,26 @@ export default {
 			});
 			targt.options = targt.options.concat(list);
 		},
+		
 		fetchList() {
-			const { selected, page } = this;
+			const { selected, page, userInfo } = this;
 			const selectObj = {};
 			for (let i in selected) {
 				if (selected[i].value != -1) {
 					selectObj[i] = selected[i].value;
 				}
 			}
-			list({ ...page, categoryId: 99, ...selectObj }).then((res) => {
-				this.prodList = res.data.data.records;
-				this.page.total = res.data.data.total;
-			});
+			if (userInfo.id) {
+				yuyuelist({ ...page, categoryId: 97, ...selectObj }).then((res) => {
+					this.prodList = res.data.data.records;
+					this.page.total = res.data.data.total;
+				});
+			} else {
+				list({ ...page, categoryId: 97, ...selectObj }).then((res) => {
+					this.prodList = res.data.data.records;
+					this.page.total = res.data.data.total;
+				});
+			}
 		},
 		fetchListBykey() {
 			if (!this.key) {

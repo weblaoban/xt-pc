@@ -5,7 +5,12 @@
 		<div class="combineCon">
 			<div class="combineBanner">
 				<div class="input">
-					<input v-model="key" @blur="fetchListBykey" type="text" placeholder="状态｜期限｜门槛｜付息方式｜领域" />
+					<input
+						v-model="key"
+						@blur="fetchListBykey"
+						type="text"
+						placeholder="状态｜期限｜门槛｜付息方式｜领域"
+					/>
 					<img src="/img/search.png" alt="" class="search" />
 				</div>
 			</div>
@@ -67,7 +72,7 @@
 							<div class="ths">操作</div>
 						</div>
 						<div
-                        @click="goDetail(item)"
+							@click="goDetail(item)"
 							:class="{
 								prodItem: true,
 								valid: item.status !== 3,
@@ -77,9 +82,19 @@
 							:key="index"
 						>
 							<div class="ths" v-for="prop in propColumn" :key="prop.value">
-								{{ prop.dicData?prop.dicData[item[prop.value]]:item[prop.value] }}
+								{{
+									prop.dicData
+										? prop.dicData[item[prop.value]]
+										: item[prop.value]
+								}}
 							</div>
-							<div v-if="!item.imgs" @click.stop="onYuyue(item)" class="ths can yuyue">我要预约</div>
+							<div
+								v-if="!item.imgs"
+								@click.stop="onYuyue(item)"
+								class="ths can yuyue"
+							>
+								我要预约
+							</div>
 							<div v-if="item.imgs" class="ths can yuyue">已预约</div>
 						</div>
 					</div>
@@ -112,61 +127,6 @@
 				</div>
 			</div>
 		</div>
-		<!-- 协议 -->
-		<div class="model" v-if="showAgreement">
-			<div class="modelContent">
-				<el-icon @click="showAgreement = false"><Close /></el-icon>
-				<div class="agreement">
-					<img class="logo" src="/img/logo.png" alt="" />
-					<div class="agCon">
-						<h1>《合格投资者认定》</h1>
-						<p>
-							本网谨遵中国银行业监督管理委员会发布的《信托公司集合资金信托计划管理办法》之规定，只向特定投资者展示信托产品信息，不构成任何投资推介建议。
-						</p>
-						<p>
-							阁下如有意进行信托投资，请承诺符合《信托公司集合资金信托计划管理办法》之规定合格投资者的条件。
-						</p>
-						<p>
-							即具备相应风险识别能力和风险承担能力，投资于单只信托产品金额不低于100万元，且符合下列相关标准之一：
-						</p>
-						<p class="red">
-							1.承诺符合金融类资产不低于300万元;（金融资产包括银行存款、股票、债券、基金份额、资产管理计划、银行理财产品、信托计划、保险产品、期货权益等）
-						</p>
-						<p class="red">或</p>
-						<p class="red">
-							2.承诺符合最近三年个人平均收入不低于50万元人民币；
-						</p>
-						<h1 style="margin-top: 50px">《免责条款》</h1>
-						<p>
-							一、本网致力于提供完整、准确的产品信息，信息内容绝大部份来自于本网的授权机构，本网尽谨慎注意和一致描述义务。尽
-						</p>
-					</div>
-					<div class="checkBox">
-						<img
-							v-if="checked"
-							src="/img/checked.png"
-							@click="toggleCheck"
-							alt=""
-							class="checked"
-						/>
-						<img
-							v-if="!checked"
-							src="/img/unchecked.png"
-							@click="toggleCheck"
-							alt=""
-							class="notCheced"
-						/>
-						<span
-							>我接受 <span class="yel">《合格投资者认定》</span>、<span
-								class="yel"
-								>《免责条款》</span
-							>中所有条款</span
-						>
-					</div>
-					<div class="button" @click="onAgree">确定</div>
-				</div>
-			</div>
-		</div>
 	</div>
 </template>
 
@@ -174,7 +134,7 @@
 import { mapGetters } from "vuex";
 import mainFooter from "../common/footer.vue";
 import mainHeader from "../common/header.vue";
-import { list ,yuyue,keylist} from "@/api/prod.js";
+import { list, yuyue, keylist, getprodinfo, yuyuelist } from "@/api/prod.js";
 export default {
 	name: "jeZi",
 	components: {
@@ -214,18 +174,6 @@ export default {
 							label: "不限",
 							value: "-1",
 						},
-						{
-							label: "一年内（含）",
-							value: "一年内（含）",
-						},
-						{
-							label: "一年至两年（含）",
-							value: "一年至两年（含）",
-						},
-						{
-							label: "两年以上",
-							value: "两年以上",
-						},
 					],
 				},
 				{
@@ -235,22 +183,6 @@ export default {
 						{
 							label: "不限",
 							value: "-1",
-						},
-						{
-							label: "50万以内（含）",
-							value: "50万以内（含）",
-						},
-						{
-							label: "50万至100万（含）",
-							value: "50万至100万（含）",
-						},
-						{
-							label: "100万至300万（含）",
-							value: "100万至300万（含）",
-						},
-						{
-							label: "300万以上",
-							value: "300万以上",
 						},
 					],
 				},
@@ -262,26 +194,6 @@ export default {
 							label: "不限",
 							value: "-1",
 						},
-						{
-							label: "按月付息",
-							value: "按月付息",
-						},
-						{
-							label: "按季付息",
-							value: "按季付息",
-						},
-						{
-							label: "半年付息",
-							value: "半年付息",
-						},
-						{
-							label: "按年付息",
-							value: "按年付息",
-						},
-						{
-							label: "到期付息",
-							value: "到期付息",
-						},
 					],
 				},
 				{
@@ -291,30 +203,6 @@ export default {
 						{
 							label: "不限",
 							value: "-1",
-						},
-						{
-							label: "工商企业类",
-							value: "工商企业类",
-						},
-						{
-							label: "金融市场类",
-							value: "金融市场类",
-						},
-						{
-							label: "基础设施类",
-							value: "基础设施类",
-						},
-						{
-							label: "房地产类",
-							value: "房地产类",
-						},
-						{
-							label: "资金池类",
-							value: "资金池类",
-						},
-						{
-							label: "其他",
-							value: "其他",
 						},
 					],
 				},
@@ -351,24 +239,19 @@ export default {
 				{
 					label: "状态",
 					value: "status",
-                    dicData:{
-                        1:'预售',
-                        2:'在售',
-                        3:'售罄'
-                    }
+					dicData: {
+						1: "预售",
+						2: "在售",
+						3: "售罄",
+					},
 				},
 				{
 					label: "类型",
-					value: "categoryId",
-                    dicData:{
-                        97:'集合信托',
-                        98:'集合资管',
-                        99:'私募基金'
-                    }
+					value: "categoryCnt",
 				},
 				{
 					label: "期限",
-					value: "investLimitId",
+					value: "investLimitCnt",
 				},
 				{
 					label: "业绩比较基准",
@@ -376,15 +259,15 @@ export default {
 				},
 				{
 					label: "投资门槛",
-					value: "pmStand",
+					value: "pmStandCnt",
 				},
 				{
 					label: "付息方式",
-					value: "inrestMethodId",
+					value: "inrestMethodCnt",
 				},
 				{
 					label: "投资领域",
-					value: "prodEffid",
+					value: "prodEffCnt",
 				},
 				{
 					label: "防控评级",
@@ -400,51 +283,100 @@ export default {
 			checked: false,
 			showAgreement: false,
 			showYuyue: false,
-            cur:{},
-            key:'',
+			cur: {},
+			key: "",
 		};
 	},
 	computed: {
 		...mapGetters(["userInfo"]),
 	},
 	created() {
-		this.fetchList()
+		this.fetchList();
+		this.getSearchCardInfo();
 	},
 	methods: {
+		getSearchCardInfo() {
+			// // 期限
+			// this.searchs.investLimitId = this.getDataByParent(12, data);
+			// // 付息方式
+			// this.searchs.inrestMethodId = this.getDataByParent(13, data);
+			// // 投资门槛
+			// this.searchs.pmStand = this.getDataByParent(14, data);
+			// // 投资领域
+			// this.searchs.prodEffid = this.getDataByParent(15, data);
+			getprodinfo({ parentId: 12 }).then((res) => {
+				console.log(res);
+				this.setcardInfo("investLimitId", res.data.data);
+			});
+			getprodinfo({ parentId: 13 }).then((res) => {
+				console.log(res);
+				this.setcardInfo("inrestMethodId", res.data.data);
+			});
+			getprodinfo({ parentId: 14 }).then((res) => {
+				console.log(res);
+				this.setcardInfo("pmStand", res.data.data);
+			});
+			getprodinfo({ parentId: 15 }).then((res) => {
+				console.log(res);
+				this.setcardInfo("prodEffid", res.data.data);
+			});
+		},
+		setcardInfo(key, data = []) {
+			const searchs = this.searchs;
+			const targt = searchs.find((item) => item.prop == key);
+			if (!targt) {
+				return;
+			}
+			let list = [...data];
+			list = list.map((item) => {
+				return {
+					label: item.name,
+					value: item.id,
+				};
+			});
+			targt.options = targt.options.concat(list);
+		},
 		fetchList() {
-			const { selected, page } = this;
+			const { selected, page, userInfo } = this;
 			const selectObj = {};
 			for (let i in selected) {
 				if (selected[i].value != -1) {
 					selectObj[i] = selected[i].value;
 				}
 			}
-			list({ ...page, categoryId: 98,...selectObj }).then(res=>{
-                this.prodList = res.data.data.records;
-                this.page.total = res.data.data.total;
-            });
+			if (userInfo.id) {
+				yuyuelist({ ...page, categoryId: 98, ...selectObj }).then((res) => {
+					this.prodList = res.data.data.records;
+					this.page.total = res.data.data.total;
+				});
+			} else {
+				list({ ...page, categoryId: 98, ...selectObj }).then((res) => {
+					this.prodList = res.data.data.records;
+					this.page.total = res.data.data.total;
+				});
+			}
 		},
-        fetchListBykey(){
-            if(!this.key){
-                this.fetchList();
-                return;
-            }
-            keylist({keystr:this.key,catstr:98}).then(res=>{
-                this.prodList = res.data.data.records;
-                this.page.total = res.data.data.total;
-            })
-        },
+		fetchListBykey() {
+			if (!this.key) {
+				this.fetchList();
+				return;
+			}
+			keylist({ keystr: this.key, catstr: 98 }).then((res) => {
+				this.prodList = res.data.data.records;
+				this.page.total = res.data.data.total;
+			});
+		},
 		onSelectSearch(value, prop) {
 			console.log(value, prop);
 			this.selected[prop] = value;
-            this.fetchList()
+			this.fetchList();
 		},
 		removeSelected(key) {
 			this.selected[key] = {
 				label: "不限",
 				value: "-1",
 			};
-		this.fetchList()
+			this.fetchList();
 		},
 		resetSearch() {
 			this.selected = {
@@ -472,66 +404,62 @@ export default {
 		},
 		currentChange(current) {
 			this.page.current = current;
-            if(!this.key){
-                this.fetchList();
-            }else{
-this.fetchListBykey()
-            }
+			if (!this.key) {
+				this.fetchList();
+			} else {
+				this.fetchListBykey();
+			}
 		},
 		toggleCheck() {
 			this.checked = !this.checked;
 		},
-        goDetail(row){
-            if(!this.userInfo.id){
-                this.$store.dispatch('setLoginDialog',true)
-                return;
-            }
-this.$router.push({
-    path:'/prodDetail/'+row.id,
-    query:{
-        type:1
-    }
-})
-        },
-        onYuyue(cur){
-            if(!this.userInfo.id){
-                this.$store.dispatch('setLoginDialog',true)
-                return;
-            }
-            this.cur = cur;
-            this.showYuyue = true
-        },
-        onAgree(){
-            if(!this.checked){
-                this.$message.error('请先同意协议');
-                return;
-            }
-            this.showYuyue = true
-            this.showAgreement = false
-        },
-        onDoYuyue(){
-const cur = this.cur;
-const userInfo = this.userInfo
-if(cur.id){
-    yuyue({prodId:cur.id,userId:userInfo.id}).then(res=>{
-        if(res && res.data && res.data.success){
-            this.$message.success('预约成功')
-            this.showYuyue = false
-            this.cur = {}
-            this.fetchList()
-        }
-    })
-}
-        }
+		goDetail(row) {
+			if (!this.userInfo.id) {
+				this.$store.dispatch("setLoginDialog", true);
+				return;
+			}
+			this.$router.push({
+				path: "/prodDetail/" + row.id,
+				query: {
+					type: 1,
+				},
+			});
+		},
+		onYuyue(cur) {
+			if (!this.userInfo.id) {
+				this.$store.dispatch("setLoginDialog", true);
+				return;
+			}
+			this.cur = cur;
+			this.showYuyue = true;
+		},
+		onAgree() {
+			if (!this.checked) {
+				this.$message.error("请先同意协议");
+				return;
+			}
+			this.showYuyue = true;
+			this.showAgreement = false;
+		},
+		onDoYuyue() {
+			const cur = this.cur;
+			const userInfo = this.userInfo;
+			if (cur.id) {
+				yuyue({ prodId: cur.id, userId: userInfo.id }).then((res) => {
+					if (res && res.data && res.data.success) {
+						this.$message.success("预约成功");
+						this.showYuyue = false;
+						this.cur = {};
+						this.fetchList();
+					}
+				});
+			}
+		},
 	},
 };
 </script>
 
 <style lang="scss">
-.combineCon{
-
-    background: #fff;
-}
 .combineBanner {
 	width: 100%;
 	height: 274px;
@@ -588,7 +516,9 @@ if(cur.id){
 		}
 	}
 }
-
+.combineCon {
+	background: #fff;
+}
 .combineContent {
 	transform: translateY(-50px);
 	.searchCard {
@@ -761,6 +691,11 @@ if(cur.id){
 			}
 			.can {
 				display: block !important;
+				width: 83px;
+				height: 36px;
+				border-radius: 6px;
+				line-height: 36px;
+				margin-left: 20px;
 			}
 			.ths {
 				&:nth-child(5) {
@@ -769,7 +704,7 @@ if(cur.id){
 			}
 		}
 		&.notValid {
-            pointer-events: none;
+			pointer-events: none;
 			color: #9a9a9c;
 			.ths {
 				&:nth-child(5) {

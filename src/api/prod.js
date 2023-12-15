@@ -12,6 +12,18 @@ export const list = (data) => {
 	});
 };
 
+// 产品列表 根据分类id来
+export const yuyuelist = (data) => {
+	return request({
+		url: baseUrl + "/p/prod/pageProd",
+		method: "get",
+		meta: {
+			isSerialize: true,
+		},
+		params: data,
+	});
+};
+
 // 产品列表 根据关键字查询
 export const keylist = (data) => {
 	return request({
@@ -62,7 +74,7 @@ export const yuyue = (data) => {
 
 export const getprodinfo = (params) => {
 	return request({
-		url: baseUrl + "/categoryContent/categoryContentlnfo",
+		url: baseUrl + "/categoryContent/categoryContentInfo",
 		method: "get",
 		params: { ...params },
 	});
