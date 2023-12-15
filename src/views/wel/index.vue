@@ -894,7 +894,7 @@ export default {
 }
 .bannerContent {
 	position: relative;
-	height: 322px;
+	height: 500px;
 	.carouseCard {
 		width: 100%;
 		height: 100%;
