@@ -523,7 +523,7 @@ export default {
 	transform: translateY(-50px);
 	.searchCard {
 		width: 100%;
-		height: 358px;
+		min-height: 358px;
 		background: #ffffff;
 		box-shadow: 0px 0px 16px 4px rgba(154, 154, 156, 0.15);
 		border-radius: 6px;
