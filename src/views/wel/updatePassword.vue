@@ -24,12 +24,13 @@
 					<h4 class="loginTitle"><span>修改密码</span></h4>
 					<div class="inputItem">
 						<div class="phoneInfo">
-							登录手机号： <span>{{ (userInfo.userMobile+'').slice(0, 3) }} </span
-							><span>{{ (userInfo.userMobile+'').slice(3, 7) }} </span
-							><span>{{ (userInfo.userMobile+'').slice(7, 11) }} </span>
+							登录手机号：
+							<span>{{ (userInfo.userMobile + "").slice(0, 3) }} </span
+							><span>{{ (userInfo.userMobile + "").slice(3, 7) }} </span
+							><span>{{ (userInfo.userMobile + "").slice(7, 11) }} </span>
 						</div>
 					</div>
-					
+
 					<div class="smscodeCon">
 						<div class="inputItem">
 							<input
@@ -44,7 +45,7 @@
 							<div class="cut"></div>
 						</div>
 						<div class="sendBtn">
-        <img :src="captcha" alt="" @click="refershCode">
+							<img :src="captcha" alt="" @click="refershCode" />
 						</div>
 					</div>
 					<div class="smscodeCon">
@@ -61,7 +62,11 @@
 							<div class="cut"></div>
 						</div>
 						<div class="sendBtn">
-							<div class="send" v-if="timeDown === originTime" @click="checkCaptcha">
+							<div
+								class="send"
+								v-if="timeDown === originTime"
+								@click="checkCaptcha"
+							>
 								发送
 							</div>
 							<div class="hasSend" v-if="timeDown !== originTime">
@@ -120,7 +125,7 @@
 							class="togglePassword"
 						/>
 					</div>
-                    
+
 					<p class="errInfo">{{ errInfo }}</p>
 					<div class="button" @click="onModify">确认修改</div>
 					<div class="other">
@@ -138,7 +143,13 @@
 import { mapGetters } from "vuex";
 import mainFooter from "../common/footer.vue";
 import { encrypt } from "utils/util";
-import { register, modifyPassword,getCaptcha,sendSmsCode,checkCode } from "@/api/user.js";
+import {
+	register,
+	modifyPassword,
+	getCaptcha,
+	sendSmsCode,
+	checkCode,
+} from "@/api/user.js";
 export default {
 	name: "register",
 	components: {
@@ -156,7 +167,7 @@ export default {
 			gender: 0,
 			smsCode: "",
 			originTime: 30,
-        code:'',
+			code: "",
 			timeDown: 30,
 			timer: null,
 			contact: {
@@ -164,56 +175,57 @@ export default {
 				phone: "",
 				message: "",
 			},
-            captcha:'',
-            time:new Date().getTime(),
-            errInfo:''
+			captcha: "",
+			time: new Date().getTime(),
+			errInfo: "",
 		};
 	},
 	computed: {
 		...mapGetters(["userInfo"]),
 	},
-	mounted() {this.getCaptcha()},
+	mounted() {
+		this.getCaptcha();
+	},
 	methods: {
-        getCaptcha(){
-            getCaptcha({time:this.time}).then((res)=>{
-                const file = new FileReader()
-                const that = this;
-                file.onloadend =function(e){
-                that.captcha = e.target.result
-                }
-                file.readAsDataURL(res.data)
-            })
-        },
-        refershCode(){
-this.time = new Date().getTime();
-this.code=''
-this.getCaptcha()
-        },
-        checkCaptcha(){
-            if(!this.code){
-                this.errInfo = "请输入图形验证码";
-                return;
-            }
-            // this.errInfo = "";
-            checkCode({time:this.time,code:this.code}).then(({data})=>{
-                if(data.data){
-
-                    this.sendSms()
-                this.errInfo = "";
-                }else{
-                    this.refershCode();
-                this.errInfo = "请输入正确的图形验证码";
-                }
-            })
-        },
-		sendSms() {
-            sendSmsCode({mobile:this.phone}).then(res=>{
-                if(res && res.data&& res.data.success){
-this.timeDownfn()
-                }
-            })
+		getCaptcha() {
+			getCaptcha({ time: this.time }).then((res) => {
+				const file = new FileReader();
+				const that = this;
+				file.onloadend = function (e) {
+					that.captcha = e.target.result;
+				};
+				file.readAsDataURL(res.data);
+			});
 		},
-        timeDownfn(){
+		refershCode() {
+			this.time = new Date().getTime();
+			this.code = "";
+			this.getCaptcha();
+		},
+		checkCaptcha() {
+			if (!this.code) {
+				this.errInfo = "请输入图形验证码";
+				return;
+			}
+			// this.errInfo = "";
+			checkCode({ time: this.time, code: this.code }).then(({ data }) => {
+				if (data.data) {
+					this.sendSms();
+					this.errInfo = "";
+				} else {
+					this.refershCode();
+					this.errInfo = "请输入正确的图形验证码";
+				}
+			});
+		},
+		sendSms() {
+			sendSmsCode({ mobile: this.phone }).then((res) => {
+				if (res && res.data && res.data.success) {
+					this.timeDownfn();
+				}
+			});
+		},
+		timeDownfn() {
 			this.timer = setTimeout(() => {
 				this.timeDown = this.timeDown - 1;
 				if (this.timeDown <= 1) {
@@ -228,7 +240,7 @@ this.timeDownfn()
 					this.timeDownfn();
 				}
 			}, 1000);
-        },
+		},
 		backLogin() {
 			this.$router.replace("/index");
 		},
@@ -245,30 +257,33 @@ this.timeDownfn()
 			});
 		},
 		onModify() {
-			const { userName, passWord, gender, smsCode, phone,twopassWord } = this;
-            if(!twopassWord){
+			const { userName, passWord, gender, smsCode, phone, twopassWord } = this;
+			if (!twopassWord) {
 				this.errInfo = "请确认密码";
 				return;
-            }
-			if (!passWord  || !smsCode) {
+			}
+			if (!passWord || !smsCode) {
 				this.errInfo = "请输入完整信息";
 				return;
 			}
-			modifyPassword({ code:smsCode, passWord: encrypt(passWord), 
-				userMobile: phone,mobile:phone,time:this.time }).then(
-				(res) => {
-                if(res.data.success){
-                    this.$message.success('修改成功');
-                    setTimeout(()=>{
-            this.$store.dispatch('LogOut')
-                    this.backLogin()
-                    },2000)
-                }else{
-                    this.$message.error(res.data.msg)
-                    this.refershCode();
-                }
+			modifyPassword({
+				code: smsCode,
+				passWord: encrypt(passWord),
+				userMobile: phone,
+				mobile: phone,
+				time: this.time,
+			}).then((res) => {
+				if (res.data.success) {
+					this.$message.success("修改成功");
+					setTimeout(() => {
+						this.$store.dispatch("LogOut");
+						this.backLogin();
+					}, 2000);
+				} else {
+					this.$message.error(res.data.msg);
+					this.refershCode();
 				}
-			);
+			});
 		},
 		onMenuClick(menu) {
 			if (menu.link) {
@@ -336,12 +351,12 @@ this.timeDownfn()
 }
 .bannerContent {
 	position: relative;
-	height:322px;
+	height: auto;
 	.carouseCard {
 		width: 100%;
 		height: 100%;
 		background-image: url(/img/registerbg.png);
-        background-size:1920px 100%;
+		background-size: 1920px 100%;
 		background-position: center center;
 		background-repeat: no-repeat;
 		display: flex;
@@ -380,12 +395,12 @@ this.timeDownfn()
 		// position:absolute;
 		// top:56px;
 		// right:calc(50% - 490px);
-        width: 380px;
-height: auto;
+		width: 380px;
+		height: auto;
 		background: #ffffff;
 		box-shadow: 0px 0px 10px 10px rgba(234, 186, 99, 0.1);
 		border-radius: 12px;
-position:static;
+		position: static;
 
 		&.haslogin {
 			text-align: center;
@@ -575,7 +590,7 @@ position:static;
 			position: relative;
 			text-align: center;
 			margin-bottom: 40px;
-            line-height: 1;
+			line-height: 1;
 			&::after {
 				position: absolute;
 				content: "";
@@ -588,10 +603,10 @@ position:static;
 				bottom: 0;
 				margin: auto;
 			}
-span{
-    position:relative;
-    z-index:1;
-}
+			span {
+				position: relative;
+				z-index: 1;
+			}
 		}
 		.cut {
 			background-color: #fff;
@@ -669,18 +684,18 @@ span{
 		margin-top: 0;
 	}
 }
-.errInfo{
-    margin:0;
-    font-size: 12px;
-    color:red;
-    margin-left:50px;
-    margin-top:-18px;
-    height:16px;
+.errInfo {
+	margin: 0;
+	font-size: 12px;
+	color: red;
+	margin-left: 50px;
+	margin-top: -18px;
+	height: 16px;
 }
-.sendBtn{
-    img{
-        width:80px;
-        height:40px;
-    }
+.sendBtn {
+	img {
+		width: 80px;
+		height: 40px;
+	}
 }
 </style>

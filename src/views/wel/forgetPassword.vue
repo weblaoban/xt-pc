@@ -293,6 +293,7 @@ font-weight: 500;
 }
 .bannerContent {
     position:relative;
+    height: auto;
 	.carouseCard {
 		width: 100%;
 		height: 100%;

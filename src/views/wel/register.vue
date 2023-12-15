@@ -78,7 +78,7 @@
 							<div class="cut"></div>
 						</div>
 						<div class="sendBtn">
-        <img :src="captcha" alt="" @click="refershCode">
+							<img :src="captcha" alt="" @click="refershCode" />
 						</div>
 					</div>
 					<div class="smscodeCon">
@@ -95,7 +95,11 @@
 							<div class="cut"></div>
 						</div>
 						<div class="sendBtn">
-							<div class="send" v-if="timeDown === originTime" @click="checkCaptcha">
+							<div
+								class="send"
+								v-if="timeDown === originTime"
+								@click="checkCaptcha"
+							>
 								发送
 							</div>
 							<div class="hasSend" v-if="timeDown !== originTime">
@@ -173,7 +177,13 @@
 <script>
 import mainFooter from "../common/footer.vue";
 import { encrypt } from "utils/util";
-import { register, modifyPassword,getCaptcha,sendSmsCode,checkCode } from "@/api/user.js";
+import {
+	register,
+	modifyPassword,
+	getCaptcha,
+	sendSmsCode,
+	checkCode,
+} from "@/api/user.js";
 export default {
 	name: "register",
 	components: {
@@ -191,7 +201,7 @@ export default {
 			gender: 0,
 			smsCode: "",
 			originTime: 30,
-        code:'',
+			code: "",
 			timeDown: 30,
 			timer: null,
 			products: [
@@ -213,53 +223,54 @@ export default {
 				phone: "",
 				message: "",
 			},
-            captcha:'',
-            time:new Date().getTime(),
-            errInfo:''
+			captcha: "",
+			time: new Date().getTime(),
+			errInfo: "",
 		};
 	},
-	mounted() {this.getCaptcha()},
+	mounted() {
+		this.getCaptcha();
+	},
 	methods: {
-        getCaptcha(){
-            getCaptcha({time:this.time}).then((res)=>{
-                const file = new FileReader()
-                const that = this;
-                file.onloadend =function(e){
-                that.captcha = e.target.result
-                }
-                file.readAsDataURL(res.data)
-            })
-        },
-        refershCode(){
-this.time = new Date().getTime();
-this.code=''
-this.getCaptcha()
-        },
-        checkCaptcha(){
-            if(!this.code){
-                this.errInfo = "请输入图形验证码";
-                return;
-            }
-            // this.errInfo = "";
-            checkCode({time:this.time,code:this.code}).then(({data})=>{
-                if(data.data){
-
-                    this.sendSms()
-                this.errInfo = "";
-                }else{
-                this.errInfo = "请输入正确的图形验证码";
-                this.refershCode()
-                }
-            })
-        },
-		sendSms() {
-            sendSmsCode({mobile:this.phone}).then(res=>{
-                if(res && res.data&& res.data.success){
-this.timeDownfn()
-                }
-            })
+		getCaptcha() {
+			getCaptcha({ time: this.time }).then((res) => {
+				const file = new FileReader();
+				const that = this;
+				file.onloadend = function (e) {
+					that.captcha = e.target.result;
+				};
+				file.readAsDataURL(res.data);
+			});
 		},
-        timeDownfn(){
+		refershCode() {
+			this.time = new Date().getTime();
+			this.code = "";
+			this.getCaptcha();
+		},
+		checkCaptcha() {
+			if (!this.code) {
+				this.errInfo = "请输入图形验证码";
+				return;
+			}
+			// this.errInfo = "";
+			checkCode({ time: this.time, code: this.code }).then(({ data }) => {
+				if (data.data) {
+					this.sendSms();
+					this.errInfo = "";
+				} else {
+					this.errInfo = "请输入正确的图形验证码";
+					this.refershCode();
+				}
+			});
+		},
+		sendSms() {
+			sendSmsCode({ mobile: this.phone }).then((res) => {
+				if (res && res.data && res.data.success) {
+					this.timeDownfn();
+				}
+			});
+		},
+		timeDownfn() {
 			this.timer = setTimeout(() => {
 				this.timeDown = this.timeDown - 1;
 				if (this.timeDown <= 1) {
@@ -274,35 +285,36 @@ this.timeDownfn()
 					this.timeDownfn();
 				}
 			}, 1000);
-        },
+		},
 		backLogin() {
 			this.$router.replace("/index");
 		},
 		onRegister() {
-			const { userName, passWord,gender, smsCode, phone,twopassWord } = this;
-			if (!userName || !passWord  || !smsCode || !phone) {
+			const { userName, passWord, gender, smsCode, phone, twopassWord } = this;
+			if (!userName || !passWord || !smsCode || !phone) {
 				this.errInfo = "请输入完整信息";
 				return;
-			}  if(!twopassWord){
+			}
+			if (!twopassWord) {
 				this.errInfo = "请确认密码";
 				return;
-            }
+			}
 			register({
-                mobile:phone,
+				mobile: phone,
 				nickName: userName,
-                userMobile:phone,
+				userMobile: phone,
 				passWord: encrypt(passWord),
-				sex:gender===0?'M':'F',
-				code:smsCode,
-                t:this.time
+				sex: gender === 0 ? "M" : "F",
+				code: smsCode,
+				t: this.time,
 			}).then((res) => {
-                if(res.data.success){
-                    this.$message.success('注册成功，请登录')
-                    this.backLogin()
-                }else{
-                    this.$message.error(res.data.msg)
-                this.refershCode()
-                }
+				if (res.data.success) {
+					this.$message.success("注册成功，请登录");
+					this.backLogin();
+				} else {
+					this.$message.error(res.data.msg);
+					this.refershCode();
+				}
 			});
 		},
 		onMenuClick(menu) {
@@ -311,12 +323,16 @@ this.timeDownfn()
 			}
 		},
 		twoPasswordChange() {
-            console.log(this.twopassWord ,this.passWord)
-			if (this.twopassWord&&this.passWord && this.twopassWord !== this.passWord) {
+			console.log(this.twopassWord, this.passWord);
+			if (
+				this.twopassWord &&
+				this.passWord &&
+				this.twopassWord !== this.passWord
+			) {
 				this.errInfo = "两次密码不一致，请检查";
-			}else{
-                this.errInfo = ''
-            }
+			} else {
+				this.errInfo = "";
+			}
 		},
 	},
 };
@@ -438,11 +454,12 @@ this.timeDownfn()
 }
 .bannerContent {
 	position: relative;
+	height: auto;
 	.carouseCard {
 		width: 100%;
 		height: 100%;
 		background-image: url(/img/registerbg.png);
-        background-size:1920px 100%;
+		background-size: 1920px 100%;
 		background-position: center center;
 		background-repeat: no-repeat;
 		display: flex;
@@ -487,7 +504,7 @@ this.timeDownfn()
 		box-shadow: 0px 0px 10px 10px rgba(234, 186, 99, 0.1);
 		border-radius: 12px;
 
-        position:static;
+		position: static;
 		&.haslogin {
 			text-align: center;
 			.welcom {
@@ -676,7 +693,7 @@ this.timeDownfn()
 			position: relative;
 			text-align: center;
 			margin-bottom: 40px;
-            line-height: 1;
+			line-height: 1;
 			&::after {
 				position: absolute;
 				content: "";
@@ -689,10 +706,10 @@ this.timeDownfn()
 				bottom: 0;
 				margin: auto;
 			}
-            span{
-                position:relative;
-                z-index:1;
-            }
+			span {
+				position: relative;
+				z-index: 1;
+			}
 		}
 		.cut {
 			background-color: #fff;
@@ -771,19 +788,19 @@ this.timeDownfn()
 	}
 }
 
-.errInfo{
-    margin:0;
-    font-size: 12px;
-    color:red;
-    margin-left:50px;
-    margin-top:-18px;
-    height:16px;
+.errInfo {
+	margin: 0;
+	font-size: 12px;
+	color: red;
+	margin-left: 50px;
+	margin-top: -18px;
+	height: 16px;
 }
 
-.sendBtn{
-    img{
-        width:80px;
-        height:40px;
-    }
+.sendBtn {
+	img {
+		width: 80px;
+		height: 40px;
+	}
 }
 </style>

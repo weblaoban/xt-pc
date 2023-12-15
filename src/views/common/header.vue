@@ -250,6 +250,7 @@ background: #EABA63;
 }
 .bannerContent {
     position:relative;
+    height: auto;
 	.carouseCard {
 		width: 100%;
 		height: 100%;
