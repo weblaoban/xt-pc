@@ -14,13 +14,12 @@
 				</div>
 			</div>
 			<div class="footerRight">
-				<!-- <div class="imgCon">
-                        <div class="imgBg">
-
-                            <img src="/img/code.png" alt="" />
-                        </div>
-						<p>微信公众号</p>
-					</div> -->
+				<div class="imgCon" style="opacity: 0">
+					<div class="imgBg">
+						<img src="/img/code.png" alt="" />
+					</div>
+					<p>微信公众号</p>
+				</div>
 				<div class="imgCon">
 					<div class="imgBg">
 						<img src="/img/code1.png" alt="" />

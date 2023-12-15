@@ -5,11 +5,13 @@
 		</div>
 		<div class="logoContent">
 			<div class="container">
-				<div class="logo"><img src="/img/logo.png" alt="" /></div>
+				<div class="logo" @click="goIndex">
+					<img src="/img/logo.png" alt="" />
+				</div>
 				<div class="phone">
 					<img src="/img/kefu.png" alt="" />
 					<div class="phoneInfo">
-						<p class="phonenumber">400-820-8820</p>
+						<p class="phonenumber">0571-86012055</p>
 						<p class="time">工作时间：9:00-17:00</p>
 					</div>
 				</div>
@@ -187,6 +189,9 @@ export default {
 		this.getCaptcha();
 	},
 	methods: {
+		goIndex() {
+			this.$router.replace("/");
+		},
 		getCaptcha() {
 			getCaptcha({ time: this.time }).then((res) => {
 				const file = new FileReader();
