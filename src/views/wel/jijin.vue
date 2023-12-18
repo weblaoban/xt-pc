@@ -134,7 +134,7 @@
 import { mapGetters } from "vuex";
 import mainFooter from "../common/footer.vue";
 import mainHeader from "../common/header.vue";
-import { list, yuyue, keylist, getprodinfo } from "@/api/prod.js";
+import { list, yuyue, keylist, getprodinfo, yuyuelist } from "@/api/prod.js";
 export default {
 	name: "jeZi",
 	components: {
@@ -336,7 +336,6 @@ export default {
 			});
 			targt.options = targt.options.concat(list);
 		},
-		
 		fetchList() {
 			const { selected, page, userInfo } = this;
 			const selectObj = {};
@@ -346,12 +345,12 @@ export default {
 				}
 			}
 			if (userInfo.id) {
-				yuyuelist({ ...page, categoryId: 97, ...selectObj }).then((res) => {
+				yuyuelist({ ...page, categoryId: 99, ...selectObj }).then((res) => {
 					this.prodList = res.data.data.records;
 					this.page.total = res.data.data.total;
 				});
 			} else {
-				list({ ...page, categoryId: 97, ...selectObj }).then((res) => {
+				list({ ...page, categoryId: 99, ...selectObj }).then((res) => {
 					this.prodList = res.data.data.records;
 					this.page.total = res.data.data.total;
 				});
