@@ -274,8 +274,8 @@ export default {
 			modifyPassword({
 				code: smsCode,
 				passWord: encrypt(passWord),
-				userMobile: phone,
-				mobile: phone,
+				userMobile: this.userInfo.userMobile,
+				mobile: this.userInfo.userMobile,
 				time: this.time,
 			}).then((res) => {
 				if (res.data.success) {
