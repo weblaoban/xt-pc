@@ -66,9 +66,11 @@ export default {
 		},
 		goRegister() {
 			this.$router.push("/register");
+			this.closeDialog();
 		},
 		onForgetPassword() {
 			this.$router.push("/forgetPassword");
+			this.closeDialog();
 		},
 	},
 };
