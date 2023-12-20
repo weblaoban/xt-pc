@@ -22,7 +22,7 @@
 				<img src="/img/welcomebg.png" alt="" />
 				<div class="loginContent register">
 					<h4 class="loginTitle"><span>注册</span></h4>
-					<div class="genderCon">
+					<div class="">
 						<div class="inputItem">
 							<input
 								autocomplete="off"
@@ -31,11 +31,11 @@
 								id="userName"
 								type="text"
 							/><label class="placeholder" for="userName" v-show="!userName"
-								>输入您的姓名</label
+								>输入您的称呼</label
 							>
 							<div class="cut"></div>
 						</div>
-						<div class="gender">
+						<!-- <div class="gender">
 							<div class="genderItem">
 								<label @click="gender = 0" class="radio">
 									<span
@@ -52,7 +52,7 @@
 									女士
 								</label>
 							</div>
-						</div>
+						</div> -->
 					</div>
 					<div class="inputItem">
 						<input
@@ -200,7 +200,7 @@ export default {
 			passWord: "",
 			twopassWord: "",
 			phone: "",
-			gender: 0,
+			// gender: 0,
 			smsCode: "",
 			originTime: 30,
 			code: "",
@@ -295,7 +295,7 @@ export default {
 			this.$router.replace("/index");
 		},
 		onRegister() {
-			const { userName, passWord, gender, smsCode, phone, twopassWord } = this;
+			const { userName, passWord, smsCode, phone, twopassWord } = this;
 			if (!userName || !passWord || !smsCode || !phone) {
 				this.errInfo = "请输入完整信息";
 				return;
@@ -309,7 +309,7 @@ export default {
 				nickName: userName,
 				userMobile: phone,
 				passWord: encrypt(passWord),
-				sex: gender === 0 ? "M" : "F",
+				// sex: gender === 0 ? "M" : "F",
 				code: smsCode,
 				t: this.time,
 			}).then((res) => {
