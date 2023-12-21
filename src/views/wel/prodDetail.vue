@@ -614,7 +614,7 @@ export default {
 			padding: 30px;
 			box-sizing: border-box;
 			.logo {
-				width: 161px;
+				// width: 161px;
 				height: 47px;
 				margin-bottom: 32px;
 			}

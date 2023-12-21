@@ -316,7 +316,7 @@ export default {
 		align-items: center;
 		.logo {
 			img {
-				width: 274px;
+				width: 400px;
 				height: 80px;
 			}
 		}
