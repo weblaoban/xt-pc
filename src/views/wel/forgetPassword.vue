@@ -79,6 +79,7 @@
 								{{ timeDown }}
 							</div>
 						</div>
+                    <div class="sendtip" style="width:100%;flex-shrink:0">（短信由杭州泓林信息咨询发送）</div>
 					</div>
 					<div class="inputItem">
 						<input
@@ -520,6 +521,12 @@ export default {
 				align-items: center;
 				justify-content: space-between;
 				margin-bottom: 20px;
+                flex-wrap: wrap;
+                .sendtip{
+                    font-size: 12px;
+                    color:#9a9a9c;
+                    margin-top:4px;
+                }
 				.inputItem,
 				.input {
 					width: 190px;

@@ -92,7 +92,7 @@
 								id="smsCode"
 								type="text"
 							/><label class="placeholder" for="smsCode" v-show="!smsCode"
-								>输入手机验证码</label
+								>验证码</label
 							>
 							<div class="cut"></div>
 						</div>
@@ -108,6 +108,7 @@
 								{{ timeDown }}
 							</div>
 						</div>
+                    <div class="sendtip" style="width:100%;flex-shrink:0">（短信由杭州泓林信息咨询发送）</div>
 					</div>
 					<div class="inputItem">
 						<input
@@ -504,7 +505,7 @@ export default {
 		// top:56px;
 		// right:calc(50% - 490px);
 		width: 380px;
-		height: 565px;
+		height: 585px;
 		background: #ffffff;
 		box-shadow: 0px 0px 10px 10px rgba(234, 186, 99, 0.1);
 		border-radius: 12px;
@@ -630,6 +631,12 @@ export default {
 				align-items: center;
 				justify-content: space-between;
 				margin-bottom: 20px;
+                flex-wrap: wrap;
+                .sendtip{
+                    font-size: 12px;
+                    color:#9a9a9c;
+                    margin-top:4px;
+                }
 				.inputItem,
 				.input {
 					width: 190px;

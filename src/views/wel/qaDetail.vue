@@ -6,7 +6,7 @@
 		<div class="qadetailcon">
             <h4>{{ detail.title }}</h4>
             <p class="time">发布时间：{{ detail.updateTime }}</p>
-            <img v-if="detail.imgUrl" :src="detail.imgUrl" alt="">
+            <img class="detailimg" v-if="detail.imgUrl" :src="detail.imgUrl" alt="">
             <div class="videoCon" v-show="detail.link">
                 <video ref="video" :src="detail.link"></video>
 <img src="/img/play.png" alt="" @click="play" class="play">
@@ -112,6 +112,10 @@ video{
                 margin:auto;
             }
 }
+    .detailimg{
+        display: block;
+        margin:0 auto;
+    }
     img{
         max-width:100%;
     }

@@ -28,6 +28,16 @@
 				</div>
 			</div>
 		</div>
+        <div class="copy">
+            <p>
+                Copyright ©杭州泓林信息咨询有限公司All rights reserved|投资有风险，理财需谨慎。| <a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank">浙ICP备2023043214</a>号
+</p>
+<p>以上项目皆真实，信息来自信托、基金、保险等金融机构，其对提供信息的真实可靠</p>
+<p>性和完整准确性负责。</p>
+<p>
+投资者应仔细阅读产品的法律文件，了解产品风险和收益特征</p>
+<p>(包括系统性风险和特定产品所特有的投资风险等)。</p>
+        </div>
 	</div>
 </template>
 
@@ -36,7 +46,7 @@
 	background: #13161c;
 
 	background-image: url(/img/bgbottom.png);
-	background-size: 1920px 400px;
+	// background-size: 1920px 400px;
 	background-position: center center;
 	background-repeat: no-repeat;
 	.container {
@@ -121,5 +131,27 @@
 			}
 		}
 	}
+
+    .copy{
+background: #292C31;
+padding:20px 0;
+p{
+    width:810px;
+    text-align: center;
+    margin:0 auto;font-size: 16px;
+font-family: Heiti SC;
+font-weight: 500;
+color: #85878B;
+line-height: 24px;
+a{
+    font-size: 16px;
+font-family: Heiti SC;
+font-weight: 500;
+color: #85878B;
+line-height: 24px;
+}
+}
+
+    }
 }
 </style>
