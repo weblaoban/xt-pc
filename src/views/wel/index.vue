@@ -332,19 +332,27 @@ export default {
 				if (res && res.status === 200) {
 					console.log();
 					let list = res.data.data.records || [];
-					// list = list.sort((a, b) => {
-					// 	return a.soldNum - b.soldNum;
-					// });
+					list = list.sort((a, b) => {
+						return a.soldNum - b.soldNum;
+					});
 					this.product1 = res.data.data.records;
 				}
 			});
 			list({ categoryId: 98, soldNum: 1 }).then((res) => {
 				if (res && res.status === 200) {
+					let list = res.data.data.records || [];
+					list = list.sort((a, b) => {
+						return a.soldNum - b.soldNum;
+					});
 					this.product2 = res.data.data.records;
 				}
 			});
 			list({ categoryId: 99, soldNum: 1 }).then((res) => {
 				if (res && res.status === 200) {
+					let list = res.data.data.records || [];
+					list = list.sort((a, b) => {
+						return a.soldNum - b.soldNum;
+					});
 					this.product3 = res.data.data.records;
 				}
 			});
