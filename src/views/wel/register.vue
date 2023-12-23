@@ -308,6 +308,7 @@ export default {
 			register({
 				mobile: phone,
 				nickName: userName,
+				userName: userName,
 				userMobile: phone,
 				passWord: encrypt(passWord),
 				// sex: gender === 0 ? "M" : "F",
