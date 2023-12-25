@@ -103,7 +103,7 @@
 						<div class="productItem" v-for="item in product1" :key="item.id">
 							<div class="title">{{ item.name }}</div>
 							<div class="desc">产品收益</div>
-							<p class="count">{{ item.brief || 0 }} <span>%</span></p>
+							<p class="count">{{ item.brief || 0 }} <span></span></p>
 							<div class="line"></div>
 							<div class="duration">产品期限：{{ item.investLimitCnt }}</div>
 							<div class="button" @click="goDetail(item, 1)">立即查看</div>
@@ -118,7 +118,7 @@
 						<div class="productItem" v-for="item in product2" :key="item">
 							<div class="title">{{ item.name }}</div>
 							<div class="desc">产品收益</div>
-							<p class="count">{{ item.brief || "--" }} <span>%</span></p>
+							<p class="count">{{ item.brief || "--" }} <span></span></p>
 							<div class="line"></div>
 							<div class="duration">产品期限：{{ item.investLimitCnt }}</div>
 							<div class="button" @click="goDetail(item, 2)">立即查看</div>
@@ -133,7 +133,7 @@
 						<div class="productItem" v-for="item in product3" :key="item">
 							<div class="title">{{ item.name }}</div>
 							<div class="desc">产品收益</div>
-							<p class="count">{{ item.brief || "--" }}<span>%</span></p>
+							<p class="count">{{ item.brief || "--" }}<span></span></p>
 							<div class="line"></div>
 							<div class="duration">产品期限：{{ item.investLimitCnt }}</div>
 							<div class="button" @click="goDetail(item, 3)">立即查看</div>

@@ -83,7 +83,7 @@
 						<el-col :span="12"
 							><div class="infoItem">
 								<div class="infoLabel">投资门槛</div>
-								<div class="infoDesc">{{ detail.pmStand }}</div>
+								<div class="infoDesc">{{ detail.pmStandCnt }}</div>
 							</div></el-col
 						>
 						<el-col :span="12"
@@ -266,9 +266,9 @@ export default {
 			if (this.loading) {
 				return;
 			}
-			const { realName: name, nickName: tel } = this.userInfo;
+			const { nickName: name, userMobile: tel, id: userid } = this.userInfo;
 			const { content } = this;
-			if (!name || !tel) {
+			if (!userid) {
 				this.$store.dispatch("setLoginDialog", true);
 				return;
 			}
