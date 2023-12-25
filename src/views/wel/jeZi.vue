@@ -127,10 +127,12 @@
 				</div>
 			</div>
 		</div>
+		<login-mask v-if="showLogin" @callback="fetchList"></login-mask>
 	</div>
 </template>
 
 <script>
+import loginMask from "../common/loginDialog.vue";
 import { mapGetters } from "vuex";
 import mainFooter from "../common/footer.vue";
 import mainHeader from "../common/header.vue";
@@ -140,6 +142,7 @@ export default {
 	components: {
 		mainFooter,
 		mainHeader,
+		loginMask,
 	},
 	data() {
 		return {
@@ -288,7 +291,7 @@ export default {
 		};
 	},
 	computed: {
-		...mapGetters(["userInfo"]),
+		...mapGetters(["userInfo", "showLogin"]),
 	},
 	created() {
 		this.fetchList();
@@ -523,7 +526,7 @@ export default {
 	transform: translateY(-50px);
 	.searchCard {
 		width: 100%;
-		height: 358px;
+		min-height: 358px;
 		background: #ffffff;
 		box-shadow: 0px 0px 16px 4px rgba(154, 154, 156, 0.15);
 		border-radius: 6px;

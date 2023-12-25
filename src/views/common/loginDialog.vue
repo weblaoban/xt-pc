@@ -58,6 +58,7 @@ export default {
 				.dispatch("LoginByUsername", { username: userName, password: passWord })
 				.then(() => {
 					this.$store.dispatch("GetUserInfo");
+					this.$emit("callback");
 					this.closeDialog();
 				});
 		},

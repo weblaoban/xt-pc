@@ -1,7 +1,6 @@
 <template>
 	<div class="main">
 		<router-view />
-        <login-mask v-if="showLogin"></login-mask>
 	</div>
 </template>
 
