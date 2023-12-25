@@ -205,10 +205,12 @@
 			</div>
 		</div>
 		<main-footer></main-footer>
+		<login-mask v-if="showLogin"></login-mask>
 	</div>
 </template>
 
 <script>
+import loginMask from "../common/loginDialog.vue";
 import { mapGetters } from "vuex";
 import mainFooter from "../common/footer.vue";
 import mainHeader from "../common/header.vue";
@@ -219,6 +221,7 @@ export default {
 	name: "jeZi",
 	components: {
 		mainFooter,
+		loginMask,
 		mainHeader,
 	},
 	data() {
@@ -238,7 +241,7 @@ export default {
 		};
 	},
 	computed: {
-		...mapGetters(["userInfo"]),
+		...mapGetters(["userInfo", "showLogin"]),
 	},
 	mounted() {
 		window.scrollTo(0, 0);
