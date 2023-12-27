@@ -5,9 +5,9 @@
         <div class="banner"></div>
 		<div class="qadetailcon">
             <h4>{{ detail.title }}</h4>
-            <p class="time">发布时间：{{ detail.updateTime }}</p>
+            <p class="time">发布时间：{{ detail.uploadTime }}</p>
             <img class="detailimg" v-if="detail.imgUrl" :src="detail.imgUrl" alt="">
-            <div class="videoCon" v-if="detail.link">
+            <div class="videoCon" v-show="detail.link">
                 <video ref="video" :src="detail.link"></video>
 <img src="/img/play.png" alt="" @click="play" class="play">
             </div>

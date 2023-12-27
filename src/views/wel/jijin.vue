@@ -88,14 +88,17 @@
 										: item[prop.value]
 								}}
 							</div>
+
 							<div
-								v-if="!item.imgs"
+								v-if="!item.imgs || !userInfo.id"
 								@click.stop="onYuyue(item)"
 								class="ths can yuyue"
 							>
 								我要预约
 							</div>
-							<div v-if="item.imgs" class="ths can yuyue">已预约</div>
+							<div v-if="item.imgs && userInfo.id" class="ths can yuyue">
+								已预约
+							</div>
 						</div>
 					</div>
 
