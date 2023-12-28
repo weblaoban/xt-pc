@@ -282,7 +282,7 @@ export default {
 			],
 
 			page: {
-				pageSize: 15,
+				pageSize: 10,
 				total: 0,
 				current: 1,
 			},
