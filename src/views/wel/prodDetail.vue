@@ -77,7 +77,7 @@
 						<el-col :span="12"
 							><div class="infoItem">
 								<div class="infoLabel">规模</div>
-								<div class="infoDesc">{{ detail.name }}</div>
+								<div class="infoDesc">{{ detail.totalStocks }}</div>
 							</div></el-col
 						>
 						<el-col :span="12"
