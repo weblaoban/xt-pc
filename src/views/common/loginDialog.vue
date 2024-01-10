@@ -27,6 +27,7 @@
 				>
 				<div class="cut" v-if="!passWord"></div>
 			</div>
+			<p class="errInfo" style="margin-left: 20px">{{ errInfo }}</p>
 			<div class="button" @click="onLogin">立即登录</div>
 			<div class="other">
 				<p @click="goRegister">还没有账号？ <span>立即注册</span></p>
@@ -41,6 +42,7 @@ export default {
 		return {
 			passWord: "",
 			userName: "",
+			errInfo: "",
 		};
 	},
 	methods: {
@@ -56,10 +58,15 @@ export default {
 			}
 			this.$store
 				.dispatch("LoginByUsername", { username: userName, password: passWord })
-				.then(() => {
-					this.$store.dispatch("GetUserInfo");
-					this.$emit("callback");
-					this.closeDialog();
+				.then(({ data }) => {
+					if (data.success) {
+						this.$store.dispatch("GetUserInfo");
+						this.$emit("callback");
+						this.closeDialog();
+					} else {
+						console.log(data);
+						this.errInfo = data.msg;
+					}
 				});
 		},
 		closeDialog() {

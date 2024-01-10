@@ -261,6 +261,9 @@ export default {
 			const active = this.$route.query.type || 1;
 			this.active = active;
 			proddetail({ id }).then((res) => {
+				if (!res.data.success) {
+					return;
+				}
 				this.detail = res.data.data;
 				this.detail.porder = JSON.parse(this.detail.porder);
 			});
