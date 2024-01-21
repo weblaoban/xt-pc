@@ -176,12 +176,12 @@ background: #FFFFFF;
 					padding: 0;
                     color:#EABA63;
                     &.phonenumber{
-                        font-size: 32px;
+                        font-size: 30px;
 font-family: Arial;
 font-weight: 400;
                     }
                     &.time{
-                        font-size: 16px;
+                        font-size: 14px;
 font-family: Heiti SC;
 font-weight: 500;
                     }
