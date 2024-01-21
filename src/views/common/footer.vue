@@ -21,7 +21,7 @@
           <p>微信公众号</p>
         </div> -->
         <div class="footerIntro">
-          <img src="img/foottitle.png" alt="" />
+          <img src="/img/foottitle.png" alt="" />
           <p>
             本文由瑔石信托风控委员会委员、风控部负责团队成员撰写。
             风控团队6人，深耕金融市场多年，擅长信托产品、资管计划、私募基金等投资配置，海外资产、家族信托架构搭建，全方位的服务为客户避坑200余次。

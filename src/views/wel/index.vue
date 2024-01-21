@@ -215,12 +215,12 @@
             <div class="menuCardItem" @click="goQa">
               <p>信托问答</p>
               <p class="sub">PROBLEM SOLVING</p>
-              <span>了解更多 <img src="img/arrow.png" alt="" /></span>
+              <span>了解更多 <img src="/img/arrow.png" alt="" /></span>
             </div>
             <div class="menuCardItem" @click="goAboutUs">
               <p>关于我们</p>
               <p class="sub">ABOUT US</p>
-              <span>了解更多 <img src="img/arrow.png" alt="" /></span>
+              <span>了解更多 <img src="/img/arrow.png" alt="" /></span>
             </div>
           </div>
         </div>
@@ -583,12 +583,12 @@
     padding: 80px 0;
     background: #f8f8f8;
     &.product1 {
-      background: url(img/prodbg1.png);
+      background: url(/img/prodbg1.png);
       background-size: 1920px 661px;
       background-repeat: no-repeat;
     }
     &.product3 {
-      background: url(img/prodbg2.png);
+      background: url(/img/prodbg2.png);
       background-size: 1920px 661px;
       background-repeat: no-repeat;
     }
@@ -853,14 +853,14 @@
                 bottom: 0;
                 left: 0;
                 margin: auto;
-                background: url(img/zixun.png);
+                background: url(/img/zixun.png);
                 background-size: 18px 10px;
                 background-repeat: no-repeat;
                 background-position: left center;
               }
               &:nth-child(1) {
                 &::before {
-                  background: url(img/zixunactive.png);
+                  background: url(/img/zixunactive.png);
                   background-size: 18px 10px;
                   background-repeat: no-repeat;
                   background-position: left center;
@@ -868,7 +868,7 @@
               }
               &:nth-child(2) {
                 &::before {
-                  background: url(img/zixunactive.png);
+                  background: url(/img/zixunactive.png);
                   background-size: 18px 10px;
                   background-repeat: no-repeat;
                   background-position: left center;
@@ -877,7 +877,7 @@
               }
               &:nth-child(3) {
                 &::before {
-                  background: url(img/zixunactive.png);
+                  background: url(/img/zixunactive.png);
                   background-size: 18px 10px;
                   background-repeat: no-repeat;
                   background-position: left center;
@@ -1206,7 +1206,7 @@
             width: 50px;
             height: 3px;
             display: inline-block;
-            background: url(img/right.png);
+            background: url(/img/right.png);
             background-size: 100% 100%;
             margin-left: 20px;
           }
@@ -1215,7 +1215,7 @@
             width: 50px;
             height: 3px;
             display: inline-block;
-            background: url(img/left.png);
+            background: url(/img/left.png);
             background-size: 100% 100%;
             margin-right: 20px;
           }
