@@ -190,7 +190,7 @@
             <div class="zixunList">
               <div class="listL" v-if="list.length">
                 <a :href="`/#/informationDetail/${list[0].id}`">
-                  <img :src="list[0].imgUrl" alt="" />
+                  <img src="/img/zixunnew.png" alt="" />
                   <p>{{ list[0].title }}</p>
                   <span>{{
                     list[0].uploadTime ? list[0].uploadTime.split(" ")[0] : ""
@@ -199,14 +199,12 @@
               </div>
               <div class="listR">
                 <div class="zixunItem" v-for="item in list" :key="item.id">
-                  <p>
-                    <a :href="`/#/informationDetail/${item.id}`">{{
-                      item.title
-                    }}</a>
-                  </p>
-                  <span>{{
-                    item.uploadTime ? item.uploadTime.split(" ")[0] : ""
-                  }}</span>
+                  <a :href="`/#/informationDetail/${item.id}`">
+                    <p>{{ item.title }}</p>
+                    <span>{{
+                      item.uploadTime ? item.uploadTime.split(" ")[0] : ""
+                    }}</span></a
+                  >
                 </div>
               </div>
             </div>
@@ -553,6 +551,7 @@
         line-height: 1;
         box-sizing: border-box;
         z-index: 20;
+        cursor: pointer;
         img {
           width: 36px;
           height: 33px;
@@ -635,6 +634,7 @@
         border-radius: 12px;
         text-align: center;
         margin-right: 27px;
+        cursor: pointer;
         &:hover {
           box-shadow: 0px 0px 21px 9px rgba(66, 142, 230, 0.3);
         }
@@ -843,6 +843,7 @@
               padding-left: 28px;
               position: relative;
               margin-bottom: 14px;
+              cursor: pointer;
               &::before {
                 content: "";
                 display: block;
@@ -889,6 +890,14 @@
               }
               p {
                 margin: 0;
+                font-size: 14px;
+                font-family: Heiti SC;
+                font-weight: 500;
+                color: #30333b;
+                line-height: 18px;
+                &:hover {
+                  color: #eaba63 !important;
+                }
                 a {
                   font-size: 14px;
                   font-family: Heiti SC;
@@ -925,6 +934,7 @@
         position: relative;
         padding: 44px 32px;
         box-sizing: border-box;
+        cursor: pointer;
         &:nth-child(1) {
           background-image: url(/img/help1.png);
           background-size: 100% 100%;
