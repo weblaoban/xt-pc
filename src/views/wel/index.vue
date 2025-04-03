@@ -215,11 +215,11 @@
               <p class="sub">PROBLEM SOLVING</p>
               <span>了解更多 <img src="/img/arrow.png" alt="" /></span>
             </div>
-            <div class="menuCardItem" @click="goAboutUs">
+            <!-- <div class="menuCardItem" @click="goAboutUs">
               <p>关于我们</p>
               <p class="sub">ABOUT US</p>
               <span>了解更多 <img src="/img/arrow.png" alt="" /></span>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="company">
