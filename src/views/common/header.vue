@@ -29,6 +29,43 @@
           >
             <img v-if="item.icon" :src="item.icon" alt="" />{{ item.name }}
             <div class="tag" v-if="item.notOpen">暂未开放</div>
+            <div class="menuItemChildren" v-if="item.children">
+              <div
+                :class="{
+                  childrenItem: true,
+                  childrenItemActive:
+                    subActive === childIndex && index == active,
+                }"
+                v-for="(child, childIndex) in item.children"
+                :key="child.name"
+                @click="onMenuClick(child)"
+              >
+                <div class="childContainer">
+                  <div class="childrenCon">{{ child.name }}</div>
+                </div>
+                <div class="subChildrenCon">
+                  <div class="subChildren" v-if="child.children">
+                    <div
+                      :class="{
+                        subChildItem: true,
+                        childrenItem: true,
+                        subChildrenItemActive:
+                          subActive === childIndex &&
+                          index === active &&
+                          subIndex === subChildActive,
+                      }"
+                      v-for="(subChild, subIndex) in child.children"
+                      :key="subChild.name"
+                      @click="onMenuClick(subChild)"
+                    >
+                      <div class="childContainer">
+                        <div class="childrenCon">{{ subChild.name }}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -42,7 +79,7 @@
   import { register, modifyPassword } from "@/api/user.js";
   export default {
     name: "header",
-    props: ["active"],
+    props: ["active", "subActive", "subChildActive"],
     data() {
       return {
         showContact: false,
@@ -80,33 +117,69 @@
             link: "/",
           },
           {
-            name: "集合信托",
-            link: "/xtcombine",
+            name: "境内资产",
+            children: [
+              {
+                name: "集合信托",
+                link: "/xtcombine",
+              },
+              {
+                name: "直融资产",
+                link: "/ziguan",
+              },
+              {
+                name: "私募基金",
+                link: "/privateFund",
+              },
+            ],
           },
           {
-            name: "集合资管",
-            link: "/ziguan",
+            name: "境外资产",
+            children: [
+              {
+                name: "保 险",
+                children: [
+                  {
+                    name: "储蓄产品",
+                    link: "/out",
+                    query: {
+                      type: 1,
+                      category: 100,
+                    },
+                  },
+                  {
+                    name: "重疾产品",
+                    link: "/out",
+                    query: {
+                      type: 1,
+                      category: 100,
+                    },
+                  },
+                ],
+              },
+              {
+                name: "境外债",
+                link: "",
+              },
+            ],
+          },
+          //   {
+          //     name: "集合保险",
+          //     notOpen: true,
+          //   },
+
+          {
+            name: "财经资讯",
+            link: "/information",
           },
           {
-            name: "私募基金",
-            link: "/privateFund",
-          },
-          {
-            name: "集合保险",
-            notOpen: true,
-          },
-          {
-            name: "信托问答",
+            name: "资讯问答",
             link: "/trustQa",
           },
           {
-            name: "信托资讯",
-            link: "/information",
+            name: "关于我们",
+            link: "/aboutUs",
           },
-          /* {
-                      name:'关于我们',
-                      link:'/aboutUs'
-                  } */
         ],
         userName: "",
         passWord: "",
@@ -173,7 +246,14 @@
       },
       onMenuClick(menu) {
         if (menu.link) {
-          this.$router.push(menu.link);
+          let query = {};
+          if (menu.query) {
+            query = menu.query;
+          }
+          this.$router.push({
+            path: menu.link,
+            query,
+          });
         }
       },
     },
@@ -240,6 +320,7 @@
     background: #30333b;
     .menuList {
       display: flex;
+      justify-content: space-between;
 
       .menuItem {
         width: 12.5%;
@@ -284,6 +365,97 @@
             bottom: 0;
             left: 0;
             background: #eaba63;
+          }
+        }
+        &:hover {
+          .menuItemChildren {
+            display: block;
+          }
+        }
+        .menuItemChildren {
+          display: none;
+          position: absolute;
+          top: 52px;
+          width: 100%;
+          z-index: 2;
+          text-align: center;
+          background: #fff;
+          box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.1);
+          color: #666;
+          font-size: 16px;
+          padding: 0 10px;
+          box-sizing: border-box;
+          line-height: 30px;
+          .childContainer {
+            height: 52px;
+            border-bottom: 1px solid #efefef;
+            padding: 0 10px;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            .childrenCon {
+              padding: 0 10px;
+              width: 80%;
+              text-align: center;
+              &:hover {
+                background: #f6f6f6;
+                border-radius: 15px;
+              }
+            }
+          }
+          .childrenItem {
+            position: relative;
+            &:hover {
+              .subChildrenCon {
+                display: block;
+              }
+            }
+          }
+          .subChildItem {
+            height: 48px;
+            font-size: 14px;
+
+            & > .childContainer {
+              .childrenCon {
+                width: auto;
+              }
+            }
+          }
+          .childrenItemActive {
+            & > .childContainer {
+              .childrenCon {
+                padding: 0 10px;
+
+                background: #f6f6f6;
+                border-radius: 6px;
+                font-weight: 600;
+              }
+            }
+          }
+          .subChildrenItemActive {
+            & > .childContainer {
+              .childrenCon {
+                padding: 0 10px;
+                background: #eaba63;
+                border-radius: 15px;
+                color: #fff;
+              }
+            }
+          }
+          .subChildrenCon {
+            padding: 0 10px;
+            display: none;
+            position: absolute;
+            left: 100%;
+            width: 110%;
+            top: 0;
+          }
+          .subChildren {
+            background: #fff;
+            box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.1);
+            color: #666;
+            font-size: 16px;
           }
         }
       }

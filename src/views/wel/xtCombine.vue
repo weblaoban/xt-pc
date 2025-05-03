@@ -1,7 +1,7 @@
 <!-- 集合信托 -->
 <template>
   <div class="index-container">
-    <main-header :active="1"></main-header>
+    <main-header :active="1" :subActive="0"></main-header>
     <div class="combineCon">
       <div class="combineBanner">
         <div class="input">

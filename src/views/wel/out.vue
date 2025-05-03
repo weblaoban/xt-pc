@@ -1,7 +1,7 @@
 <!-- 集合信托 -->
 <template>
   <div class="index-container">
-    <main-header :active="1" :subActive="2"></main-header>
+    <main-header :active="2" :subActive="0" :subChildActive="0"></main-header>
     <div class="combineCon">
       <div class="combineBanner">
         <div class="input">
@@ -299,6 +299,7 @@
     created() {
       this.fetchList();
       this.getSearchCardInfo();
+      console.log(this.$route);
     },
     methods: {
       getSearchCardInfo() {

@@ -71,7 +71,11 @@
     <div class="cardContainer">
       <div class="container">
         <div class="cardContent">
-          <div class="cardItem" v-for="item in cardItem" :key="item.id">
+          <div
+            :class="`cardItem cardItem${item.categoryId}`"
+            v-for="item in cardItem"
+            :key="item.id"
+          >
             <img :src="item.img" alt="" />
             <div class="cardDesc">
               <p class="title">{{ item.title }}</p>
@@ -98,20 +102,40 @@
     <div class="productC">
       <div class="productContent product1">
         <div class="container">
-          <div class="productTitle"><span>信托产品</span></div>
+          <div class="productTitle"><span>推荐产品</span></div>
           <div class="products">
-            <div class="productItem" v-for="item in product1" :key="item.id">
-              <div class="title">{{ item.name }}</div>
-              <div class="desc">产品收益</div>
-              <p class="count">{{ item.brief || 0 }} <span></span></p>
-              <div class="line"></div>
-              <div class="duration">产品期限：{{ item.investLimitCnt }}</div>
-              <div class="button" @click="goDetail(item, 1)">立即查看</div>
+            <div class="prev" @click="prev">
+              <img src="/img/arrowline.png" alt="" />
+            </div>
+            <div class="productCon">
+              <div
+                :class="`productItem productItem${item.categoryId}`"
+                v-for="item in product1"
+                :key="item.id"
+              >
+                <div class="productItemC">
+                  <div class="title">
+                    {{ item.name }}
+                    <div class="subTitle">中长期收益可观</div>
+                  </div>
+                  <div class="desc">产品收益</div>
+                  <p class="count">{{ item.brief || 0 }} <span></span></p>
+                  <div class="line"></div>
+                  <div class="duration">
+                    产品期限：{{ item.investLimitCnt }}
+                  </div>
+                  <div class="button" @click="goDetail(item, 1)">立即查看</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="next" @click="next">
+              <img src="/img/arrowline.png" alt="" />
             </div>
           </div>
         </div>
       </div>
-      <div class="productContent product2">
+      <!-- <div class="productContent product2">
         <div class="container">
           <div class="productTitle"><span>集合资管</span></div>
           <div class="products">
@@ -140,7 +164,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
     <!-- 客户咨询 -->
     <div class="contact" v-if="showContact">
@@ -330,6 +354,12 @@
           current: 1,
         },
         list: [],
+        prodPage: {
+          pageSize: 4,
+          current: 1,
+          total: 0,
+        },
+        totalProd: [],
       };
     },
     computed: {
@@ -378,7 +408,51 @@
           }
         });
       },
+      getPageProd() {
+        let result = [];
+        const { current, total, pageSize } = this.prodPage;
+        result = this.totalProd.slice(
+          (current - 1) * pageSize,
+          current * pageSize
+        );
+        this.product1 = result;
+      },
+      next() {
+        const { current, total, pageSize } = this.prodPage;
+        if (current * pageSize < total) {
+          this.prodPage.current = this.prodPage.current + 1;
+          this.getPageProd();
+        }
+      },
+      prev() {
+        if (this.prodPage.current === 1) {
+          return;
+        }
+        this.prodPage.current = this.prodPage.current - 1;
+        this.getPageProd();
+      },
       getProdList() {
+        list({ tpy: 1 }).then((res) => {
+          if (res && res.status === 200) {
+            let data = res.data.data.records;
+            data = data.sort((a, b) => {
+              return a.tpy - b.tpy;
+            });
+            data = [
+              { categoryId: 98 },
+              { categoryId: 98 },
+              { categoryId: 98 },
+              { categoryId: 98 },
+              { categoryId: 98 },
+            ];
+            this.prodPage.current = 1;
+            this.prodPage.total = data.length;
+            this.totalProd = data;
+            this.getPageProd();
+            // this.product1 = data;
+          }
+        });
+        return;
         list({ categoryId: 97, soldNum: 1 }).then((res) => {
           if (res && res.status === 200) {
             console.log();
@@ -626,14 +700,23 @@
     .products {
       display: flex;
       // justify-content: space-between;
+      align-items: center;
+      .productCon {
+        flex: 1;
+        display: flex;
+        justify-content: space-between;
+        margin: 0 16px;
+      }
       .productItem {
-        width: 280px;
+        width: 24%;
+        flex-shrink: 0;
         height: 377px;
         background: #ffffff;
         box-shadow: 0px 0px 21px 9px rgba(66, 142, 230, 0.1);
+        box-shadow: 0px 0px 21px 9px rgba(234, 186, 99, 0.1) !important;
         border-radius: 12px;
         text-align: center;
-        margin-right: 27px;
+        // margin-right: 27px;
         cursor: pointer;
         &:hover {
           box-shadow: 0px 0px 21px 9px rgba(66, 142, 230, 0.3);
@@ -643,13 +726,24 @@
           background: linear-gradient(0deg, #89f7fe, #66a6ff);
           border-radius: 12px 12px 0px 0px;
           text-align: center;
-          line-height: 94px;
+          //   line-height: 94px;
           font-size: 20px;
           font-family: Heiti SC;
           font-weight: 500;
           color: #ffffff;
           text-align: center;
           margin-bottom: 20px;
+          display: flex;
+          align-items: center;
+          flex-wrap: wrap;
+          justify-content: center;
+          padding: 20px 0;
+          box-sizing: border-box;
+          .subTitle {
+            width: 100%;
+            flex-shrink: 0;
+            font-size: 14px;
+          }
         }
         &:nth-child(2n) {
           box-shadow: 0px 0px 21px 9px rgba(252, 106, 74, 0.1);
@@ -700,6 +794,35 @@
         }
         &:last-child {
           margin: 0;
+        }
+      }
+      .productItem98 {
+        .title {
+          background: linear-gradient(0deg, #38ebba, #6fb1d2);
+        }
+      }
+
+      .productItem99 {
+        .title {
+          background: linear-gradient(0deg, #f28e26, #fd644f);
+        }
+      }
+
+      .productItem100 {
+        .title {
+          background: linear-gradient(0deg, #7683d9, #d8a0fe);
+        }
+      }
+
+      .productItem101 {
+        .title {
+          background: linear-gradient(0deg, #7683d9, #d8a0fe);
+        }
+      }
+
+      .productItem102 {
+        .title {
+          background: linear-gradient(0deg, #fad126, #f39800);
         }
       }
     }
@@ -1477,5 +1600,24 @@
     margin-left: 50px;
     margin-top: -18px;
     height: 16px;
+  }
+
+  .prev,
+  .next {
+    width: 48px;
+    height: 48px;
+    background: #ffffff;
+    border-radius: 50%;
+    opacity: 0.6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      width: 30px;
+      height: 30px;
+    }
+  }
+  .next {
+    transform: rotate(180deg);
   }
 </style>
