@@ -426,7 +426,7 @@
           return;
         }
         this.$router.push({
-          path: "/prodDetail/" + row.id,
+          path: "/bProdDetail/" + row.id,
           query: {
             type: 1,
           },
