@@ -113,17 +113,30 @@
                 v-for="item in product1"
                 :key="item.id"
               >
-                <div class="productItemC">
+                <div class="productItemC" v-if="true">
                   <div class="title">
                     {{ item.name }}
-                    <div class="subTitle">中长期收益可观</div>
                   </div>
-                  <div class="desc">产品收益</div>
+                  <div class="desc">业绩比较基准</div>
                   <p class="count">{{ item.brief || 0 }} <span></span></p>
                   <div class="line"></div>
                   <div class="duration">
                     产品期限：{{ item.investLimitCnt }}
                   </div>
+                  <div class="button" @click="goDetail(item, 1)">立即查看</div>
+                </div>
+                <!-- 保险 -->
+                <div v-else class="productItemC">
+                  <div class="title">
+                    {{ item.name }}
+                    <div class="subTitle">中长期收益可观</div>
+                  </div>
+                  <div class="desc">TRR高达</div>
+                  <p class="count" style="color: '#EABA63'">
+                    {{ item.irr || 0 }} <span></span>
+                  </p>
+                  <div class="line"></div>
+                  <div class="duration">缴费灵活：{{ item.paymentMode }}</div>
                   <div class="button" @click="goDetail(item, 1)">立即查看</div>
                 </div>
               </div>
