@@ -458,14 +458,12 @@
             data = data.sort((a, b) => {
               return a.tpy - b.tpy;
             });
-           // let data = [
-						// 		...result,
-           //  ];
             this.prodPage.current = 1;
             this.prodPage.total = data.length;
             this.totalProd = [...result,...data];
+						console.log( this.totalProd)
             this.getPageProd();
-            this.product1 = data;
+            // this.product1 = data;
           }
         });
         return;
@@ -563,6 +561,16 @@
           this.$store.dispatch("setLoginDialog", true);
           return;
         }
+				if(row.categoryId === 100){
+					
+					this.$router.push({
+						path: "/bProdDetail/" + row.id,
+						query: {
+							tpe: row.tpe,
+						},
+					});
+					return
+				}
         this.$router.push({
           path: "/prodDetail/" + row.id,
           query: {
