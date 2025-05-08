@@ -131,7 +131,7 @@
                     {{ item.name }}
                     <div class="subTitle">中长期收益可观</div>
                   </div>
-                  <div class="desc">TRR高达</div>
+                  <div class="desc">IRR高达</div>
                   <p class="count" style="color: '#EABA63'">
                     {{ item.irr || 0 }} <span></span>
                   </p>

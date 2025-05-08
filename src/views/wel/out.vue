@@ -1,7 +1,11 @@
 <!-- 集合信托 -->
 <template>
   <div class="index-container">
-    <main-header :active="2" :subActive="0" :subChildActive="$route.query.tpe*1"></main-header>
+    <main-header
+      :active="2"
+      :subActive="0"
+      :subChildActive="$route.query.tpe * 1"
+    ></main-header>
     <div class="combineCon">
       <div class="combineBanner">
         <div class="input">
@@ -16,7 +20,7 @@
       </div>
       <div class="combineContent">
         <div class="container">
-          <div class="searchCard" style="min-height:220px">
+          <div class="searchCard" style="min-height: 220px">
             <div class="searchList">
               <div class="searchItem" v-for="item in searchs" :key="item.prop">
                 <div class="label">{{ item.label }}</div>
@@ -101,7 +105,7 @@
               </div>
             </div>
           </div>
-					<div class="empty" v-else>暂无数据</div>
+          <div class="empty" v-else>暂无数据</div>
 
           <div class="paginationCon">
             <el-pagination
@@ -222,7 +226,7 @@
           //   label: "不限",
           //   value: "-1",
           // },
-					investmentThreshold: {
+          investmentThreshold: {
             label: "不限",
             value: "-1",
           },
@@ -251,10 +255,10 @@
               3: "售罄",
             },
           },
-          {
-            label: "类型",
-            value: "categoryCnt",
-          },
+          //   {
+          //     label: "类型",
+          //     value: "categoryCnt",
+          //   },
           // {
           //   label: "期限",
           //   value: "investLimitCnt",
@@ -321,7 +325,7 @@
         });
         getprodinfo({ parentId: 14 }).then((res) => {
           console.log(res);
-          this.setcardInfo("pmStand", res.data.data);
+          this.setcardInfo("investmentThreshold", res.data.data);
         });
         getprodinfo({ parentId: 15 }).then((res) => {
           console.log(res);
@@ -357,10 +361,12 @@
         //     this.page.total = res.data.data.total;
         //   });
         // } else {
-					bList({ ...page, ...selectObj,tpe:this.$route.query.tpe }).then((res) => {
+        bList({ ...page, ...selectObj, tpe: this.$route.query.tpe }).then(
+          (res) => {
             this.prodList = res.data.data;
             // this.page.total = res.data.data.total;
-          });
+          }
+        );
         // }
       },
       fetchListBykey() {
@@ -428,7 +434,7 @@
         this.$router.push({
           path: "/bProdDetail/" + row.id,
           query: {
-						tpe: this.$route.query.tpe,
+            tpe: this.$route.query.tpe,
           },
         });
       },
@@ -463,17 +469,17 @@
         }
       },
     },
-		watch:{
-			'$route.query.tpe'(newVal,oldVal){
-				if(newVal !== oldVal){
-					this.fetchList()
-				}
-			}
-		}
+    watch: {
+      "$route.query.tpe"(newVal, oldVal) {
+        if (newVal !== oldVal) {
+          this.fetchList();
+        }
+      },
+    },
   };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .combineBanner {
     width: 100%;
     height: 274px;
@@ -657,6 +663,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        width: 20% !important;
         &:nth-child(1) {
           width: 220px;
           flex-shrink: 0;
@@ -687,18 +694,26 @@
             display: none;
           }
         }
+        &:last-child {
+          width: 83px !important;
+        }
+      }
+      .ths {
+        &:nth-child(5) {
+          color: #eaba63 !important;
+        }
       }
       &.valid {
         &:hover {
           color: #eaba63;
           background: rgba(234, 186, 99, 0.1);
           .can {
-            width: 83px;
+            width: 83px !important;
             height: 36px;
             background: #eaba63;
             border-radius: 6px;
 
-            color: #fff;
+            color: #fff !important;
             line-height: 36px;
             margin-left: 20px;
           }
@@ -710,11 +725,6 @@
           border-radius: 6px;
           line-height: 36px;
           margin-left: 20px;
-        }
-        .ths {
-          &:nth-child(5) {
-            color: #eaba63 !important;
-          }
         }
       }
       &.notValid {
@@ -904,14 +914,13 @@
       }
     }
   }
-	
-	.empty{
-		
-		font-size: 12px;
-		font-family: Heiti SC;
-		font-weight: 500;
-		color: #9a9a9c;
-		padding:20px 0;
-		text-align: center;
-	}
+
+  .empty {
+    font-size: 12px;
+    font-family: Heiti SC;
+    font-weight: 500;
+    color: #9a9a9c;
+    padding: 20px 0;
+    text-align: center;
+  }
 </style>
