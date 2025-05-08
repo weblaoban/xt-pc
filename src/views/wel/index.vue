@@ -452,27 +452,22 @@
 					item.categoryId = 100
 					return item
 				})
-        // list({ tpy: 1 }).then((res) => {
-        //   if (res && res.status === 200) {
-        //     let data = res.data.data.records;
-        //     data = data.sort((a, b) => {
-        //       return a.tpy - b.tpy;
-        //     });
-           let data = [
-								...result,
-              { categoryId: 98 },
-              { categoryId: 98 },
-              { categoryId: 98 },
-              { categoryId: 98 },
-              { categoryId: 98 },
-            ];
-            // this.prodPage.current = 1;
-            // this.prodPage.total = data.length;
-            this.totalProd = data;
+        list({ tpy: 1 }).then((res) => {
+          if (res && res.status === 200) {
+            let data = res.data.data.records;
+            data = data.sort((a, b) => {
+              return a.tpy - b.tpy;
+            });
+           // let data = [
+						// 		...result,
+           //  ];
+            this.prodPage.current = 1;
+            this.prodPage.total = data.length;
+            this.totalProd = [...result,...data];
             this.getPageProd();
-            // this.product1 = data;
-          // }
-        // });
+            this.product1 = data;
+          }
+        });
         return;
         list({ categoryId: 97, soldNum: 1 }).then((res) => {
           if (res && res.status === 200) {
