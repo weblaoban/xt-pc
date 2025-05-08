@@ -113,7 +113,7 @@
                 v-for="item in product1"
                 :key="item.id"
               >
-                <div class="productItemC" v-if="item.categoryId!==100">
+                <div class="productItemC" v-if="item.categoryId !== 100">
                   <div class="title">
                     {{ item.name }}
                   </div>
@@ -445,13 +445,13 @@
         this.getPageProd();
       },
       async getProdList() {
-				const blist = await bList({recommended:1})
-				console.log(blist)
-				let result = blist.data.data || []
-				result = result.map(item=>{
-					item.categoryId = 100
-					return item
-				})
+        const blist = await bList({ recommended: 1 });
+        console.log(blist);
+        let result = blist.data.data || [];
+        result = result.map((item) => {
+          item.categoryId = 100;
+          return item;
+        });
         list({ tpy: 1 }).then((res) => {
           if (res && res.status === 200) {
             let data = res.data.data.records;
@@ -459,9 +459,9 @@
               return a.tpy - b.tpy;
             });
             this.prodPage.current = 1;
-            this.prodPage.total = data.length;
-            this.totalProd = [...result,...data];
-						console.log( this.totalProd)
+            this.totalProd = [...result, ...data];
+            this.prodPage.total = this.totalProd.length;
+            console.log(this.totalProd);
             this.getPageProd();
             // this.product1 = data;
           }
@@ -561,16 +561,15 @@
           this.$store.dispatch("setLoginDialog", true);
           return;
         }
-				if(row.categoryId === 100){
-					
-					this.$router.push({
-						path: "/bProdDetail/" + row.id,
-						query: {
-							tpe: row.tpe,
-						},
-					});
-					return
-				}
+        if (row.categoryId === 100) {
+          this.$router.push({
+            path: "/bProdDetail/" + row.id,
+            query: {
+              tpe: row.tpe,
+            },
+          });
+          return;
+        }
         this.$router.push({
           path: "/prodDetail/" + row.id,
           query: {
