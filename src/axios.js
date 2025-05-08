@@ -54,6 +54,12 @@ axios.interceptors.response.use(res => {
         store.dispatch('FedLogOut')
         store.dispatch('setLoginDialog', true)
         return res
+    } if (res.data.code === 'A00005') {
+        ElMessage({
+            message: res.data.msg,
+            type: 'error'
+        })
+        return Promise.reject(new Error(message))
     }
     // 如果请求为非200否者默认统一处理
     if (status !== 200) {

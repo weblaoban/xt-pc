@@ -428,7 +428,7 @@
         this.$router.push({
           path: "/bProdDetail/" + row.id,
           query: {
-						tpe: $route.query.tpe,
+						tpe: this.$route.query.tpe,
           },
         });
       },
