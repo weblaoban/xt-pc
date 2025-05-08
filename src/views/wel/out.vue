@@ -458,7 +458,8 @@
         const cur = this.cur;
         const userInfo = this.userInfo;
         if (cur.id) {
-          yuyue({ prodId: cur.id, userId: userInfo.id }).then((res) => {
+				// , userId: userInfo.id
+          yuyue({ prodId: cur.id }).then((res) => {
             if (res && res.data && res.data.success) {
               this.$message.success("预约成功");
               this.showYuyue = false;
@@ -646,6 +647,7 @@
       box-sizing: border-box;
       padding: 0 50px;
       border-bottom: 1px solid rgba(154, 154, 156, 0.2);
+			cursor: pointer;
 
       &.head {
         height: 60px;

@@ -61,7 +61,7 @@ export const register = (data) =>
 // 获取用户信息
 export const getUserInfo = () =>
     request({
-        url: baseUrl + "/user/userInfo",
+        url: baseUrl + "/p/user/userInfo",
         method: "get",
     });
 // 修改密码
