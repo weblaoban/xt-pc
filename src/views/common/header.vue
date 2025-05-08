@@ -143,16 +143,14 @@
                     name: "储蓄产品",
                     link: "/out",
                     query: {
-                      type: 1,
-                      category: 100,
+                      tpe: 0,
                     },
                   },
                   {
                     name: "重疾产品",
                     link: "/out",
                     query: {
-                      type: 1,
-                      category: 100,
+											tpe: 1,
                     },
                   },
                 ],

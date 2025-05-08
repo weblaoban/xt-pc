@@ -1,6 +1,6 @@
 <template>
   <div class="prodDetail">
-    <main-header :active="active"></main-header>
+    <main-header  :active="2" :subActive="0" :subChildActive="$route.query.tpe*1"></main-header>
     <div class="banner"></div>
     <div class="prodDetailCon">
       <div class="container">
@@ -18,7 +18,7 @@
               </li>
               <li>
                 <div class="label">优势</div>
-                <div class="con">中长期收益客观</div>
+                <div class="con" style="font-size:18px">中长期收益客观</div>
               </li>
             </ul>
           </div>
@@ -127,7 +127,7 @@
 <!--            </div>-->
 <!--          </div>-->
           <div class="title">产品详情</div>
-          <div class="detailCon" v-html="detail.content"></div>
+          <div class="detailCon" v-html="detail.description"></div>
         </div>
       </div>
     </div>
@@ -210,7 +210,7 @@
   import { mapGetters } from "vuex";
   import mainFooter from "../common/footer.vue";
   import mainHeader from "../common/header.vue";
-  import { proddetail } from "@/api/prod.js";
+  import { bProddetail } from "@/api/prod.js";
   import { addComment } from "@/api/index.js";
   import { setStore, getStore } from "utils/store";
   export default {
@@ -256,7 +256,7 @@
         const id = this.$route.params.id;
         const active = this.$route.query.type || 1;
         this.active = active;
-        proddetail({ id }).then((res) => {
+        bProddetail({ id }).then((res) => {
           if (!res.data.success) {
             return;
           }

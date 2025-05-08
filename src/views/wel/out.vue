@@ -1,7 +1,7 @@
 <!-- 集合信托 -->
 <template>
   <div class="index-container">
-    <main-header :active="2" :subActive="0" :subChildActive="0"></main-header>
+    <main-header :active="2" :subActive="0" :subChildActive="$route.query.tpe*1"></main-header>
     <div class="combineCon">
       <div class="combineBanner">
         <div class="input">
@@ -9,14 +9,14 @@
             v-model="key"
             @blur="fetchListBykey"
             type="text"
-            placeholder="状态｜期限｜门槛｜付息方式｜领域"
+            placeholder="状态｜门槛"
           />
           <img src="/img/search.png" alt="" class="search" />
         </div>
       </div>
       <div class="combineContent">
         <div class="container">
-          <div class="searchCard">
+          <div class="searchCard" style="min-height:220px">
             <div class="searchList">
               <div class="searchItem" v-for="item in searchs" :key="item.prop">
                 <div class="label">{{ item.label }}</div>
@@ -64,7 +64,7 @@
             </div>
           </div>
 
-          <div class="prodList">
+          <div class="prodList" v-if="prodList && prodList.length">
             <div class="prodItem head">
               <div class="ths" v-for="item in propColumn" :key="item.value">
                 {{ item.label }}
@@ -101,6 +101,7 @@
               </div>
             </div>
           </div>
+					<div class="empty" v-else>暂无数据</div>
 
           <div class="paginationCon">
             <el-pagination
@@ -117,7 +118,6 @@
       </div>
     </div>
     <main-footer></main-footer>
-
     <!-- 确认预约产品弹窗 -->
     <div class="model" v-if="showYuyue">
       <div class="modelContent">
@@ -139,7 +139,7 @@
   import { mapGetters } from "vuex";
   import mainFooter from "../common/footer.vue";
   import mainHeader from "../common/header.vue";
-  import { list, yuyue, keylist, getprodinfo, yuyuelist } from "@/api/prod.js";
+  import { bList, yuyue, keylist, getprodinfo, yuyuelist } from "@/api/prod.js";
   export default {
     name: "jeZi",
     components: {
@@ -172,19 +172,19 @@
               },
             ],
           },
-          {
-            label: "产品期限：",
-            prop: "investLimitId",
-            options: [
-              {
-                label: "不限",
-                value: "-1",
-              },
-            ],
-          },
+          // {
+          //   label: "产品期限：",
+          //   prop: "investLimitId",
+          //   options: [
+          //     {
+          //       label: "不限",
+          //       value: "-1",
+          //     },
+          //   ],
+          // },
           {
             label: "投资门槛：",
-            prop: "pmStand",
+            prop: "investmentThreshold",
             options: [
               {
                 label: "不限",
@@ -192,48 +192,48 @@
               },
             ],
           },
-          {
-            label: "付息方式：",
-            prop: "inrestMethodId",
-            options: [
-              {
-                label: "不限",
-                value: "-1",
-              },
-            ],
-          },
-          {
-            label: "投资领域：",
-            prop: "prodEffid",
-            options: [
-              {
-                label: "不限",
-                value: "-1",
-              },
-            ],
-          },
+          // {
+          //   label: "付息方式：",
+          //   prop: "inrestMethodId",
+          //   options: [
+          //     {
+          //       label: "不限",
+          //       value: "-1",
+          //     },
+          //   ],
+          // },
+          // {
+          //   label: "投资领域：",
+          //   prop: "prodEffid",
+          //   options: [
+          //     {
+          //       label: "不限",
+          //       value: "-1",
+          //     },
+          //   ],
+          // },
         ],
         selected: {
           status: {
             label: "不限",
             value: "-1",
           },
-          investLimitId: {
+          // investLimitId: {
+          //   label: "不限",
+          //   value: "-1",
+          // },
+					investmentThreshold: {
             label: "不限",
             value: "-1",
           },
-          pmStand: {
-            label: "不限",
-            value: "-1",
-          },
-          inrestMethodId: {
-            label: "不限",
-            value: "-1",
-          },
-          prodEffid: {
-            label: "不限",
-            value: "-1",
-          },
+          // inrestMethodId: {
+          //   label: "不限",
+          //   value: "-1",
+          // },
+          // prodEffid: {
+          //   label: "不限",
+          //   value: "-1",
+          // },
         },
         prodList: [{}, {}],
         propColumn: [
@@ -255,30 +255,30 @@
             label: "类型",
             value: "categoryCnt",
           },
+          // {
+          //   label: "期限",
+          //   value: "investLimitCnt",
+          // },
           {
-            label: "期限",
-            value: "investLimitCnt",
-          },
-          {
-            label: "业绩比较基准",
-            value: "brief",
+            label: "IRR",
+            value: "irr",
           },
           {
             label: "投资门槛",
-            value: "pmStandCnt",
+            value: "investmentThreshold",
           },
-          {
-            label: "付息方式",
-            value: "inrestMethodCnt",
-          },
-          {
-            label: "投资领域",
-            value: "prodEffCnt",
-          },
-          {
-            label: "防控评级",
-            value: "lev",
-          },
+          // {
+          //   label: "付息方式",
+          //   value: "inrestMethodCnt",
+          // },
+          // {
+          //   label: "投资领域",
+          //   value: "prodEffCnt",
+          // },
+          // {
+          //   label: "防控评级",
+          //   value: "lev",
+          // },
         ],
 
         page: {
@@ -351,17 +351,17 @@
             selectObj[i] = selected[i].value;
           }
         }
-        if (userInfo.id) {
-          yuyuelist({ ...page, categoryId: 99, ...selectObj }).then((res) => {
-            this.prodList = res.data.data.records;
-            this.page.total = res.data.data.total;
+        // if (userInfo.id) {
+        //   yuyuelist({ ...page, categoryId: 99, ...selectObj }).then((res) => {
+        //     this.prodList = res.data.data.records;
+        //     this.page.total = res.data.data.total;
+        //   });
+        // } else {
+					bList({ ...page, ...selectObj,tpe:this.$route.query.tpe }).then((res) => {
+            this.prodList = res.data.data;
+            // this.page.total = res.data.data.total;
           });
-        } else {
-          list({ ...page, categoryId: 99, ...selectObj }).then((res) => {
-            this.prodList = res.data.data.records;
-            this.page.total = res.data.data.total;
-          });
-        }
+        // }
       },
       fetchListBykey() {
         if (!this.key) {
@@ -428,7 +428,7 @@
         this.$router.push({
           path: "/bProdDetail/" + row.id,
           query: {
-            type: 1,
+						tpe: $route.query.tpe,
           },
         });
       },
@@ -463,6 +463,13 @@
         }
       },
     },
+		watch:{
+			'$route.query.tpe'(newVal,oldVal){
+				if(newVal !== oldVal){
+					this.fetchList()
+				}
+			}
+		}
   };
 </script>
 
@@ -897,4 +904,14 @@
       }
     }
   }
+	
+	.empty{
+		
+		font-size: 12px;
+		font-family: Heiti SC;
+		font-weight: 500;
+		color: #9a9a9c;
+		padding:20px 0;
+		text-align: center;
+	}
 </style>

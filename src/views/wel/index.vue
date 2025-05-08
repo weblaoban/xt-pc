@@ -113,7 +113,7 @@
                 v-for="item in product1"
                 :key="item.id"
               >
-                <div class="productItemC" v-if="true">
+                <div class="productItemC" v-if="item.categoryId!==100">
                   <div class="title">
                     {{ item.name }}
                   </div>
@@ -225,7 +225,7 @@
               <p class="more" @click="goZixun">更多+</p>
             </div>
             <div class="zixunList">
-              <div class="listL" v-if="list.length">
+              <div class="listL" v-if="list && list.length">
                 <a :href="`/#/informationDetail/${list[0].id}`">
                   <img src="/img/zixunnew.png" alt="" />
                   <p>{{ list[0].title }}</p>
@@ -281,7 +281,7 @@
   import mainFooter from "../common/footer.vue";
   import mainHeader from "../common/header.vue";
   import { addComment, getAmount } from "@/api/index.js";
-  import { zxlist, list } from "@/api/prod.js";
+  import { zxlist, list, bList } from "@/api/prod.js";
   export default {
     name: "wel",
     components: {
@@ -444,27 +444,35 @@
         this.prodPage.current = this.prodPage.current - 1;
         this.getPageProd();
       },
-      getProdList() {
-        list({ tpy: 1 }).then((res) => {
-          if (res && res.status === 200) {
-            let data = res.data.data.records;
-            data = data.sort((a, b) => {
-              return a.tpy - b.tpy;
-            });
-            data = [
+      async getProdList() {
+				const blist = await bList({recommended:1})
+				console.log(blist)
+				let result = blist.data.data || []
+				result = result.map(item=>{
+					item.categoryId = 100
+					return item
+				})
+        // list({ tpy: 1 }).then((res) => {
+        //   if (res && res.status === 200) {
+        //     let data = res.data.data.records;
+        //     data = data.sort((a, b) => {
+        //       return a.tpy - b.tpy;
+        //     });
+           let data = [
+								...result,
               { categoryId: 98 },
               { categoryId: 98 },
               { categoryId: 98 },
               { categoryId: 98 },
               { categoryId: 98 },
             ];
-            this.prodPage.current = 1;
-            this.prodPage.total = data.length;
+            // this.prodPage.current = 1;
+            // this.prodPage.total = data.length;
             this.totalProd = data;
             this.getPageProd();
             // this.product1 = data;
-          }
-        });
+          // }
+        // });
         return;
         list({ categoryId: 97, soldNum: 1 }).then((res) => {
           if (res && res.status === 200) {
@@ -764,7 +772,7 @@
             box-shadow: 0px 0px 21px 9px rgba(252, 106, 74, 0.3);
           }
           .title {
-            background: linear-gradient(0deg, #f28e26, #fd644f);
+            //background: linear-gradient(0deg, #f28e26, #fd644f);
           }
         }
         .desc {
