@@ -91,6 +91,10 @@
                     ? prop.dicData[item[prop.value]]
                     : item[prop.value]
                 }}
+                <template v-if="prop.value === 'irr'">%</template>
+                <template v-if="prop.value === 'investmentThreshold'"
+                  >万（美元）</template
+                >
               </div>
 
               <div
@@ -186,16 +190,16 @@
           //     },
           //   ],
           // },
-          {
-            label: "投资门槛：",
-            prop: "investmentThreshold",
-            options: [
-              {
-                label: "不限",
-                value: "-1",
-              },
-            ],
-          },
+          //   {
+          //     label: "投资门槛：",
+          //     prop: "investmentThreshold",
+          //     options: [
+          //       {
+          //         label: "不限",
+          //         value: "-1",
+          //       },
+          //     ],
+          //   },
           // {
           //   label: "付息方式：",
           //   prop: "inrestMethodId",
@@ -226,10 +230,10 @@
           //   label: "不限",
           //   value: "-1",
           // },
-          investmentThreshold: {
-            label: "不限",
-            value: "-1",
-          },
+          //   investmentThreshold: {
+          //     label: "不限",
+          //     value: "-1",
+          //   },
           // inrestMethodId: {
           //   label: "不限",
           //   value: "-1",
@@ -458,7 +462,7 @@
         const cur = this.cur;
         const userInfo = this.userInfo;
         if (cur.id) {
-				// , userId: userInfo.id
+          // , userId: userInfo.id
           yuyue({ prodId: cur.id }).then((res) => {
             if (res && res.data && res.data.success) {
               this.$message.success("预约成功");
@@ -647,7 +651,7 @@
       box-sizing: border-box;
       padding: 0 50px;
       border-bottom: 1px solid rgba(154, 154, 156, 0.2);
-			cursor: pointer;
+      cursor: pointer;
 
       &.head {
         height: 60px;

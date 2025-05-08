@@ -445,13 +445,15 @@
         this.getPageProd();
       },
       async getProdList() {
-        const blist = await bList({ recommended: 1 });
+        const blist = await bList();
         console.log(blist);
         let result = blist.data.data || [];
-        result = result.map((item) => {
-          item.categoryId = 100;
-          return item;
-        });
+        result = result
+          .map((item) => {
+            item.categoryId = 100;
+            return item;
+          })
+          .filter((item) => item.orders > 0);
         list({ tpy: 1 }).then((res) => {
           if (res && res.status === 200) {
             let data = res.data.data.records;
@@ -459,7 +461,11 @@
               return a.tpy - b.tpy;
             });
             this.prodPage.current = 1;
-            this.totalProd = [...result, ...data];
+            const totalList = [...result, ...data];
+            const resultList = totalList.sort((a, b) => {
+              return a.orders - b.orders;
+            });
+            this.totalProd = resultList;
             this.prodPage.total = this.totalProd.length;
             console.log(this.totalProd);
             this.getPageProd();

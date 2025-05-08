@@ -1,6 +1,10 @@
 <template>
   <div class="prodDetail">
-    <main-header  :active="2" :subActive="0" :subChildActive="$route.query.tpe*1"></main-header>
+    <main-header
+      :active="2"
+      :subActive="0"
+      :subChildActive="$route.query.tpe * 1"
+    ></main-header>
     <div class="banner"></div>
     <div class="prodDetailCon">
       <div class="container">
@@ -10,15 +14,15 @@
             <ul>
               <li>
                 <div class="label">IRR高达</div>
-                <div class="con">{{ detail.brief || "--" }}</div>
+                <div class="con">{{ detail.irr || "--" }}%</div>
               </li>
               <li>
                 <div class="label">缴费灵活</div>
-                <div class="con"> 24个月 </div>
+                <div class="con">{{ detail.phasesc }}</div>
               </li>
               <li>
                 <div class="label">优势</div>
-                <div class="con" style="font-size:18px">中长期收益客观</div>
+                <div class="con" style="font-size: 18px">中长期收益客观</div>
               </li>
             </ul>
           </div>
@@ -37,95 +41,95 @@
         </div>
 
         <div class="section2">
-<!--          <div class="title">产品概况</div>-->
-<!--          <el-row>-->
-<!--            <el-col :span="24"-->
-<!--              ><div class="infoItem">-->
-<!--                <div class="infoLabel">产品名称</div>-->
-<!--                <div class="infoDesc">{{ detail.name }}</div>-->
-<!--              </div></el-col-->
-<!--            >-->
+          <!--          <div class="title">产品概况</div>-->
+          <!--          <el-row>-->
+          <!--            <el-col :span="24"-->
+          <!--              ><div class="infoItem">-->
+          <!--                <div class="infoLabel">产品名称</div>-->
+          <!--                <div class="infoDesc">{{ detail.name }}</div>-->
+          <!--              </div></el-col-->
+          <!--            >-->
 
-<!--            <el-col :span="12"-->
-<!--              ><div class="infoItem">-->
-<!--                <div class="infoLabel">产品类别</div>-->
-<!--                <div class="infoDesc">{{ detail.categoryCnt }}</div>-->
-<!--              </div></el-col-->
-<!--            >-->
-<!--            <el-col :span="12"-->
-<!--              ><div class="infoItem">-->
-<!--                <div class="infoLabel">发行机构</div>-->
-<!--                <div class="infoDesc">{{ detail.organCnt }}</div>-->
-<!--              </div></el-col-->
-<!--            >-->
-<!--            <el-col :span="12"-->
-<!--              ><div class="infoItem">-->
-<!--                <div class="infoLabel">投资领域</div>-->
-<!--                <div class="infoDesc">{{ detail.prodEffCnt }}</div>-->
-<!--              </div></el-col-->
-<!--            >-->
-<!--            <el-col :span="12"-->
-<!--              ><div class="infoItem">-->
-<!--                <div class="infoLabel">收益类型</div>-->
-<!--                <div class="infoDesc">{{ detail.investId }}</div>-->
-<!--              </div></el-col-->
-<!--            >-->
-<!--            <el-col :span="12"-->
-<!--              ><div class="infoItem">-->
-<!--                <div class="infoLabel">规模</div>-->
-<!--                <div class="infoDesc">{{ detail.totalStocks }}</div>-->
-<!--              </div></el-col-->
-<!--            >-->
-<!--            <el-col :span="12"-->
-<!--              ><div class="infoItem">-->
-<!--                <div class="infoLabel">投资门槛</div>-->
-<!--                <div class="infoDesc">{{ detail.pmStandCnt }}</div>-->
-<!--              </div></el-col-->
-<!--            >-->
-<!--            <el-col :span="12"-->
-<!--              ><div class="infoItem">-->
-<!--                <div class="infoLabel">产品期限</div>-->
-<!--                <div class="infoDesc">{{ detail.investLimitCnt }}</div>-->
-<!--              </div></el-col-->
-<!--            >-->
-<!--            <el-col :span="12"-->
-<!--              ><div class="infoItem">-->
-<!--                <div class="infoLabel">付息方式</div>-->
-<!--                <div class="infoDesc">{{ detail.inrestMethodCnt }}</div>-->
-<!--              </div></el-col-->
-<!--            >-->
-<!--            <el-col :span="12"-->
-<!--              ><div class="infoItem">-->
-<!--                <div class="infoLabel">所在地域</div>-->
-<!--                <div class="infoDesc">{{ detail.area }}</div>-->
-<!--              </div></el-col-->
-<!--            >-->
-<!--            <el-col :span="12"-->
-<!--              ><div class="infoItem">-->
-<!--                <div class="infoLabel">业绩比较基准</div>-->
-<!--                <div class="infoDesc">{{ detail.brief }}</div>-->
-<!--              </div></el-col-->
-<!--            >-->
-<!--            <el-col :span="12"-->
-<!--              ><div class="infoItem">-->
-<!--                <div class="infoLabel">大小配额比</div>-->
-<!--                <div class="infoDesc">{{ detail.investRatio }}</div>-->
-<!--              </div></el-col-->
-<!--            >-->
-<!--            <el-col :span="12"-->
-<!--              ><div class="infoItem">-->
-<!--                <div class="infoLabel">风控级别</div>-->
-<!--                <div class="infoDesc">{{ detail.lev }}</div>-->
-<!--              </div></el-col-->
-<!--            >-->
-<!--          </el-row>-->
+          <!--            <el-col :span="12"-->
+          <!--              ><div class="infoItem">-->
+          <!--                <div class="infoLabel">产品类别</div>-->
+          <!--                <div class="infoDesc">{{ detail.categoryCnt }}</div>-->
+          <!--              </div></el-col-->
+          <!--            >-->
+          <!--            <el-col :span="12"-->
+          <!--              ><div class="infoItem">-->
+          <!--                <div class="infoLabel">发行机构</div>-->
+          <!--                <div class="infoDesc">{{ detail.organCnt }}</div>-->
+          <!--              </div></el-col-->
+          <!--            >-->
+          <!--            <el-col :span="12"-->
+          <!--              ><div class="infoItem">-->
+          <!--                <div class="infoLabel">投资领域</div>-->
+          <!--                <div class="infoDesc">{{ detail.prodEffCnt }}</div>-->
+          <!--              </div></el-col-->
+          <!--            >-->
+          <!--            <el-col :span="12"-->
+          <!--              ><div class="infoItem">-->
+          <!--                <div class="infoLabel">收益类型</div>-->
+          <!--                <div class="infoDesc">{{ detail.investId }}</div>-->
+          <!--              </div></el-col-->
+          <!--            >-->
+          <!--            <el-col :span="12"-->
+          <!--              ><div class="infoItem">-->
+          <!--                <div class="infoLabel">规模</div>-->
+          <!--                <div class="infoDesc">{{ detail.totalStocks }}</div>-->
+          <!--              </div></el-col-->
+          <!--            >-->
+          <!--            <el-col :span="12"-->
+          <!--              ><div class="infoItem">-->
+          <!--                <div class="infoLabel">投资门槛</div>-->
+          <!--                <div class="infoDesc">{{ detail.pmStandCnt }}</div>-->
+          <!--              </div></el-col-->
+          <!--            >-->
+          <!--            <el-col :span="12"-->
+          <!--              ><div class="infoItem">-->
+          <!--                <div class="infoLabel">产品期限</div>-->
+          <!--                <div class="infoDesc">{{ detail.investLimitCnt }}</div>-->
+          <!--              </div></el-col-->
+          <!--            >-->
+          <!--            <el-col :span="12"-->
+          <!--              ><div class="infoItem">-->
+          <!--                <div class="infoLabel">付息方式</div>-->
+          <!--                <div class="infoDesc">{{ detail.inrestMethodCnt }}</div>-->
+          <!--              </div></el-col-->
+          <!--            >-->
+          <!--            <el-col :span="12"-->
+          <!--              ><div class="infoItem">-->
+          <!--                <div class="infoLabel">所在地域</div>-->
+          <!--                <div class="infoDesc">{{ detail.area }}</div>-->
+          <!--              </div></el-col-->
+          <!--            >-->
+          <!--            <el-col :span="12"-->
+          <!--              ><div class="infoItem">-->
+          <!--                <div class="infoLabel">业绩比较基准</div>-->
+          <!--                <div class="infoDesc">{{ detail.brief }}</div>-->
+          <!--              </div></el-col-->
+          <!--            >-->
+          <!--            <el-col :span="12"-->
+          <!--              ><div class="infoItem">-->
+          <!--                <div class="infoLabel">大小配额比</div>-->
+          <!--                <div class="infoDesc">{{ detail.investRatio }}</div>-->
+          <!--              </div></el-col-->
+          <!--            >-->
+          <!--            <el-col :span="12"-->
+          <!--              ><div class="infoItem">-->
+          <!--                <div class="infoLabel">风控级别</div>-->
+          <!--                <div class="infoDesc">{{ detail.lev }}</div>-->
+          <!--              </div></el-col-->
+          <!--            >-->
+          <!--          </el-row>-->
 
-<!--          <div class="title">产品进度</div>-->
-<!--          <div class="progress">-->
-<!--            <div class="progressItem" v-for="item in detail.porder" :key="item">-->
-<!--              {{ item.detail }}-->
-<!--            </div>-->
-<!--          </div>-->
+          <!--          <div class="title">产品进度</div>-->
+          <!--          <div class="progress">-->
+          <!--            <div class="progressItem" v-for="item in detail.porder" :key="item">-->
+          <!--              {{ item.detail }}-->
+          <!--            </div>-->
+          <!--          </div>-->
           <div class="title">产品详情</div>
           <div class="detailCon" v-html="detail.description"></div>
         </div>
