@@ -18,7 +18,7 @@
               </li>
               <li>
                 <div class="label">缴费灵活</div>
-                <div class="con">{{ detail.phasesc }}</div>
+                <div class="con">{{ detail.paymentMode }}</div>
               </li>
               <li>
                 <div class="label">优势</div>
@@ -254,7 +254,6 @@
       }
       this.getDetail();
     },
-    mounted() {},
     methods: {
       getDetail() {
         const id = this.$route.params.id;

@@ -37,8 +37,8 @@
     </div>
     <div class="copy">
       <p>
-        Copyright ©杭州泓林信息咨询有限公司All rights
-        reserved|投资有风险，理财需谨慎。|
+				Copyright ©杭州瑔石信息咨询有限公司
+				All rights reserved|投资有风险，理财需谨慎。|
         <a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank"
           >浙ICP备2023043214</a
         >号
