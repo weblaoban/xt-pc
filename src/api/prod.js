@@ -9,7 +9,7 @@ export const list = (data) => {
 		meta: {
 			isSerialize: true,
 		},
-		params: {...data,userid:getStore({name:'userInfo'}) && getStore({name:'userInfo'}).id ||  '-1'},
+		params: {...data},
 	});
 };
 export const bList = (data)=>{
@@ -30,7 +30,7 @@ export const yuyuelist = (data) => {
 		meta: {
 			isSerialize: true,
 		},
-		params: {...data,userid:getStore({name:'userInfo'}) && getStore({name:'userInfo'}).id ||  '-1'},
+		params: {...data},
 	});
 };
 
