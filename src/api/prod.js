@@ -1,5 +1,6 @@
 import request from "@/axios";
 import { baseUrl } from "@/config/env";
+import {getStore} from "utils/store";
 // 产品列表 根据分类id来
 export const list = (data) => {
 	return request({
@@ -8,7 +9,7 @@ export const list = (data) => {
 		meta: {
 			isSerialize: true,
 		},
-		params: data,
+		params: {...data,userid:getStore({name:'userInfo'}) && getStore({name:'userInfo'}).id ||  '-1'},
 	});
 };
 export const bList = (data)=>{
@@ -18,7 +19,7 @@ export const bList = (data)=>{
 		meta: {
 			isSerialize: true,
 		},
-		params: data,
+		params: {...data,userid:getStore({name:'userInfo'}) && getStore({name:'userInfo'}).id ||  '-1'},
 	});
 }
 // 产品列表 根据分类id来
@@ -29,7 +30,7 @@ export const yuyuelist = (data) => {
 		meta: {
 			isSerialize: true,
 		},
-		params: data,
+		params: {...data,userid:getStore({name:'userInfo'}) && getStore({name:'userInfo'}).id ||  '-1'},
 	});
 };
 
@@ -69,14 +70,14 @@ export const proddetail = (params) => {
 	return request({
 		url: baseUrl + '/p/prod/prodInfo/',
 		method: "get",
-		params: { ...params },
+		params: { ...params,userid:getStore({name:'userInfo'}) && getStore({name:'userInfo'}).id ||  '-1' },
 	});
 };
 export const bProddetail = (params) => {
 	return request({
 		url: baseUrl + "/p/insurance/product/findUnPaidbyId",
 		method: "get",
-		params: { ...params },
+		params: { ...params,userid:getStore({name:'userInfo'}) && getStore({name:'userInfo'}).id ||  '-1' },
 	});
 };
 
@@ -84,7 +85,7 @@ export const yuyue = (data) => {
 	return request({
 		url: baseUrl + '/p/collection/addOrCancel',
 		method: "post",
-		data: { ...data },
+		data: { ...data,userId:getStore({name:'userInfo'}) && getStore({name:'userInfo'}).id ||  '-1' },
 	});
 };
 
