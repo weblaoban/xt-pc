@@ -70,7 +70,7 @@
         </div>
       </div>
     </div>
-		<login-mask v-if="showLogin"></login-mask>
+    <login-mask v-if="showLogin"></login-mask>
   </div>
 </template>
 
@@ -78,10 +78,10 @@
   import { mapGetters } from "vuex";
   import { encrypt } from "utils/util";
   import { register, modifyPassword } from "@/api/user.js";
-	import loginMask from "@/views/common/loginDialog.vue";
+  import loginMask from "@/views/common/loginDialog.vue";
   export default {
     name: "header",
-		components: {loginMask},
+    components: { loginMask },
     props: ["active", "subActive", "subChildActive"],
     data() {
       return {
@@ -125,17 +125,17 @@
               {
                 name: "集合信托",
                 link: "/xtcombine",
-								needLogin: true,
+                needLogin: true,
               },
               {
                 name: "直融资产",
                 link: "/ziguan",
-								needLogin: true,
+                needLogin: true,
               },
               {
                 name: "私募基金",
                 link: "/privateFund",
-								needLogin: true,
+                needLogin: true,
               },
             ],
           },
@@ -147,6 +147,7 @@
                 children: [
                   {
                     name: "储蓄产品",
+                    needLogin: true,
                     link: "/out",
                     query: {
                       tpe: 0,
@@ -154,9 +155,10 @@
                   },
                   {
                     name: "重疾产品",
+                    needLogin: true,
                     link: "/out",
                     query: {
-											tpe: 1,
+                      tpe: 1,
                     },
                   },
                 ],
@@ -164,7 +166,7 @@
               {
                 name: "境外债",
                 link: "/oProdList",
-								needLogin: true,
+                needLogin: true,
               },
             ],
           },
@@ -217,9 +219,9 @@
         showModifyPass: false,
       };
     },
-		computed: {
-			...mapGetters(["userInfo", "showLogin"]),
-		},
+    computed: {
+      ...mapGetters(["userInfo", "showLogin"]),
+    },
     created() {},
     methods: {
       goIndex() {
@@ -250,16 +252,16 @@
         }, 1000);
       },
       onMenuClick(menu) {
-				console.log(menu)
+        console.log(menu);
         if (menu.link) {
           let query = {};
           if (menu.query) {
             query = menu.query;
           }
-					if(menu.needLogin && !this.userInfo.id) {
-						this.$store.dispatch("setLoginDialog", true);
-						return
-					}
+          if (menu.needLogin && !this.userInfo.id) {
+            this.$store.dispatch("setLoginDialog", true);
+            return;
+          }
           this.$router.push({
             path: menu.link,
             query,
