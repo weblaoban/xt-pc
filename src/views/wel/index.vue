@@ -849,6 +849,11 @@
         }
       }
 
+      .productItem3 {
+        .title {
+          background: linear-gradient(0deg, #fad126, #f39800);
+        }
+      }
       .productItem102 {
         .title {
           background: linear-gradient(0deg, #fad126, #f39800);

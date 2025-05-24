@@ -631,7 +631,7 @@
       box-sizing: border-box;
       padding: 0 50px;
       border-bottom: 1px solid rgba(154, 154, 156, 0.2);
-			cursor: pointer;
+      cursor: pointer;
 
       &.head {
         height: 60px;

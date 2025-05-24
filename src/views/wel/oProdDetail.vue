@@ -1,8 +1,6 @@
 <template>
   <div class="prodDetail">
-    <main-header
-				:active="2"
-				:subActive="1"></main-header>
+    <main-header :active="2" :subActive="1"></main-header>
     <div class="banner"></div>
     <div class="prodDetailCon">
       <div class="container">
@@ -20,7 +18,9 @@
               </li>
               <li>
                 <div class="label">投资门槛</div>
-                <div class="con">{{ detail.pmStand?detail.pmStand+'万美元' : "--" }}</div>
+                <div class="con">
+                  {{ detail.pmStand ? detail.pmStand + "万美元" : "--" }}
+                </div>
               </li>
               <li>
                 <div class="label">付息方式</div>
@@ -60,19 +60,19 @@
             >
             <el-col :span="12"
               ><div class="infoItem">
-                <div class="infoLabel">发行机构</div>
-                <div class="infoDesc">{{ detail.organCnt }}</div>
+                <div class="infoLabel">发行人</div>
+                <div class="infoDesc">{{ detail.organId }}</div>
               </div></el-col
             >
             <el-col :span="12"
               ><div class="infoItem">
-                <div class="infoLabel">投资领域</div>
-                <div class="infoDesc">{{ detail.prodEffCnt }}</div>
+                <div class="infoLabel">资金用途</div>
+                <div class="infoDesc">{{ detail.prodEffId }}</div>
               </div></el-col
             >
             <el-col :span="12"
               ><div class="infoItem">
-                <div class="infoLabel">收益类型</div>
+                <div class="infoLabel">发行币种</div>
                 <div class="infoDesc">{{ detail.investId }}</div>
               </div></el-col
             >
@@ -85,7 +85,7 @@
             <el-col :span="12"
               ><div class="infoItem">
                 <div class="infoLabel">投资门槛</div>
-                <div class="infoDesc">{{ detail.pmStandCnt }}</div>
+                <div class="infoDesc">{{ detail.pmStand }}万美元</div>
               </div></el-col
             >
             <el-col :span="12"
@@ -102,7 +102,7 @@
             >
             <el-col :span="12"
               ><div class="infoItem">
-                <div class="infoLabel">所在地域</div>
+                <div class="infoLabel">上市地点</div>
                 <div class="infoDesc">{{ detail.area }}</div>
               </div></el-col
             >
@@ -114,13 +114,13 @@
             >
             <el-col :span="12"
               ><div class="infoItem">
-                <div class="infoLabel">大小配额比</div>
+                <div class="infoLabel">发行日期</div>
                 <div class="infoDesc">{{ detail.investRatio }}</div>
               </div></el-col
             >
             <el-col :span="12"
               ><div class="infoItem">
-                <div class="infoLabel">风控级别</div>
+                <div class="infoLabel">1S1N</div>
                 <div class="infoDesc">{{ detail.lev }}</div>
               </div></el-col
             >

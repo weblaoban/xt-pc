@@ -9,7 +9,7 @@
             v-model="key"
             @blur="fetchListBykey"
             type="text"
-            placeholder="状态｜期限｜门槛｜付息方式｜领域"
+            placeholder="状态｜期限｜门槛｜付息方式｜用途"
           />
           <img src="/img/search.png" alt="" class="search" />
         </div>
@@ -86,7 +86,7 @@
                   prop.dicData
                     ? prop.dicData[item[prop.value]]
                     : item[prop.value]
-                }}{{prop.surfix}}
+                }}{{ prop.surfix }}
               </div>
               <div
                 v-if="!item.imgs || !userInfo.id"
@@ -265,18 +265,18 @@
           {
             label: "投资门槛",
             value: "pmStand",
-						surfix:'万美元'
+            surfix: "万美元",
           },
           {
             label: "付息方式",
             value: "inrestMethodCnt",
           },
           {
-            label: "投资领域",
-            value: "prodEffCnt",
+            label: "资金用途",
+            value: "prodEffId",
           },
           {
-            label: "防控评级",
+            label: "1S1N",
             value: "lev",
           },
         ],
@@ -632,7 +632,7 @@
       box-sizing: border-box;
       padding: 0 50px;
       border-bottom: 1px solid rgba(154, 154, 156, 0.2);
-			cursor: pointer;
+      cursor: pointer;
 
       &.head {
         height: 60px;
