@@ -70,6 +70,7 @@
         </div>
       </div>
     </div>
+		<login-mask v-if="showLogin"></login-mask>
   </div>
 </template>
 
@@ -77,8 +78,10 @@
   import { mapGetters } from "vuex";
   import { encrypt } from "utils/util";
   import { register, modifyPassword } from "@/api/user.js";
+	import loginMask from "@/views/common/loginDialog.vue";
   export default {
     name: "header",
+		components: {loginMask},
     props: ["active", "subActive", "subChildActive"],
     data() {
       return {
@@ -122,14 +125,17 @@
               {
                 name: "集合信托",
                 link: "/xtcombine",
+								needLogin: true,
               },
               {
                 name: "直融资产",
                 link: "/ziguan",
+								needLogin: true,
               },
               {
                 name: "私募基金",
                 link: "/privateFund",
+								needLogin: true,
               },
             ],
           },
@@ -155,10 +161,11 @@
                   },
                 ],
               },
-              // {
-              //   name: "境外债",
-              //   link: "",
-              // },
+              {
+                name: "境外债",
+                link: "/oProdList",
+								needLogin: true,
+              },
             ],
           },
           //   {
@@ -210,9 +217,9 @@
         showModifyPass: false,
       };
     },
-    computed: {
-      ...mapGetters(["userInfo"]),
-    },
+		computed: {
+			...mapGetters(["userInfo", "showLogin"]),
+		},
     created() {},
     methods: {
       goIndex() {
@@ -243,11 +250,16 @@
         }, 1000);
       },
       onMenuClick(menu) {
+				console.log(menu)
         if (menu.link) {
           let query = {};
           if (menu.query) {
             query = menu.query;
           }
+					if(menu.needLogin && !this.userInfo.id) {
+						this.$store.dispatch("setLoginDialog", true);
+						return
+					}
           this.$router.push({
             path: menu.link,
             query,

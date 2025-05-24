@@ -99,7 +99,7 @@
         </div>
       </div>
     </div>
-    <div class="productC">
+    <div class="productC" v-if="userInfo.id">
       <div class="productContent product1">
         <div class="container">
           <div class="productTitle"><span>推荐产品</span></div>

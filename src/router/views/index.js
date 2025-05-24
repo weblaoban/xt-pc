@@ -42,12 +42,21 @@ export default [
             },
             {
                 path: "out",
+                name: "保险产品",
+                meta: {
+                    title: "保险产品",
+                },
+                component: () =>
+                    import(/* webpackChunkName: "views" */ "@/views/wel/out.vue"),
+            },
+            {
+                path: "oProdList",
                 name: "境外资产",
                 meta: {
                     title: "境外资产",
                 },
                 component: () =>
-                    import(/* webpackChunkName: "views" */ "@/views/wel/out.vue"),
+                    import(/* webpackChunkName: "views" */ "@/views/wel/oProdList.vue"),
             },
             {
                 path: "prodDetail/:id",
@@ -57,6 +66,15 @@ export default [
                 },
                 component: () =>
                     import(/* webpackChunkName: "views" */ "@/views/wel/prodDetail.vue"),
+            },
+            {
+                path: "oProdDetail/:id",
+                name: "产品详情（境外债）",
+                meta: {
+                    title: "产品详情（境外债）",
+                },
+                component: () =>
+                    import(/* webpackChunkName: "views" */ "@/views/wel/oProdDetail.vue"),
             },
             {
                 path: "bProdDetail/:id",
