@@ -266,8 +266,38 @@
           if (!res.data.success) {
             return;
           }
-          this.detail = res.data.data;
-          this.detail.porder = JSON.parse(this.detail.porder);
+          const data = res.data.data;
+          data.qlist = data.porder;
+          let qlist = {
+            qlist: [
+              {
+                finish: false,
+                desc: "",
+                days: "",
+              },
+            ],
+          };
+          try {
+            qlist = JSON.parse(data.qlist);
+          } catch (err) {
+            qlist = {
+              qlist: [
+                {
+                  finish: false,
+                  desc: "",
+                  days: "",
+                },
+              ],
+            };
+          }
+          if (Array.isArray(qlist)) {
+            data.porder = qlist;
+          } else {
+            data.periods = qlist.periods;
+            data.days = qlist.days;
+            data.porder = qlist.porder;
+          }
+          this.detail = data;
         });
       },
       sendComm() {
