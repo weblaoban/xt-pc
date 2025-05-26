@@ -82,11 +82,15 @@
               :key="index"
             >
               <div class="ths" v-for="prop in propColumn" :key="prop.value">
-                {{
-                  prop.dicData
-                    ? prop.dicData[item[prop.value]]
-                    : item[prop.value]
-                }}
+								<template v-if="prop.value==='brief'">{{item[prop.value] && item[prop.value].indexOf('%')>-1?item[prop.value]:item[prop.value]+'%'}}
+								</template>
+								<template v-else>
+									{{
+										prop.dicData
+												? prop.dicData[item[prop.value]]
+												: item[prop.value]
+									}}{{ prop.surfix }}
+								</template>
               </div>
               <div
                 v-if="!item.imgs || !userInfo.id"

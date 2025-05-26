@@ -10,7 +10,8 @@
             <ul>
               <li>
                 <div class="label">业绩比较标准</div>
-                <div class="con">{{ detail.brief || "--" }}</div>
+								
+                <div class="con">{{ detail.brief && detail.brief.indexOf('%')>-1?detail.brief:detail.brief+'%' || "--" }}</div>
               </li>
               <li>
                 <div class="label">投资期限</div>
@@ -109,7 +110,7 @@
             <el-col :span="12"
               ><div class="infoItem">
                 <div class="infoLabel">业绩比较基准</div>
-                <div class="infoDesc">{{ detail.brief }}</div>
+                <div class="infoDesc">{{ detail.brief && detail.brief.indexOf('%')>-1?detail.brief:detail.brief+'%' || "--"  }}</div>
               </div></el-col
             >
             <el-col :span="12"
