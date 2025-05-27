@@ -60,9 +60,10 @@ export default {
 				.dispatch("LoginByUsername", { username: userName, password: passWord })
 				.then(({ data }) => {
 					if (data.success) {
-						this.$store.dispatch("GetUserInfo");
-						this.$emit("callback");
-						this.closeDialog();
+						this.$store.dispatch("GetUserInfo").then(res=>{
+							this.$emit("callback");
+							this.closeDialog();
+						});
 					} else {
 						console.log(data);
 						this.errInfo = data.msg;
