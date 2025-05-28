@@ -108,7 +108,7 @@
 								{{ timeDown }}
 							</div>
 						</div>
-                    <div class="sendtip" style="width:100%;flex-shrink:0">（短信由杭州泓林信息咨询发送）</div>
+                    <div class="sendtip" style="width:100%;flex-shrink:0">（短信由杭州瑔石信息咨询发送）</div>
 					</div>
 					<div class="inputItem">
 						<input
