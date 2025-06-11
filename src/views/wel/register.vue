@@ -203,9 +203,9 @@ export default {
 			phone: "",
 			// gender: 0,
 			smsCode: "",
-			originTime: 30,
+			originTime: 120,
 			code: "",
-			timeDown: 30,
+			timeDown: 120,
 			timer: null,
 			products: [
 				{
