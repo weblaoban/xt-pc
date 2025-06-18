@@ -18,6 +18,7 @@ export default [
                 name: "集合信托",
                 meta: {
                     title: "集合信托",
+                    isAuth:true
                 },
                 component: () =>
                     import(/* webpackChunkName: "views" */ "@/views/wel/xtCombine.vue"),
@@ -27,6 +28,7 @@ export default [
                 name: "直融资产",
                 meta: {
                     title: "直融资产",
+                    isAuth:true
                 },
                 component: () =>
                     import(/* webpackChunkName: "views" */ "@/views/wel/jeZi.vue"),
@@ -36,6 +38,7 @@ export default [
                 name: "私募基金",
                 meta: {
                     title: "私募基金",
+                    isAuth:true
                 },
                 component: () =>
                     import(/* webpackChunkName: "views" */ "@/views/wel/jijin.vue"),
@@ -45,6 +48,7 @@ export default [
                 name: "保险产品",
                 meta: {
                     title: "保险产品",
+                    isAuth:true
                 },
                 component: () =>
                     import(/* webpackChunkName: "views" */ "@/views/wel/out.vue"),
@@ -54,6 +58,7 @@ export default [
                 name: "境外资产",
                 meta: {
                     title: "境外资产",
+                    isAuth:true
                 },
                 component: () =>
                     import(/* webpackChunkName: "views" */ "@/views/wel/oProdList.vue"),
@@ -63,6 +68,7 @@ export default [
                 name: "产品详情",
                 meta: {
                     title: "产品详情",
+                    isAuth:true
                 },
                 component: () =>
                     import(/* webpackChunkName: "views" */ "@/views/wel/prodDetail.vue"),
@@ -72,6 +78,7 @@ export default [
                 name: "产品详情（境外债）",
                 meta: {
                     title: "产品详情（境外债）",
+                    isAuth:true
                 },
                 component: () =>
                     import(/* webpackChunkName: "views" */ "@/views/wel/oProdDetail.vue"),
@@ -81,6 +88,7 @@ export default [
                 name: "产品详情（保险）",
                 meta: {
                     title: "产品详情（保险）",
+                    isAuth:true
                 },
                 component: () =>
                     import(/* webpackChunkName: "views" */ "@/views/wel/bProdDetail.vue"),
@@ -144,6 +152,7 @@ export default [
                 name: "修改密码",
                 meta: {
                     title: "修改密码",
+                    isAuth:true
                 },
                 component: () =>
                     import(
